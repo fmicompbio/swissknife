@@ -7,7 +7,7 @@ Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role
              person("Dania", "Machlab", email = "dania.machlab@fmi.ch", role = "aut"))
 Description: A collection of useful R functions performing various tasks that
     might be re-usable and worth sharing.
-Depends: R (>= 3.5.0)
+Depends: R (>= 3.5.0), grDevices, graphics, png
 Suggests: 
 License: GPL-3
 Encoding: UTF-8

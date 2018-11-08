@@ -1,0 +1,9 @@
+CHANGES IN VERSION 0.2
+----------------------
+
+  o Add R/plotting.R:plotBitScatter()
+
+CHANGES IN VERSION 0.1
+----------------------
+
+  o Initial version, add R/misc.R:sampleControlElements()

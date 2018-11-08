@@ -2,8 +2,10 @@
 
 export(plotBitScatter)
 export(sampleControlElements)
+importFrom(KernSmooth,bkde2D)
 importFrom(grDevices,as.raster)
 importFrom(grDevices,colorRampPalette)
+importFrom(grDevices,densCols)
 importFrom(grDevices,dev.off)
 importFrom(grDevices,png)
 importFrom(graphics,box)

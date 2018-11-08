@@ -50,3 +50,6 @@ plotBitScatter(x, y, main = "bitmap")
 plot(x, y, main = "default")
 
 }
+\author{
+Michael Stadler
+}

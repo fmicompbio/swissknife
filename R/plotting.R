@@ -1,7 +1,4 @@
 # functions related to plotting / visualization
-#' @importFrom grDevices png as.raster colorRampPalette dev.off
-#' @importFrom png readPNG
-#' @importFrom graphics rasterImage par grconvertX plot box
 
 #' @title Create a bitmap-rendered plot.
 #'
@@ -9,6 +6,8 @@
 #'     plot area as a bitmap (png), but keeps all other elements (axes, labels, etc.)
 #'     as vector elements. This is especially useful for keeping the size of PDF files
 #'     with scatter plots with many elements small, while retaining editability of axes.
+#'
+#' @author Michael Stadler
 #'
 #' @param x `numeric` vector with x-coordinates of points.
 #' @param y `numeric` vector with y-coordinates of points (same length as `x`).
@@ -36,6 +35,11 @@
 #' par(mfrow=c(1,2))
 #' plotBitScatter(x, y, main = "bitmap")
 #' plot(x, y, main = "default")
+#'
+#' @importFrom grDevices png as.raster densCols colorRampPalette dev.off
+#' @importFrom png readPNG
+#' @importFrom graphics rasterImage par grconvertX plot box
+#' @importFrom KernSmooth bkde2D
 #'
 #' @export
 plotBitScatter <- function(x, y, ..., densCols=TRUE,

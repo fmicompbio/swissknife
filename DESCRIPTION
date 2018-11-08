@@ -1,14 +1,14 @@
 Package: swissknife
 Title: Handy code shared in the FMI CompBio group
-Version: 0.1
+Version: 0.2
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
              person("Dania", "Machlab", email = "dania.machlab@fmi.ch", role = "aut"))
 Description: A collection of useful R functions performing various tasks that
     might be re-usable and worth sharing.
-Depends: R (>= 3.5.0), grDevices, graphics, png
-Suggests: 
+Depends: R (>= 3.5.0), grDevices, graphics, png, KernSmooth
+Suggests: testthat
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

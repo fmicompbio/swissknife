@@ -45,3 +45,6 @@ hist(x[1001:1200], breaks = h$breaks, main = "target")
 hist(x[s], breaks = h$breaks, main = "sampled control")
 
 }
+\author{
+Michael Stadler
+}

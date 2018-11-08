@@ -6,6 +6,8 @@
 #'     such that the selected elements are similarly distributed as a given
 #'     set of target (foreground) elements.
 #'
+#' @author Michael Stadler
+#'
 #' @param x `numeric` vector (or list of `numeric` vectors). `idxTarget` and `idxControl`
 #'     refer to the elements of `x`. If `x` is a list, all elements must have the same length.
 #' @param idxTarget `numeric` or `logical` vector specifying the elements in `x`

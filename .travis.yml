@@ -1,10 +1,11 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
 language: r
-
 r: bioc-release
 warnings_are_errors: false
 cache: packages
-
 r_build_args: "--no-manual --no-resave-data"
 r_check_args: "--no-build-vignettes --no-manual --timings"
+notifications:
+  slack:
+    secure: Y5hgrydnpsFdxJAg95jaMzmqUghi1XKrhkik2Jf1hbDun00Fi4C0tKu4Qs59WdNChTIkB51HEPmJTrBiiJWm7m3rQTKCiZiVxFH5jOr/BQhiHjT3CllQx0BC6iIMu6eV/0v82cLIosFn3XynvpdV4oqAHwrI4Ay89GOn5fi3vsTXEFJn5uPtGpkOUiVHolbT74QlyvODbmf4/8CpA3x5tPBaaQosfNCeLBQCIpOLcphyl4pmSatGs0Q25+yQCYUFpsT84cO1vJcIj9qj3cUTQPvvRSkyEmXOtm6jliklhcInKp1xhKySOQQw7yYgNUSj1RcCt/32H/jEIEoKkyz95qoQctl0wqP/2jJ+072JVTGc3OQQXKXq9ajuYEi280ZTndnavUQ6oNYhs2+3Fns6zbc/MtsDx/x9jLQXSffojk9t5eYNM/eZSqaaJ4jWgRsqvbNGqwA+8GBnEBWCCS9YYYjDfu/dutcfc8WGkExk1xqsCgjpOfC8RSdsXPaibePItf7n7tO98oQMQH57m5BcLSB3WV1b41DmSXhR33zpJ1mfkej2ayaUHmN6gLFQ1qU/MMqIAY7Hhi/YEvkZBYfruzhh/2M6TpGgxLRICW3SBbVb2Pl1AWvk3LVsy78P4741MV7+Yq3MvEcOkjJTVBsgLJhA9acpQMjE4yiECgbrPPQ=
+    on_success: always # default: always
+    on_failure: always # default: always

@@ -34,8 +34,10 @@ The function searches the provided `seqdataDir` for tsv files
 }
 \examples{
 \dontrun{
-readSampleTsvs(seqdataDir = "/work/gbioinfo/seqdata", 
-               sampleIds = c("1034F6-2_161111_D00404_0278_AH2F5CBCXY_ACGGACTT"))
+readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
+                                        package = "swissknife"), 
+               sampleIds = c("readSampleTsvsEx1", "readSampleTsvsEx2",
+                             "readSampleTsvsEx3"))
 }
 
 }

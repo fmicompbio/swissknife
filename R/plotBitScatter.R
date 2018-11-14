@@ -1,5 +1,3 @@
-# functions related to plotting / visualization
-
 #' @title Create a bitmap-rendered plot.
 #'
 #' @description `plotBitScatter` is a wrapper around `plot` which renders the

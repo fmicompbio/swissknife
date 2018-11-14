@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.3
+----------------------
+
+  o Add R/readSampleTsvs.R:readSampleTsvs()
+  
 CHANGES IN VERSION 0.2
 ----------------------
 

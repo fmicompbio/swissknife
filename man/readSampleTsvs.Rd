@@ -12,33 +12,31 @@ readSampleTsvs(seqdataDir = "/work/gbioinfo/seqdata", sampleIds,
 tsv files.}
 
 \item{sampleIds}{Character vector with sample IDs, which will be matched
-against the file names in `seqDataDir`. The sample IDs should not contain
-the `.tsv` suffix.}
+against the file names in \code{seqDataDir}. The sample IDs should not
+contain the \code{.tsv} suffix.}
 
 \item{keepMulti}{Logical scalar, indicating whether to keep samples that
-match more than one tsv file. If `TRUE`, these samples are represented by
-multiple rows in the table. If `FALSE`, these samples are excluded. In any
-case, a warning will be generated, listing the samples with multiple
+match more than one tsv file. If \code{TRUE}, these samples are represented
+by multiple rows in the table. If \code{FALSE}, these samples are excluded.
+In any case, a warning will be generated, listing the samples with multiple
 matching files.}
 
-\item{...}{Additional arguments that will be passed to `list.files`, e.g. to
-make the search case-insensitive or search recursively.}
+\item{...}{Additional arguments that will be passed to \code{list.files},
+e.g. to make the search case-insensitive or search recursively.}
 }
 \value{
-A `data.frame` with metadata for the provided `sampleIds`.
+A \code{data.frame} with metadata for the provided \code{sampleIds}.
 }
 \description{
-The function searches the provided `seqdataDir` for tsv files
-  corresponding to the provided `sampleIds` and returns a `data.frame`
-  containing the metadata for all samples.
+The function searches the provided \code{seqdataDir} for tsv
+  files corresponding to the provided \code{sampleIds} and returns a
+  \code{data.frame} containing the metadata for all these samples.
 }
 \examples{
-\dontrun{
 readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
                                         package = "swissknife"), 
                sampleIds = c("readSampleTsvsEx1", "readSampleTsvsEx2",
                              "readSampleTsvsEx3"))
-}
 
 }
 \author{

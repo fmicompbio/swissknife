@@ -34,7 +34,7 @@
 #' @export
 #' 
 readSampleTsvs <- function(seqdataDir = "/work/gbioinfo/seqdata", 
-                           sampleIds, keepMulti = FALSE, ...) {
+                           sampleIds, keepMulti = TRUE, ...) {
     
     ## List all tsv files in seqdataDir matching any of the sample IDs
     matchingFiles <- list.files(path = seqdataDir, 

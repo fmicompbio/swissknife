@@ -5,7 +5,7 @@
 \title{Read sample tsv files from seqdata storage}
 \usage{
 readSampleTsvs(seqdataDir = "/work/gbioinfo/seqdata", sampleIds,
-  keepMulti = FALSE, ...)
+  keepMulti = TRUE, ...)
 }
 \arguments{
 \item{seqdataDir}{Character scalar, the path to the directory containing the

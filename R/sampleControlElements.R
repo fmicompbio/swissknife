@@ -1,5 +1,3 @@
-# miscellaneous functions (anything that does not fit anywhere else)
-
 #' @title Sample control elements that match a target distribution.
 #'
 #' @description Randomly sample from a set of control (background) elements,
@@ -37,8 +35,15 @@
 #' @export
 sampleControlElements <- function(x, idxTarget, idxControl = NULL, nbins = 50, oversample = 1.0) {
     # ... check arguments
-    if (is.vector(x))
-        x <- list(x)
+    if (!is.list(x)) {
+        if (is.numeric(x)) {
+            x <- list(x)
+        } else {
+            stop("`x` needs to be either a `list` or a `numeric` vector")
+        }
+    } else if (!all(unlist(lapply(x, is.numeric)))) {
+        stop("all elements of the list `x` have to be `numeric`")
+    }
     stopifnot(is.list(x) && all(lengths(x) == length(x[[1]])))
     if (is.logical(idxTarget))
         idxTarget <- which(idxTarget)

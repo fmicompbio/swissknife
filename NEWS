@@ -1,8 +1,13 @@
+CHANGES IN VERSION 0.4
+----------------------
+
+  o sampleControlElements(x = list(), ...) now works correctly
+
 CHANGES IN VERSION 0.3
 ----------------------
 
   o Add R/readSampleTsvs.R:readSampleTsvs()
-  
+
 CHANGES IN VERSION 0.2
 ----------------------
 

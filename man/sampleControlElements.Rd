@@ -21,7 +21,7 @@ from which a subset is to be sampled.}
 \item{nbins}{`numeric(1)` or `numeric(length(x))` if `x` is a list, specifying the
 number of bins to group the values of x into. Higher numbers of bins will
 increase the match to the target distribution(s), but may fail if there are
-few elements to sample from.}
+few elements to sample from (will throw a warning).}
 
 \item{oversample}{The number of control elements to sample for each target element.}
 }

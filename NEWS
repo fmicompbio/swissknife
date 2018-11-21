@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.5
+----------------------
+
+  o sampleControlElements() now catches cases with too few control elements to match the target distribution
+
 CHANGES IN VERSION 0.4
 ----------------------
 

@@ -13,6 +13,10 @@ test_that("sampleControlElements() works properly", {
     expect_true(is.numeric(s3 <- sampleControlElements(list(x),
                                       idxTarget = rep(c(FALSE,TRUE),c(length(i.control),length(i.target))),
                                       idxControl = i.control)))
+    expect_error(sampleControlElements(x, i.target, i.control, oversample = 100))
+    expect_warning(s4 <- sampleControlElements(list(x, runif(length(x))),
+                                               i.target, i.control, nbins = c(100,100)),
+                   regexp = "Too few control elements")
 
     expect_equal(length(s1), length(i.target))
     expect_equal(s1, s2)

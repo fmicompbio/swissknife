@@ -16,7 +16,7 @@
 #' @param nbins `numeric(1)` or `numeric(length(x))` if `x` is a list, specifying the
 #'     number of bins to group the values of x into. Higher numbers of bins will
 #'     increase the match to the target distribution(s), but may fail if there are
-#'     few elements to sample from.
+#'     few elements to sample from (will throw a warning).
 #' @param oversample The number of control elements to sample for each target element.
 #'
 #' @return `numeric` vector with `round(length(idxTarget) * oversample)` elements,
@@ -58,6 +58,8 @@ sampleControlElements <- function(x, idxTarget, idxControl = NULL, nbins = 50, o
         nbins <- rep(nbins, N)
     stopifnot(is.numeric(nbins) && length(nbins) == N)
     stopifnot(min(idxTarget,idxControl) >= 1 && max(idxTarget,idxControl) <= n)
+    nsel <- round(length(idxTarget)*oversample)
+    stopifnot(nsel <= length(idxControl))
 
     # ... bin target (convert to factor to retain unobserved levels)
     binsL <- lapply(seq_along(x), function(i) seq(min(x[[i]]), max(x[[i]]), length.out = nbins[i] + 1L))
@@ -73,7 +75,10 @@ sampleControlElements <- function(x, idxTarget, idxControl = NULL, nbins = 50, o
 
     # ... select control elements using target-based probabilities
     control.prob <- target.bins[control.bins.tab] / control.bins[control.bins.tab]
-    sel <- sample(x = idxControl, size = round(length(idxTarget)*oversample),
-                  prob = control.prob)
+    if (sum(control.prob > 0) < nsel) {
+        warning("Too few control elements to match target distributions well - maybe reduce 'nbins'")
+        control.prob <- (control.prob + 0.001) / sum(control.prob + 0.001)
+    }
+    sel <- sample(x = idxControl, size = nsel, prob = control.prob)
     return(sel)
 }

@@ -1,6 +1,6 @@
 Package: swissknife
 Title: Handy code shared in the FMI CompBio group
-Version: 0.5
+Version: 0.6
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
@@ -14,10 +14,18 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
+    methods,
     grDevices,
     graphics,
     png,
     KernSmooth,
     dplyr,
     tidyr,
-    utils
+    utils,
+    Rcpp,
+    GenomicAlignments,
+    GenomicRanges,
+    IRanges,
+    Rsamtools
+LinkingTo: 
+    Rcpp

@@ -1,3 +1,9 @@
+CHANGES IN VERSION 0.6
+----------------------
+
+  o Add functions to calculate and plot phasograms, e.g. to measure nucleosome
+    repeat length in MNase data (R/phasograms.R, src/phasograms.cpp)
+
 CHANGES IN VERSION 0.5
 ----------------------
 

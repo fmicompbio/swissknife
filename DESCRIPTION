@@ -26,6 +26,7 @@ Imports:
     GenomicAlignments,
     GenomicRanges,
     IRanges,
-    Rsamtools
+    Rsamtools,
+    stats
 LinkingTo: 
     Rcpp

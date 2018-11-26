@@ -29,9 +29,11 @@ strand alignments to count.}
 \description{
 Calculate the frequencies of same strand alignment distances,
   for example from MNase-seq data to estimate nucleosome repeat length.
+  Distance calculations are implemented in C++ (\code{\link{calcAndCountDist}})
+  for efficiency.
 }
 \examples{
-bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam", 
+bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
                     package = "swissknife")
 pg <- calcPhasogram(bamf)
 estimateNRL(pg, usePeaks = 1:4)[1:2]
@@ -40,17 +42,19 @@ plotPhasogram(pg, usePeaks = 1:4, xlim = c(0,1000))
 }
 \references{
 Phasograms were originally described in Valouev et al., Nature
-  2011 (doi:10.1038/nature10002).
-    The implementation here differs in two ways from the original algorithms:
-    1. It does not implement removing of positions that have been seen less
+  2011 (doi:10.1038/nature10002). The implementation here differs in two ways
+  from the original algorithms:
+  \enumerate{
+    \item It does not implement removing of positions that have been seen less
     than \code{n} times (referred to as a \code{n}-pile subset in the paper).
-    2. It does allow to retain only alignments that fall into selected
+    \item It does allow to retain only alignments that fall into selected
     genomic intervals (\code{regions} argument).
+  }
 }
 \seealso{
 \code{\link{estimateNRL}} to estimate the nucleosome repeat length
   from a phasogram, \code{\link{plotPhasogram}} to visualize an annotated
-  phasogram
+  phasogram, \code{\link{calcAndCountDist}} for low-level distance counting.
 }
 \author{
 Michael Stadler

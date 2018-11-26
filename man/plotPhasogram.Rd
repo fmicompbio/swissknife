@@ -40,6 +40,10 @@ The function will visualize an annotated phasogram. For
   de-noising loess fit and detected peaks \item linear fit to peaks and NRL
   estimation }
 }
+\examples{
+  # see the help for calcPhasogram() for a full example
+
+}
 \seealso{
 \code{\link{calcPhasogram}} to calculate the phasogram from
   alignments, \code{\link{estimateNRL}} to estimate nucleosome repeat length

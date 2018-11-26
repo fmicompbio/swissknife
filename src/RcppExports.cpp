@@ -6,15 +6,15 @@
 using namespace Rcpp;
 
 // calcAndCountDist
-NumericVector calcAndCountDist(std::vector<int> x, std::vector<int> p, NumericVector cnt);
-RcppExport SEXP _swissknife_calcAndCountDist(SEXP xSEXP, SEXP pSEXP, SEXP cntSEXP) {
+NumericVector calcAndCountDist(std::vector<int> query, std::vector<int> reference, NumericVector cnt);
+RcppExport SEXP _swissknife_calcAndCountDist(SEXP querySEXP, SEXP referenceSEXP, SEXP cntSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<int> >::type x(xSEXP);
-    Rcpp::traits::input_parameter< std::vector<int> >::type p(pSEXP);
+    Rcpp::traits::input_parameter< std::vector<int> >::type query(querySEXP);
+    Rcpp::traits::input_parameter< std::vector<int> >::type reference(referenceSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type cnt(cntSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcAndCountDist(x, p, cnt));
+    rcpp_result_gen = Rcpp::wrap(calcAndCountDist(query, reference, cnt));
     return rcpp_result_gen;
 END_RCPP
 }

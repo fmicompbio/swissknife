@@ -2,6 +2,8 @@
 #'
 #' @description Calculate the frequencies of same strand alignment distances,
 #'   for example from MNase-seq data to estimate nucleosome repeat length.
+#'   Distance calculations are implemented in C++ (\code{\link{calcAndCountDist}})
+#'   for efficiency.
 #'
 #' @author Michael Stadler
 #'
@@ -21,19 +23,21 @@
 #'   distance.
 #'
 #' @references Phasograms were originally described in Valouev et al., Nature
-#'   2011 (doi:10.1038/nature10002).
-#'     The implementation here differs in two ways from the original algorithms:
-#'     1. It does not implement removing of positions that have been seen less
+#'   2011 (doi:10.1038/nature10002). The implementation here differs in two ways
+#'   from the original algorithms:
+#'   \enumerate{
+#'     \item It does not implement removing of positions that have been seen less
 #'     than \code{n} times (referred to as a \code{n}-pile subset in the paper).
-#'     2. It does allow to retain only alignments that fall into selected
+#'     \item It does allow to retain only alignments that fall into selected
 #'     genomic intervals (\code{regions} argument).
+#'   }
 #'
 #' @seealso \code{\link{estimateNRL}} to estimate the nucleosome repeat length
 #'   from a phasogram, \code{\link{plotPhasogram}} to visualize an annotated
-#'   phasogram
+#'   phasogram, \code{\link{calcAndCountDist}} for low-level distance counting.
 #'
 #' @examples
-#' bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam", 
+#' bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
 #'                     package = "swissknife")
 #' pg <- calcPhasogram(bamf)
 #' estimateNRL(pg, usePeaks = 1:4)[1:2]
@@ -122,34 +126,37 @@ calcPhasogram <- function(fname, regions=NULL, rmdup=TRUE, dmax=3000L) {
 #' @param span2 \code{numeric(1)} giving the smoothing parameter for de-noising
 #'   loess fit (low pass filter).
 #'
-#' @return `list` with elements:
-#'     - `nrl` the estimated nucleosome repeat length
-#'     - `nrl.CI95` the 95% confidence interval
-#'     - `xs` smoothed (de-trended) phasogram
-#'     - `loessfit` the de-noising fit to the de-trended phasogram
-#'     - `lmfit` the linear fit to the phasogram peaks
-#'     - `peaks` the peak locations
-#'     - `mind` minimal distance included in the fit
-#'     - `span1` smoothing parameter for de-trending loess fit
-#'     - `span2` smoothing parameter for de-noising loess fit
-#'     - `usePeaks` the peaks used in the fit
+#' @return A \code{list} with elements: \describe{
+#'   \item{nrl}{the estimated nucleosome repeat length}
+#'   \item{nrl.CI95}{the 95\% confidence interval}
+#'   \item{xs}{smoothed (de-trended) phasogram}
+#'   \item{loessfit}{the de-noising fit to the de-trended phasogram}
+#'   \item{lmfit}{the linear fit to the phasogram peaks}
+#'   \item{peaks}{the peak locations}
+#'   \item{mind}{minimal distance included in the fit}
+#'   \item{span1}{smoothing parameter for de-trending loess fit}
+#'   \item{span2}{smoothing parameter for de-noising loess fit}
+#'   \item{usePeaks}{the peaks used in the fit}}
 #'
 #' @seealso \code{\link{calcPhasogram}} to calculate the phasogram from
 #'   alignments, \code{\link{plotPhasogram}} to visualize an annotated phasogram
+#'
+#' @examples
+#'   # see the help for calcPhasogram() for a full example
 #'
 #' @importFrom stats loess lm confint residuals predict coefficients
 #' @importFrom IRanges IRanges Views viewApply
 #' @importFrom methods as
 #'
 #' @export
-estimateNRL <- function(x, mind = 140L, usePeaks=1:8, span1=100/length(x), 
+estimateNRL <- function(x, mind = 140L, usePeaks=1:8, span1=100/length(x),
                         span2=1500/length(x)) {
     stopifnot(is.numeric(x))
 
     if (all(x == 0)) {
         warning("NRL not estimated (phasogram contains only zeros)")
         return(list(nrl = NA, nrl.CI95 = NA, xs = NA, loessfit = NA, lmfit = NA,
-                    peaks = NA, mind = mind, span1 = span1, span2 = span2, 
+                    peaks = NA, mind = mind, span1 = span1, span2 = span2,
                     usePeaks = usePeaks))
     }
 
@@ -203,6 +210,9 @@ estimateNRL <- function(x, mind = 140L, usePeaks=1:8, span1=100/length(x),
 #'
 #' @seealso \code{\link{calcPhasogram}} to calculate the phasogram from
 #'   alignments, \code{\link{estimateNRL}} to estimate nucleosome repeat length
+#'
+#' @examples
+#'   # see the help for calcPhasogram() for a full example
 #'
 #' @importFrom stats residuals
 #' @importFrom IRanges IRanges start end
@@ -273,7 +283,7 @@ plotPhasogram <- function(x, hide = TRUE, xlim = NULL, verbosePlot = FALSE, ...)
         irpos <- as(rx >= 0, "IRanges")
         text(x = nrl$mind + IRanges::start(irpos)[1] - par("cxy")[1],
              y = pusr[4] + 0.25 * par("cxy")[2], adj = c(1,0), labels = "peaks:", xpd = NA)
-        points(nrl$peaks, c(rep(NA, nrl$mind), rx)[nrl$peaks], pch = 20)
+        points(nrl$peaks[nrl$usePeaks], nrl$xs[nrl$peaks][nrl$usePeaks], pch = 20, col = "red")
         text(x = nrl$peaks[nrl$usePeaks], pusr[4] + 0.25 * par("cxy")[2], adj = c(0.5,0),
              labels = nrl$usePeaks, xpd = NA)
         slmfit <- stats::summary.lm(nrl$lmfit)

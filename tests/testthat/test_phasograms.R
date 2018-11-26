@@ -1,4 +1,4 @@
-test_that("calcPhasogram() and estimateNRL() work properly", {
+test_that("calcPhasogram(), estimateNRL() and calcAndCountDist() work properly", {
     bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam", package = "swissknife")
     pg1 <- calcPhasogram(bamf)
     pg2 <- calcPhasogram(bamf, rmdup = FALSE)
@@ -14,6 +14,9 @@ test_that("calcPhasogram() and estimateNRL() work properly", {
 
     nrl <- estimateNRL(pg1, usePeaks = 1:4)
     expect_true(is.list(nrl))
-    expect_equal(nrl$nrl, 186.4)
+    expect_equal(nrl$nrl, 186.0)
     expect_length(nrl$nrl.CI95, 2L)
+
+    expect_equal(calcAndCountDist(c(1,2,4),c(1,3,5),numeric(4)), c(2,1,1,1))
+    expect_equal(calcAndCountDist(c(1,3,5),c(1,2,4),numeric(4)), c(2,0,1,0))
 })

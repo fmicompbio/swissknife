@@ -1,8 +1,13 @@
+CHANGES IN VERSION 0.7
+----------------------
+
+  o add functions to calculate and plot phasograms, e.g. to measure nucleosome
+    repeat length in MNase data (R/phasograms.R, src/phasograms.cpp)
+
 CHANGES IN VERSION 0.6
 ----------------------
 
-  o Add functions to calculate and plot phasograms, e.g. to measure nucleosome
-    repeat length in MNase data (R/phasograms.R, src/phasograms.cpp)
+  o added tests for sampleControlElements() to cover all code (coverage gaps detected with covr::zero_coverage(covr::package_coverage()))
 
 CHANGES IN VERSION 0.5
 ----------------------

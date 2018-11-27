@@ -10,6 +10,7 @@ test_that("calcPhasogram(), estimateNRL() and calcAndCountDist() work properly",
     ## check invalid arguments
     expect_warning(estimateNRL(rep(0,3000L))) # all zeros
     expect_warning(estimateNRL(pg1, usePeaks = 1:100)) # too many usePeaks
+    expect_error(calcAndCountDist(1:3, 3:1, numeric(3))) # not sorted ascendingly
 
     ## check if the plotting function runs
     tf <- tempfile(fileext = ".pdf")

@@ -26,6 +26,12 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 NumericVector calcAndCountDist(std::vector<int> query, std::vector<int> reference, NumericVector cnt) {
     int qi, ri, currquery, d, riold = 0, maxd = cnt.size();
+    //check if input is sorted
+    if (!std::is_sorted(query.begin(), query.end()) ||
+        !std::is_sorted(reference.begin(), reference.end())) {
+        Rcpp::stop("'query' and 'reference' must be sorted ascendingly");
+    }
+    // for each element of query
     for (qi=0; qi < query.size(); qi++) {
         currquery = query[qi];
         // fast forward ri until currquery < reference[ri]

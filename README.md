@@ -1,5 +1,6 @@
 ## `swissknife` - Handy code shared in the FMI CompBio group
 [![Build Status](https://travis-ci.com/fmicompbio/swissknife.svg?branch=master)](https://travis-ci.com/fmicompbio/swissknife)
+[![Codecov.io coverage status](https://codecov.io/github/fmicompbio/swissknife/coverage.svg?branch=master)](https://codecov.io/github/fmicompbio/swissknife)
 
 The `swissknife` package is a collection of useful R functions performing various tasks that
 might be re-usable and worth sharing.

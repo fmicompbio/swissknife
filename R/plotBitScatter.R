@@ -1,31 +1,34 @@
 #' @title Create a bitmap-rendered plot.
 #'
-#' @description `plotBitScatter` is a wrapper around `plot` which renders the
+#' @description \code{plotBitScatter} is a wrapper around \code{plot} which renders the
 #'     plot area as a bitmap (png), but keeps all other elements (axes, labels, etc.)
 #'     as vector elements. This is especially useful for keeping the size of PDF files
 #'     with scatter plots with many elements small, while retaining editability of axes.
 #'
 #' @author Michael Stadler
 #'
-#' @param x `numeric` vector with x-coordinates of points.
-#' @param y `numeric` vector with y-coordinates of points (same length as `x`).
-#' @param ... any further arguments to be passed to `plot`
-#' @param densCols `logical(1)`. If `TRUE` and `col` is not given as an additional
-#'     argument, then the local density of points will be used as colors, using the
-#'     palette spanned by the colors in `colpal`.
+#' @param x \code{numeric} vector with x-coordinates of points, or a two-column
+#'     matrix with x- and y- coordinates.
+#' @param y \code{numeric} vector with y-coordinates of points (same length as \code{x}).
+#'     Can be \code{NULL}, in which case \code{x} must be a two-column matrix.
+#' @param ... any further arguments to be passed to \code{plot}
+#' @param densCols \code{logical(1)}. If \code{TRUE} and \code{col} is not given
+#'     as an additional argument, then the local density of points will be used
+#'     as colors, using the palette spanned by the colors in \code{colpal}.
 #' @param colpal vector of colors defining the palette for automatic density-based coloring.
 #' @param xpixels the number of pixels in the x dimension used for rendering
 #'     the plotting area. The number of pixels in the y dimension are calculated
-#'     as `xpixels * par('pin')[2] / par('pin')[1]`, such that the aspect ratio of
+#'     as \code{xpixels * par('pin')[2] / par('pin')[1]}, such that the aspect ratio of
 #'     the current plotting region is observed.
 #'
-#' @details `xpixels` controls the resolution of the rendered plotting area. In order
-#'     to keep circular plotting symbols circlular (e.g. `pch = 1`), `ypixels` is
-#'     automatically calculated by adjusting `xpixels` to the aspect ratio of the
-#'     current plotting area. If the plotting device is rescaled after calling
-#'     `plotBitScatter`, circular plotting symbols may become skewed.
+#' @details \code{xpixels} controls the resolution of the rendered plotting area.
+#'     In order to keep circular plotting symbols circlular (e.g. \code{pch = 1}),
+#'     \code{ypixels} is automatically calculated using \code{xpixels} and the
+#'     aspect ratio of the current plotting area. If the plotting device is
+#'     rescaled after calling \code{plotBitScatter}, circular plotting symbols
+#'     may become skewed.
 #'
-#' @return `NULL` (invisibly)
+#' @return \code{NULL} (invisibly)
 #'
 #' @examples
 #' x <- rnorm(1000)
@@ -40,10 +43,15 @@
 #' @importFrom KernSmooth bkde2D
 #'
 #' @export
-plotBitScatter <- function(x, y, ..., densCols=TRUE,
+plotBitScatter <- function(x, y = NULL, ..., densCols=TRUE,
                            colpal=c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"),
                            xpixels=1000) {
     # digest arguments
+    if (is.null(y)) {
+        stopifnot(is.matrix(x) && ncol(x) == 2L)
+        y <- x[,2]
+        x <- x[,1]
+    }
     args <- list(x = x, y = y, ...)
     if (!"xlab" %in% names(args))
         args[["xlab"]] <- "x"

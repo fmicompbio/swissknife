@@ -4,43 +4,46 @@
 \alias{plotBitScatter}
 \title{Create a bitmap-rendered plot.}
 \usage{
-plotBitScatter(x, y, ..., densCols = TRUE, colpal = c("#00007F",
-  "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red",
-  "#7F0000"), xpixels = 1000)
+plotBitScatter(x, y = NULL, ..., densCols = TRUE,
+  colpal = c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow",
+  "#FF7F00", "red", "#7F0000"), xpixels = 1000)
 }
 \arguments{
-\item{x}{`numeric` vector with x-coordinates of points.}
+\item{x}{\code{numeric} vector with x-coordinates of points, or a two-column
+matrix with x- and y- coordinates.}
 
-\item{y}{`numeric` vector with y-coordinates of points (same length as `x`).}
+\item{y}{\code{numeric} vector with y-coordinates of points (same length as \code{x}).
+Can be \code{NULL}, in which case \code{x} must be a two-column matrix.}
 
-\item{...}{any further arguments to be passed to `plot`}
+\item{...}{any further arguments to be passed to \code{plot}}
 
-\item{densCols}{`logical(1)`. If `TRUE` and `col` is not given as an additional
-argument, then the local density of points will be used as colors, using the
-palette spanned by the colors in `colpal`.}
+\item{densCols}{\code{logical(1)}. If \code{TRUE} and \code{col} is not given
+as an additional argument, then the local density of points will be used
+as colors, using the palette spanned by the colors in \code{colpal}.}
 
 \item{colpal}{vector of colors defining the palette for automatic density-based coloring.}
 
 \item{xpixels}{the number of pixels in the x dimension used for rendering
 the plotting area. The number of pixels in the y dimension are calculated
-as `xpixels * par('pin')[2] / par('pin')[1]`, such that the aspect ratio of
+as \code{xpixels * par('pin')[2] / par('pin')[1]}, such that the aspect ratio of
 the current plotting region is observed.}
 }
 \value{
-`NULL` (invisibly)
+\code{NULL} (invisibly)
 }
 \description{
-`plotBitScatter` is a wrapper around `plot` which renders the
+\code{plotBitScatter} is a wrapper around \code{plot} which renders the
     plot area as a bitmap (png), but keeps all other elements (axes, labels, etc.)
     as vector elements. This is especially useful for keeping the size of PDF files
     with scatter plots with many elements small, while retaining editability of axes.
 }
 \details{
-`xpixels` controls the resolution of the rendered plotting area. In order
-    to keep circular plotting symbols circlular (e.g. `pch = 1`), `ypixels` is
-    automatically calculated by adjusting `xpixels` to the aspect ratio of the
-    current plotting area. If the plotting device is rescaled after calling
-    `plotBitScatter`, circular plotting symbols may become skewed.
+\code{xpixels} controls the resolution of the rendered plotting area.
+    In order to keep circular plotting symbols circlular (e.g. \code{pch = 1}),
+    \code{ypixels} is automatically calculated using \code{xpixels} and the
+    aspect ratio of the current plotting area. If the plotting device is
+    rescaled after calling \code{plotBitScatter}, circular plotting symbols
+    may become skewed.
 }
 \examples{
 x <- rnorm(1000)

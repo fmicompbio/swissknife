@@ -7,6 +7,7 @@ test_that("plotBitScatter() runs", {
 
     expect_null(plotBitScatter(x = x, y = y))
     expect_null(plotBitScatter(x = x, y = y, col = "gray"))
+    expect_null(plotBitScatter(cbind(x, y)))
 
     dev.off()
     unlink(tf)

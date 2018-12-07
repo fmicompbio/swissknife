@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.8
+----------------------
+
+  o plotBitScatter(x, y = NULL) now also works for x being a two-column matrix
+
 CHANGES IN VERSION 0.7
 ----------------------
 

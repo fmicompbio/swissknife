@@ -32,7 +32,7 @@
 #' cols <- colByValue(x + y)
 #' plot(x, y, pch = 20, col = cols, main = "default")
 #'
-#' @importFrom grDevices colorRamp rgb
+#' @importFrom grDevices col2rgb colorRamp rgb
 #'
 #' @export
 colByValue <- function(x, rng = range(x, na.rm = TRUE),
@@ -42,7 +42,7 @@ colByValue <- function(x, rng = range(x, na.rm = TRUE),
                        NA.col = "lightgray", alpha = 255) {
     # helper function
     isValidColor <- function(y)
-        vapply(X = y, FUN = function(Y) tryCatch(is.matrix(col2rgb(Y)),
+        vapply(X = y, FUN = function(Y) tryCatch(is.matrix(grDevices::col2rgb(Y)),
                                                  error = function(e) FALSE),
                FUN.VALUE = logical(1), USE.NAMES = FALSE)
 

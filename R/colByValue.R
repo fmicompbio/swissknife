@@ -23,7 +23,7 @@
 #' @return A \code{character} vector of the same length of \code{x} with
 #'     R colors in hexadecimal string-encoded RGB format.
 #'
-#' @seealso \code{\link[grDevices]{colRamp}} and \code{\link[grDevices]{rgb}}
+#' @seealso \code{\link[grDevices]{colorRamp}} and \code{\link[grDevices]{rgb}}
 #'     for the functions called by \code{colByValue}.
 #'
 #' @examples
@@ -32,7 +32,7 @@
 #' cols <- colByValue(x + y)
 #' plot(x, y, pch = 20, col = cols, main = "default")
 #'
-#' @importFrom grDevices colRamp rgb
+#' @importFrom grDevices colorRamp rgb
 #'
 #' @export
 colByValue <- function(x, rng = range(x, na.rm = TRUE),

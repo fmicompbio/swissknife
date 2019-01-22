@@ -1,3 +1,5 @@
+context("plotBitScatter")
+
 test_that("plotBitScatter() runs", {
     x <- rnorm(100)
     y <- rnorm(100)

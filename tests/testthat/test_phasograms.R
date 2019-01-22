@@ -1,3 +1,5 @@
+context("calcPhasogram")
+
 test_that("calcPhasogram(), estimateNRL() and calcAndCountDist() work properly", {
     ## create phasograms using MNase data from chr10:20000000-21000000
     bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam", package = "swissknife")

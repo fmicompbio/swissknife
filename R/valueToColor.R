@@ -37,9 +37,10 @@
 #' @param col vector with R colors defining the palette (must be a valid argument
 #'     to \code{\link[grDevices]{col2rgb}}.
 #' @param NA.col Single R color to use for \code{NA} values in \code{x}.
-#' @param alpha \code{numeric(1)} between 0 and 255, giving the alpha channel
-#'     value for the colors (0 = fully transparent, 255 = fully opaque,
-#'     ignored if \code{col} already contain alpha values).
+#' @param alpha \code{NULL} (default) or \code{numeric(1)} between 0 and 255,
+#'     giving the alpha channel value for the colors (0 = fully transparent, 255 = fully opaque).
+#'     \code{NULL} will use fully opaque colors (\code{alpha = 255}). \code{alpha} is
+#'     ignored if \code{col} already contain colors with defined alpha values.
 #'
 #' @details The values in \code{[rng[1], rng[2]]} will be linearly mapped to the
 #'     color palette defined by \code{col}. Any values in \code{x} less (greater)
@@ -65,20 +66,22 @@ valueToColor <- function(x, rng = range(x, na.rm = TRUE),
                          col = c("#5E4FA2","#3288BD","#66C2A5","#ABDDA4","#E6F598",
                                  "#FFFFBF","#FEE08B","#FDAE61", "#F46D43","#D53E4F",
                                  "#9E0142"),
-                         NA.col = "lightgray", alpha = 255) {
+                         NA.col = "lightgray", alpha = NULL) {
     # arguments
     stopifnot(is.numeric(x))
     stopifnot(is.numeric(rng) && length(rng) == 2L && rng[1] < rng[2])
     stopifnot(all(.isValidColor(col)))
     stopifnot(.isValidColor(NA.col) && length(NA.col) == 1L)
-    stopifnot(is.numeric(alpha) && length(alpha) == 1L && alpha >= 0 && alpha <= 255)
+    stopifnot(is.null(alpha) || (is.numeric(alpha) && length(alpha) == 1L && alpha >= 0 && alpha <= 255))
 
     # add alpha channel where needed
     r <- grDevices::col2rgb(col = col, alpha = TRUE)
-    if (all(r[4,] == 255))
-        r[4,] <- as.integer(alpha)
-    else if (alpha != 255)
-        warning("ignoring 'alpha', as 'col' already contains alpha channels")
+    if (!is.null(alpha)) {
+        if (all(r[4,] == 255))
+            r[4,] <- as.integer(alpha)
+        else
+            warning("ignoring 'alpha', as 'col' already specifies alpha channels")
+    }
     col <- grDevices::rgb(r[1,], r[2,], r[3,], r[4,], maxColorValue = 255)
 
     # truncate x to rng

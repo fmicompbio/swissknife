@@ -17,6 +17,8 @@
 #' swissknife:::.isValidColor(c("black", "blackk"))
 #' swissknife:::.isValidColor(c(-1, 1))
 #'
+#' @keywords internal
+#' 
 #' @importFrom grDevices col2rgb
 .isValidColor <- function(x)
     vapply(X = x, FUN = function(y) tryCatch(is.matrix(grDevices::col2rgb(y)),

@@ -72,17 +72,19 @@ valueToColor <- function(x, rng = range(x, na.rm = TRUE),
     stopifnot(is.numeric(rng) && length(rng) == 2L && rng[1] < rng[2])
     stopifnot(all(.isValidColor(col)))
     stopifnot(.isValidColor(NA.col) && length(NA.col) == 1L)
-    stopifnot(is.null(alpha) || (is.numeric(alpha) && length(alpha) == 1L && alpha >= 0 && alpha <= 255))
+    stopifnot(is.null(alpha) ||
+              (is.numeric(alpha) && length(alpha) == 1L && alpha >= 0 && alpha <= 255))
 
     # add alpha channel where needed
-    r <- grDevices::col2rgb(col = col, alpha = TRUE)
+    colMatrix <- grDevices::col2rgb(col = col, alpha = TRUE)
     if (!is.null(alpha)) {
-        if (all(r[4,] == 255))
-            r[4,] <- as.integer(alpha)
+        if (all(colMatrix[4,] == 255))
+            colMatrix[4,] <- as.integer(alpha)
         else
             warning("ignoring 'alpha', as 'col' already specifies alpha channels")
     }
-    col <- grDevices::rgb(r[1,], r[2,], r[3,], r[4,], maxColorValue = 255)
+    col <- grDevices::rgb(colMatrix[1,], colMatrix[2,], colMatrix[3,],
+                          colMatrix[4,], maxColorValue = 255)
 
     # truncate x to rng
     i <- !is.na(x)
@@ -90,10 +92,11 @@ valueToColor <- function(x, rng = range(x, na.rm = TRUE),
     x[i & x > rng[2]] <- rng[2]
 
     # map x to colors
-    colfunc <- grDevices::colorRamp(col, alpha = TRUE)
-    r <- colfunc((x[i] - rng[1]) / (rng[2] - rng[1]))
-    rr <- rep(NA.col, length(x))
-    rr[i] <- grDevices::rgb(r[,1], r[,2], r[,3], r[,4], maxColorValue = 255)
+    colfunc    <- grDevices::colorRamp(col, alpha = TRUE)
+    xcolMatrix <- colfunc((x[i] - rng[1]) / (rng[2] - rng[1]))
+    xcol       <- rep(NA.col, length(x))
+    xcol[i]    <- grDevices::rgb(xcolMatrix[,1], xcolMatrix[,2], xcolMatrix[,3],
+                                 xcolMatrix[,4], maxColorValue = 255)
 
-    return(rr)
+    return(xcol)
 }

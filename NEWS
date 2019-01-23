@@ -1,7 +1,7 @@
 CHANGES IN VERSION 0.9
 ----------------------
 
-  o Add R/colByValue.R
+  o Add R/valueToColor.R
 
 CHANGES IN VERSION 0.8
 ----------------------

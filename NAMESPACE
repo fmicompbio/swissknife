@@ -2,12 +2,12 @@
 
 export(calcAndCountDist)
 export(calcPhasogram)
-export(colByValue)
 export(estimateNRL)
 export(plotBitScatter)
 export(plotPhasogram)
 export(readSampleTsvs)
 export(sampleControlElements)
+export(valueToColor)
 import(graphics)
 importFrom(GenomicAlignments,cigarWidthAlongReferenceSpace)
 importFrom(GenomicRanges,GRanges)

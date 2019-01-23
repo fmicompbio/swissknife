@@ -1,6 +1,6 @@
 Package: swissknife
 Title: Handy code shared in the FMI CompBio group
-Version: 0.8
+Version: 0.9
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
@@ -9,7 +9,11 @@ Description: A collection of useful R functions performing various tasks that
     might be re-usable and worth sharing.
 SystemRequirements: C++11
 Depends: R (>= 3.5.0)
-Suggests: testthat
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown,
+    BiocStyle
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -31,3 +35,4 @@ Imports:
     stats
 LinkingTo: 
     Rcpp
+VignetteBuilder: knitr

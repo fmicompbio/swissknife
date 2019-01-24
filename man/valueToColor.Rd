@@ -7,7 +7,7 @@
 valueToColor(x, rng = range(x, na.rm = TRUE), col = c("#5E4FA2",
   "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", "#FFFFBF", "#FEE08B",
   "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"), NA.col = "lightgray",
-  alpha = 255)
+  alpha = NULL)
 }
 \arguments{
 \item{x}{\code{numeric} vector with values to be mapped to colors.}
@@ -20,9 +20,10 @@ to \code{\link[grDevices]{col2rgb}}.}
 
 \item{NA.col}{Single R color to use for \code{NA} values in \code{x}.}
 
-\item{alpha}{\code{numeric(1)} between 0 and 255, giving the alpha channel
-value for the colors (0 = fully transparent, 255 = fully opaque,
-ignored if \code{col} already contain alpha values).}
+\item{alpha}{\code{NULL} (default) or \code{numeric(1)} between 0 and 255,
+giving the alpha channel value for the colors (0 = fully transparent, 255 = fully opaque).
+\code{NULL} will use fully opaque colors (\code{alpha = 255}). \code{alpha} is
+ignored if \code{col} already contain colors with defined alpha values.}
 }
 \value{
 A \code{character} vector of the same length of \code{x} with

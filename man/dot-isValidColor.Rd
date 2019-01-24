@@ -29,3 +29,4 @@ swissknife:::.isValidColor(c(-1, 1))
 \author{
 Michael Stadler
 }
+\keyword{internal}

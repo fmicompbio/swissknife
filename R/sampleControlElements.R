@@ -6,21 +6,23 @@
 #'
 #' @author Michael Stadler
 #'
-#' @param x `numeric` vector (or list of `numeric` vectors). `idxTarget` and `idxControl`
-#'     refer to the elements of `x`. If `x` is a list, all elements must have the same length.
-#' @param idxTarget `numeric` or `logical` vector specifying the elements in `x`
-#'     that define the target distribution to be matched by the control elements.
-#' @param idxControl `numeric` or `logical` vector specifying the complete set of
-#'     possible control elements in `x` (default: all that are not in `idxTarget`),
-#'     from which a subset is to be sampled.
-#' @param nbins `numeric(1)` or `numeric(length(x))` if `x` is a list, specifying the
-#'     number of bins to group the values of x into. Higher numbers of bins will
-#'     increase the match to the target distribution(s), but may fail if there are
-#'     few elements to sample from (will throw a warning).
+#' @param x \code{numeric} vector (or list of \code{numeric} vectors).
+#'     \code{idxTarget} and \code{idxControl} refer to the elements of \code{x}.
+#'     If \code{x} is a list, all elements must have the same length.
+#' @param idxTarget \code{numeric} or \code{logical} vector specifying the elements
+#'     in \code{x} that define the target distribution to be matched by the
+#'     control elements.
+#' @param idxControl \code{numeric} or \code{logical} vector specifying the
+#'     complete set of possible control elements in \code{x} (default: all that
+#'     are not in \code{idxTarget}), from which a subset is to be sampled.
+#' @param nbins \code{numeric(1)} or \code{numeric(length(x))} if \code{x} is a
+#'     list, specifying the number of bins to group the values of x into. Higher
+#'      numbers of bins will increase the match to the target distribution(s),
+#'      but may fail if there are few elements to sample from (will throw a warning).
 #' @param oversample The number of control elements to sample for each target element.
 #'
-#' @return `numeric` vector with `round(length(idxTarget) * oversample)` elements,
-#'     specifying the index (positions) of the sampled control elements.
+#' @return \code{numeric} vector with \code{round(length(idxTarget) * oversample)}
+#'     elements, specifying the index (positions) of the sampled control elements.
 #'
 #' @examples
 #' x <- c(runif(1000, min = 0, max = 10),

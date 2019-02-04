@@ -1,0 +1,29 @@
+authors:
+  Charlotte Soneson:
+    href: https://csoneson.github.io
+
+url: http://fmicompbio.github.io/swissknife
+
+template:
+  params:
+    bootswatch: cerulean
+#    docsearch:
+#      api_key: API_KEY
+#      index_name: INDEX_NAME
+
+reference:
+- title: Nucleosome repeat length (NRL) analysis
+  desc: "Function for calculating and visualizing phasograms, and estimate NRL from MNase data."
+  contents:
+    - '`calcPhasogram`'
+    - '`estimateNRL`'
+    - '`plotPhasogram`'
+    - '`calcAndCountDist`'
+- title: Visualization and plotting
+  contents:
+    - '`plotBitScatter`'
+    - '`valueToColor`'
+- title: Misc functions
+  contents:
+    - '`readSampleTsvs`'
+    - '`sampleControlElements`'

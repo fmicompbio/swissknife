@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Handy code shared in the FMI CompBio group • swissknife</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Handy code shared in the FMI CompBio group">
@@ -46,8 +46,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/fmicompbio/swissknife">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -63,6 +73,7 @@
 <a href="#swissknife---handy-code-shared-in-the-fmi-compbio-group" class="anchor"></a><code>swissknife</code> - Handy code shared in the FMI CompBio group</h2>
 
 <p>The <code>swissknife</code> package is a collection of useful R functions performing various tasks that might be re-usable and worth sharing.</p>
+<p>You can browse the package contents at <a href="https://fmicompbio.github.io/swissknife/" class="uri">https://fmicompbio.github.io/swissknife/</a>.</p>
 <div id="code-guidelines" class="section level3">
 <h3 class="hasAnchor">
 <a href="#code-guidelines" class="anchor"></a>Code guidelines</h3>
@@ -71,7 +82,7 @@
 <li>Use <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">Roxygen</a> to document your function(s). Some useful tags: <code>@title</code>, <code>@description</code>, <code>@details</code>, <code>@param</code>, <code>@return</code>, <code>@author</code>, <code>@examples</code>, <code>@export</code>, <code>@import</code>/<code>@importFrom</code>.</li>
 <li>If possible, add an example in the Roxygen preamble to show how to run each function.</li>
 <li>If possible, add one or more unit tests to check that the function(s) work as intended (using <a href="https://cran.r-project.org/web/packages/testthat/index.html">testthat</a>).</li>
-<li>When adding code, bump the version number of the package in the DESCRIPTION file and add an entry in the NEWS file.</li>
+<li>When adding code, bump the version number of the package in the DESCRIPTION file, add an entry in the <code>NEWS.md</code> file and to the <code>_pkgdown.yml</code> file (<code>reference</code> section), and re-run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html">pkgdown::build_site()</a></code> to update the pakcage overview page <a href="https://fmicompbio.github.io/swissknife/" class="uri">https://fmicompbio.github.io/swissknife/</a>.</li>
 <li>If your function uses functions defined in other packages, import the latter by adding <code>@importFrom package function</code> in the Roxygen preamble. Then document the package (e.g. using <code><a href="https://www.rdocumentation.org/packages/devtools/topics/document">devtools::document()</a></code>) to regenerate the NAMESPACE file. It’s also considered good practice to refer to these external functions with <code>package::function</code> in the code, to avoid name clashes.</li>
 <li>As far as possible, avoid hardcoding options (e.g., point sizes in plots, or other things that someone might want to change). Instead provide them as arguments to your function.</li>
 <li>Generally, it’s good to keep functions small (and doing a single thing), for easier testing and increased modularity. As an example, if a function does both some calculations and plotting, it can often be better to split it up into two functions, each with a clearly defined scope.</li>
@@ -81,7 +92,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/fmicompbio/swissknife">https://​github.com/​fmicompbio/​swissknife</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
@@ -91,7 +109,8 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Michael Stadler <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Charlotte Soneson <br><small class="roles"> Author </small>  </li>
+<li>
+<a href="https://csoneson.github.io">Charlotte Soneson</a> <br><small class="roles"> Author </small>  </li>
 <li>Panagiotis Papasaikas <br><small class="roles"> Author </small>  </li>
 <li>Dania Machlab <br><small class="roles"> Author </small>  </li>
 </ul>
@@ -108,11 +127,11 @@
 </div>
 
       <footer><div class="copyright">
-  <p>Developed by Michael Stadler, Charlotte Soneson, Panagiotis Papasaikas, Dania Machlab.</p>
+  <p>Developed by Michael Stadler, <a href="https://csoneson.github.io">Charlotte Soneson</a>, Panagiotis Papasaikas, Dania Machlab.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>

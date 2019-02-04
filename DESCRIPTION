@@ -36,3 +36,4 @@ Imports:
 LinkingTo: 
     Rcpp
 VignetteBuilder: knitr
+URL: https://github.com/fmicompbio/swissknife

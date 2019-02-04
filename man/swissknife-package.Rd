@@ -9,6 +9,13 @@
 \pkg{swissknife} is a collection of useful R functions performing various
     tasks that might be re-usable and worth sharing.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/fmicompbio/swissknife}
+}
+
+}
 \author{
 \strong{Maintainer}: Michael Stadler \email{michael.stadler@fmi.ch}
 

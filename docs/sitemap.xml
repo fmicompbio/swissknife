@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/index.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/calcAndCountDist.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/calcPhasogram.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/dot-isValidColor.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/estimateNRL.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/plotBitScatter.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/plotPhasogram.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/readSampleTsvs.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/sampleControlElements.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/swissknife-package.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/valueToColor.html</loc>
+  </url>
+</urlset>

@@ -1,3 +1,5 @@
+utils::globalVariables(c("V1","V2","SAMPLE_ID")) # prevent R CMD check from complaining
+
 #' @title Read sample tsv files from seqdata storage
 #' 
 #' @author Charlotte Soneson

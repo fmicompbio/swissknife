@@ -6,7 +6,7 @@
 \usage{
 plotBitScatter(x, y = NULL, ..., densCols = TRUE,
   colpal = c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow",
-  "#FF7F00", "red", "#7F0000"), xpixels = 1000)
+  "#FF7F00", "red", "#7F0000"), xpixels = 1000, ypixels = NULL)
 }
 \arguments{
 \item{x}{\code{numeric} vector with x-coordinates of points, or a two-column
@@ -24,9 +24,14 @@ as colors, using the palette spanned by the colors in \code{colpal}.}
 \item{colpal}{vector of colors defining the palette for automatic density-based coloring.}
 
 \item{xpixels}{the number of pixels in the x dimension used for rendering
-the plotting area. The number of pixels in the y dimension are calculated
+the plotting area.}
+
+\item{ypixels}{the number of pixels in the y dimension used for rendering the
+plotting area. If \code{NULL} (the default), will be calculated automatically
 as \code{xpixels * par('pin')[2] / par('pin')[1]}, such that the aspect ratio of
-the current plotting region is observed.}
+the current plotting region is observed. This may not work (e.g. when using
+\code{layout()}), as this may result in negative values returned by \code{par('pin')}.
+In that case, \code{ypixels} should be set manually using this argument.}
 }
 \value{
 \code{NULL} (invisibly)

@@ -17,9 +17,13 @@
 #'     as colors, using the palette spanned by the colors in \code{colpal}.
 #' @param colpal vector of colors defining the palette for automatic density-based coloring.
 #' @param xpixels the number of pixels in the x dimension used for rendering
-#'     the plotting area. The number of pixels in the y dimension are calculated
+#'     the plotting area.
+#' @param ypixels the number of pixels in the y dimension used for rendering the
+#'     plotting area. If \code{NULL} (the default), will be calculated automatically
 #'     as \code{xpixels * par('pin')[2] / par('pin')[1]}, such that the aspect ratio of
-#'     the current plotting region is observed.
+#'     the current plotting region is observed. This may not work (e.g. when using
+#'     \code{layout()}), as this may result in negative values returned by \code{par('pin')}.
+#'     In that case, \code{ypixels} should be set manually using this argument.
 #'
 #' @details \code{xpixels} controls the resolution of the rendered plotting area.
 #'     In order to keep circular plotting symbols circlular (e.g. \code{pch = 1}),
@@ -45,7 +49,7 @@
 #' @export
 plotBitScatter <- function(x, y = NULL, ..., densCols=TRUE,
                            colpal=c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"),
-                           xpixels=1000) {
+                           xpixels=1000, ypixels=NULL) {
     # digest arguments
     if (is.null(y)) {
         stopifnot(is.matrix(x) && ncol(x) == 2L)
@@ -60,8 +64,11 @@ plotBitScatter <- function(x, y = NULL, ..., densCols=TRUE,
     if (!"col" %in% names(args) && densCols)
         args[["col"]] <- grDevices::densCols(x, y, nbin = 512, colramp = grDevices::colorRampPalette(colpal))
 
-    # get aspect ratio of current plotting region (will open one if none is open yet)
-    ar <- graphics::par("pin")[2] / graphics::par("pin")[1]
+    if (is.null(ypixels)) {
+        # get aspect ratio of current plotting region (will open one if none is open yet)
+        ar <- graphics::par("pin")[2] / graphics::par("pin")[1]
+        ypixels <- xpixels * ar
+    }
 
     # adjust default png device pointsize (12) to xpixels
     ps <- 12 / graphics::grconvertX(par("pin")[1], from = "inches", to = "device") * xpixels
@@ -70,7 +77,7 @@ plotBitScatter <- function(x, y = NULL, ..., densCols=TRUE,
     # REMARK: use grid::grid.cap() and on-screen device instead of temporary png file?
     tf <- tempfile(fileext = ".png")
     on.exit(unlink(tf))
-    grDevices::png(tf, width = xpixels, height = xpixels * ar, pointsize = ps)
+    grDevices::png(tf, width = xpixels, height = ypixels, pointsize = ps)
     graphics::par(mar = c(0,0,0,0))
     do.call("plot", c(list(ann = FALSE, axes = FALSE), args[!(names(args) %in% c("ann","axes"))]))
     grDevices::dev.off()

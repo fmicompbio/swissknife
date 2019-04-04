@@ -30,7 +30,7 @@ the plotting area.}
 plotting area. If \code{NULL} (the default), will be calculated automatically
 as \code{xpixels * par('pin')[2] / par('pin')[1]}, such that the aspect ratio of
 the current plotting region is observed. This may not work (e.g. when using
-\code{layout()}), as this may result in negative values returned by \code{par('pin)}.
+\code{layout()}), as this may result in negative values returned by \code{par('pin')}.
 In that case, \code{ypixels} should be set manually using this argument.}
 }
 \value{

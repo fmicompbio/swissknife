@@ -1,3 +1,7 @@
+# swissknife 0.10 / 0.11
+
+* Add ypixels, pointsize argument to plotBitScatter
+
 # swissknife 0.9
 
 * Add R/valueToColor.R

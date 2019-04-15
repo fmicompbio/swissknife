@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11</span>
       </span>
     </div>
 
@@ -121,7 +121,8 @@
 
     <pre class="usage"><span class='fu'>plotBitScatter</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>densCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>colpal</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"#00007F"</span>, <span class='st'>"blue"</span>, <span class='st'>"#007FFF"</span>, <span class='st'>"cyan"</span>, <span class='st'>"#7FFF7F"</span>, <span class='st'>"yellow"</span>,
-  <span class='st'>"#FF7F00"</span>, <span class='st'>"red"</span>, <span class='st'>"#7F0000"</span>), <span class='kw'>xpixels</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>ypixels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='st'>"#FF7F00"</span>, <span class='st'>"red"</span>, <span class='st'>"#7F0000"</span>), <span class='kw'>xpixels</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>ypixels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pointsize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,6 +164,15 @@ as <code>xpixels * par('pin')[2] / par('pin')[1]</code>, such that the aspect ra
 the current plotting region is observed. This may not work (e.g. when using
 <code><a href='https://www.rdocumentation.org/packages/graphics/topics/layout'>layout()</a></code>), as this may result in negative values returned by <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par('pin')</a></code>.
 In that case, <code>ypixels</code> should be set manually using this argument.</p></td>
+    </tr>
+    <tr>
+      <th>pointsize</th>
+      <td><p>the size of points used for the png device when rendering the plot.
+If <code>NULL</code> (the default), will be calculated automatically as
+<code>12 / graphics::grconvertX(par("pin")[1], from = "inches", to = "device") * xpixels</code>.
+This may not work (e.g. when using <code><a href='https://www.rdocumentation.org/packages/graphics/topics/layout'>layout()</a></code>), as this may result in
+negative values returned by <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par('pin')</a></code>. In that case, <code>pointsize</code>
+should be set manually using this argument.</p></td>
     </tr>
     </table>
     

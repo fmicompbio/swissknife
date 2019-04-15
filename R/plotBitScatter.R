@@ -24,6 +24,12 @@
 #'     the current plotting region is observed. This may not work (e.g. when using
 #'     \code{layout()}), as this may result in negative values returned by \code{par('pin')}.
 #'     In that case, \code{ypixels} should be set manually using this argument.
+#' @param pointsize the size of points used for the png device when rendering the plot.
+#'     If \code{NULL} (the default), will be calculated automatically as
+#'     \code{12 / graphics::grconvertX(par("pin")[1], from = "inches", to = "device") * xpixels}.
+#'     This may not work (e.g. when using \code{layout()}), as this may result in
+#'     negative values returned by \code{par('pin')}. In that case, \code{pointsize}
+#'     should be set manually using this argument.
 #'
 #' @details \code{xpixels} controls the resolution of the rendered plotting area.
 #'     In order to keep circular plotting symbols circlular (e.g. \code{pch = 1}),
@@ -49,7 +55,7 @@
 #' @export
 plotBitScatter <- function(x, y = NULL, ..., densCols=TRUE,
                            colpal=c("#00007F", "blue", "#007FFF", "cyan","#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"),
-                           xpixels=1000, ypixels=NULL) {
+                           xpixels=1000, ypixels=NULL, pointsize=NULL) {
     # digest arguments
     if (is.null(y)) {
         stopifnot(is.matrix(x) && ncol(x) == 2L)
@@ -70,14 +76,16 @@ plotBitScatter <- function(x, y = NULL, ..., densCols=TRUE,
         ypixels <- xpixels * ar
     }
 
-    # adjust default png device pointsize (12) to xpixels
-    ps <- 12 / graphics::grconvertX(par("pin")[1], from = "inches", to = "device") * xpixels
+    if (is.null(pointsize)) {
+        # adjust default png device pointsize (12) to xpixels
+        pointsize <- 12 / graphics::grconvertX(par("pin")[1], from = "inches", to = "device") * xpixels
+    }
 
     # create scatter plot without annotation into a temporary png file
     # REMARK: use grid::grid.cap() and on-screen device instead of temporary png file?
     tf <- tempfile(fileext = ".png")
     on.exit(unlink(tf))
-    grDevices::png(tf, width = xpixels, height = ypixels, pointsize = ps)
+    grDevices::png(tf, width = xpixels, height = ypixels, pointsize = pointsize)
     graphics::par(mar = c(0,0,0,0))
     do.call("plot", c(list(ann = FALSE, axes = FALSE), args[!(names(args) %in% c("ann","axes"))]))
     grDevices::dev.off()

@@ -6,7 +6,8 @@
 \usage{
 plotBitScatter(x, y = NULL, ..., densCols = TRUE,
   colpal = c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow",
-  "#FF7F00", "red", "#7F0000"), xpixels = 1000, ypixels = NULL)
+  "#FF7F00", "red", "#7F0000"), xpixels = 1000, ypixels = NULL,
+  pointsize = NULL)
 }
 \arguments{
 \item{x}{\code{numeric} vector with x-coordinates of points, or a two-column
@@ -32,6 +33,13 @@ as \code{xpixels * par('pin')[2] / par('pin')[1]}, such that the aspect ratio of
 the current plotting region is observed. This may not work (e.g. when using
 \code{layout()}), as this may result in negative values returned by \code{par('pin')}.
 In that case, \code{ypixels} should be set manually using this argument.}
+
+\item{pointsize}{the size of points used for the png device when rendering the plot.
+If \code{NULL} (the default), will be calculated automatically as
+\code{12 / graphics::grconvertX(par("pin")[1], from = "inches", to = "device") * xpixels}.
+This may not work (e.g. when using \code{layout()}), as this may result in
+negative values returned by \code{par('pin')}. In that case, \code{pointsize}
+should be set manually using this argument.}
 }
 \value{
 \code{NULL} (invisibly)

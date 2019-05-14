@@ -2,6 +2,7 @@
 
 export(calcAndCountDist)
 export(calcPhasogram)
+export(col2hex)
 export(estimateNRL)
 export(plotBitScatter)
 export(plotPhasogram)

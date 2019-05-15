@@ -23,6 +23,7 @@ reference:
   contents:
     - '`plotBitScatter`'
     - '`valueToColor`'
+    - '`col2hex`'
 - title: Misc functions
   contents:
     - '`readSampleTsvs`'

@@ -4,13 +4,13 @@
 #' 
 #' @description The function returns a color in hex form given a valid name of a color in R.
 #' 
-#' @param col a \code{charachter} or \code{charachter} vector containing the names of the colors.
+#' @param col a \code{character}, \code{integer} or vector of both types containing the names of the colors or colors as integers.
 #' @param alpha a numerical value in the range [0,1] or [0,255] that indicates the 
 #'   transparency of the color(s). If the given values are between 0 and 1, they 
 #'   are mapped to be between 0 and 255. An alpha value of 1 assumes the [0,1] range
 #'   and provides maximum color. The default is set to 255.
 #'   
-#' @return a \code{charachter} or \code{charachter} vector with the hex colors. 
+#' @return a \code{character} or \code{character} vector with the hex colors. 
 #' 
 #' @examples 
 #' y <- rnorm(1000,0,1)
@@ -31,9 +31,6 @@
 col2hex <- function(col, alpha=255) {
   
   # checks
-  if(!is.character(col)){
-    stop("col must be a character or character vector")
-  }
   if(any(!swissknife:::.isValidColor(col))) {
     stop("the color provided is not a valid color in R")
   }

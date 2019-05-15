@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check for valid color specification. — .isValidColor • swissknife</title>
+<title>Get hex color — col2hex • swissknife</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Check for valid color specification. — .isValidColor" />
+<meta property="og:title" content="Get hex color — col2hex" />
 
-<meta property="og:description" content="Check if the elements of a numeric or character vector
-    are valid colors understood by R." />
+<meta property="og:description" content="The function returns a color in hex form given a valid name of a color in R." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,42 +102,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check for valid color specification.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/fmicompbio/swissknife/blob/master/R/valueToColor.R'><code>R/valueToColor.R</code></a></small>
-    <div class="hidden name"><code>dot-isValidColor.Rd</code></div>
+    <h1>Get hex color</h1>
+    <small class="dont-index">Source: <a href='https://github.com/fmicompbio/swissknife/blob/master/R/col2hex.R'><code>R/col2hex.R</code></a></small>
+    <div class="hidden name"><code>col2hex.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Check if the elements of a <code>numeric</code> or <code>character</code> vector
-    are valid colors understood by R.</p>
+    <p>The function returns a color in hex form given a valid name of a color in R.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>.isValidColor</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>col2hex</span>(<span class='no'>col</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>255</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p><code>numeric</code> or <code>character</code> vector with color specifications.</p></td>
+      <th>col</th>
+      <td><p>a <code>character</code>, <code>integer</code> or vector of both types containing the names of the colors or colors as integers.</p></td>
+    </tr>
+    <tr>
+      <th>alpha</th>
+      <td><p>a numerical value in the range [0,1] or [0,255] that indicates the 
+transparency of the color(s). If the given values are between 0 and 1, they 
+are mapped to be between 0 and 255. An alpha value of 1 assumes the [0,1] range
+and provides maximum color. The default is set to 255.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>logical</code> vector of the same length as <code>x</code>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This is an internal function, used for example by <code>valueToColor</code>.
-    The elements of <code>x</code> are check for valid color specifications by
-    passing them to <code>col2rgb</code> and checking for an exception.</p>
+    <p>a <code>character</code> or <code>character</code> vector with the hex colors.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw pkg'>swissknife</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/swissknife/topics/dot-isValidColor'>.isValidColor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"blackk"</span>))</div><div class='output co'>#&gt; [1]  TRUE FALSE</div><div class='input'><span class='kw pkg'>swissknife</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/swissknife/topics/dot-isValidColor'>.isValidColor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] FALSE  TRUE</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>1</span>)
+<span class='no'>cols</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"red"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>y</span>))
+<span class='no'>alpha</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='kw'>length.out</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>y</span>))
+<span class='no'>hexcols</span> <span class='kw'>&lt;-</span> <span class='fu'>col2hex</span>(<span class='no'>cols</span>, <span class='no'>alpha</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>y</span>), <span class='no'>y</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='no'>hexcols</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>21</span>)</div><div class='img'><img src='col2hex-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>1</span>)
+<span class='no'>cols</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"red"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>y</span>))
+<span class='no'>alpha</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>255</span>,<span class='kw'>length.out</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>y</span>))
+<span class='no'>hexcols</span> <span class='kw'>&lt;-</span> <span class='fu'>col2hex</span>(<span class='no'>cols</span>, <span class='no'>alpha</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>y</span>), <span class='no'>y</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='no'>hexcols</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>21</span>)</div><div class='img'><img src='col2hex-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -147,14 +155,12 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
-    <p>Michael Stadler</p>
+    <p>Dania Machlab</p>
   </div>
 </div>
 

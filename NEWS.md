@@ -1,3 +1,7 @@
+# swissknife 0.12
+
+* Add col2hex
+
 # swissknife 0.10 / 0.11
 
 * Add ypixels, pointsize argument to plotBitScatter

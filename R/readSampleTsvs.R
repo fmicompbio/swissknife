@@ -35,7 +35,7 @@ utils::globalVariables(c("V1","V2","SAMPLE_ID")) # prevent R CMD check from comp
 #' 
 #' @export
 #' 
-readSampleTsvs <- function(seqdataDir = "/work/gbioinfo/seqdata", 
+readSampleTsvs <- function(seqdataDir = "/tungstenfs/groups/gbioinfo/seqdata", 
                            sampleIds, keepMulti = TRUE, ...) {
     
     ## List all tsv files in seqdataDir matching any of the sample IDs

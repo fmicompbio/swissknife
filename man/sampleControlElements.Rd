@@ -4,8 +4,13 @@
 \alias{sampleControlElements}
 \title{Sample control elements that match a target distribution.}
 \usage{
-sampleControlElements(x, idxTarget, idxControl = NULL, nbins = 50,
-  oversample = 1)
+sampleControlElements(
+  x,
+  idxTarget,
+  idxControl = NULL,
+  nbins = 50,
+  oversample = 1
+)
 }
 \arguments{
 \item{x}{\code{numeric} vector (or list of \code{numeric} vectors).

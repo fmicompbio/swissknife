@@ -4,10 +4,17 @@
 \alias{plotBitScatter}
 \title{Create a bitmap-rendered plot.}
 \usage{
-plotBitScatter(x, y = NULL, ..., densCols = TRUE,
-  colpal = c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow",
-  "#FF7F00", "red", "#7F0000"), xpixels = 1000, ypixels = NULL,
-  pointsize = NULL)
+plotBitScatter(
+  x,
+  y = NULL,
+  ...,
+  densCols = TRUE,
+  colpal = c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00",
+    "red", "#7F0000"),
+  xpixels = 1000,
+  ypixels = NULL,
+  pointsize = NULL
+)
 }
 \arguments{
 \item{x}{\code{numeric} vector with x-coordinates of points, or a two-column

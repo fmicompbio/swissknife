@@ -4,10 +4,14 @@
 \alias{valueToColor}
 \title{Map numerical values to colors.}
 \usage{
-valueToColor(x, rng = range(x, na.rm = TRUE), col = c("#5E4FA2",
-  "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", "#FFFFBF", "#FEE08B",
-  "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"), NA.col = "lightgray",
-  alpha = NULL)
+valueToColor(
+  x,
+  rng = range(x, na.rm = TRUE),
+  col = c("#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", "#FFFFBF", "#FEE08B",
+    "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"),
+  NA.col = "lightgray",
+  alpha = NULL
+)
 }
 \arguments{
 \item{x}{\code{numeric} vector with values to be mapped to colors.}

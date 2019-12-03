@@ -4,8 +4,12 @@
 \alias{readSampleTsvs}
 \title{Read sample tsv files from seqdata storage}
 \usage{
-readSampleTsvs(seqdataDir = "/tungstenfs/groups/gbioinfo/seqdata",
-  sampleIds, keepMulti = TRUE, ...)
+readSampleTsvs(
+  seqdataDir = "/tungstenfs/groups/gbioinfo/seqdata",
+  sampleIds,
+  keepMulti = TRUE,
+  ...
+)
 }
 \arguments{
 \item{seqdataDir}{Character scalar, the path to the directory containing the

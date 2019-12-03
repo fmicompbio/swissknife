@@ -4,8 +4,13 @@
 \alias{estimateNRL}
 \title{Estimate the nucleosome repeat length (NRL) from a phasogram.}
 \usage{
-estimateNRL(x, mind = 140L, usePeaks = 1:8, span1 = 100/length(x),
-  span2 = 1500/length(x))
+estimateNRL(
+  x,
+  mind = 140L,
+  usePeaks = 1:8,
+  span1 = 100/length(x),
+  span2 = 1500/length(x)
+)
 }
 \arguments{
 \item{x}{\code{numeric} vector giving the counts of alignment distances

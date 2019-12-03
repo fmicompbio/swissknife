@@ -20,6 +20,11 @@ test_that("prepareGTF works", {
     expect_true("gene" %in% colnames(S4Vectors::mcols(gtf)))
     expect_true("gene_name" %in% colnames(S4Vectors::mcols(gtf)))
     expect_true(all(gtf$type == "exon"))
+    
+    expect_message(prepareGTF(gtffile, transcriptIdColumn = "transcript_id",
+                              geneIdColumn = "gene_id", 
+                              geneSymbolColumn = "missing"), 
+                   "Using the 'gene' column as gene symbols")
 })
 
 test_that("plotGeneRegion fails with incorrect input", {
@@ -71,6 +76,11 @@ test_that("plotGeneRegion works", {
     ## GTF file, no bigwig
     a1 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1")
     expect_is(a1, "list")
+    
+    ## GTF file, no bigwig, region
+    a11 <- plotGeneRegion(gtf = gtffile, showgene = "", chr = "chr10",
+                          start = 20310000, end = 20340000)
+    expect_is(a11, "list")
     
     ## GRanges, no bigwig
     b <- prepareGTF(gtffile)

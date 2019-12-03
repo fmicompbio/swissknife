@@ -79,10 +79,13 @@ gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf",
 plotGeneRegion(gtf = gtffile, 
                showgene = "Tnfaip3")
                
-bwf <- system.file("extdata/plotGeneRegion/mnase_mm10.bw", package = "swissknife")
+bwf <- system.file("extdata/plotGeneRegion/mnase_mm10.bw", 
+                   package = "swissknife")
 names(bwf) <- "bwf1"
 plotGeneRegion(gtf = gtffile, 
                bigwigFiles = bwf,
+               chr = "chr10", start = 20000000, end = 20005000)
+plotGeneRegion(bigwigFiles = bwf,
                chr = "chr10", start = 20000000, end = 20005000)
                
 bwf2 <- c(bwf, bwf)

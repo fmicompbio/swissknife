@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check for valid color specification. — .isValidColor • swissknife</title>
+<title>Parse R and R package versions from session informations — parsePkgVersions • swissknife</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,18 @@
 
 
 
-<meta property="og:title" content="Check for valid color specification. — .isValidColor" />
-<meta property="og:description" content="Check if the elements of a numeric or character vector
-    are valid colors understood by R." />
+<meta property="og:title" content="Parse R and R package versions from session informations — parsePkgVersions" />
+<meta property="og:description" content="The function parses the R version and R package versions from
+  session information (created by sessionInfo(), tested with R 3.6) in
+  files provided in infiles. Two types of files are currently
+  supported:
+Rout: Files containing R console output
+  (created by R CMD BATCH script.R output.Rout
+md: Files
+  containing markdown output created by rmarkdown::render('input.Rmd',
+  clean = FALSE), which will keep the intermediate .md file.
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,38 +118,82 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check for valid color specification.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/fmicompbio/swissknife/blob/master/R/valueToColor.R'><code>R/valueToColor.R</code></a></small>
-    <div class="hidden name"><code>dot-isValidColor.Rd</code></div>
+    <h1>Parse R and R package versions from session informations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/fmicompbio/swissknife/blob/master/R/parsePkgVersions.R'><code>R/parsePkgVersions.R</code></a></small>
+    <div class="hidden name"><code>parsePkgVersions.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check if the elements of a <code>numeric</code> or <code>character</code> vector
-    are valid colors understood by R.</p>
+    <p>The function parses the R version and R package versions from
+  session information (created by <code><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo()</a></code>, tested with R 3.6) in
+  files provided in <code>infiles</code>. Two types of files are currently
+  supported:</p><ul>
+<li><p>Rout: Files containing R console output
+  (created by <code>R CMD BATCH script.R output.Rout</code></p></li>
+<li><p>md: Files
+  containing markdown output created by <code><a href='https://rdrr.io/pkg/rmarkdown/man/render.html'>rmarkdown::render('input.Rmd',
+  clean = FALSE)</a></code>, which will keep the intermediate <code>.md</code> file.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>.isValidColor</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>parsePkgVersions</span>(<span class='no'>infiles</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p><code>numeric</code> or <code>character</code> vector with color specifications.</p></td>
+      <th>infiles</th>
+      <td><p>Character vector with text files (extension must be either
+<code>.Rout</code> or <code>.md</code>), containing session information to parse out.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>logical</code> vector of the same length as <code>x</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This is an internal function, used for example by <code>valueToColor</code>.
-    The elements of <code>x</code> are check for valid color specifications by
-    passing them to <code>col2rgb</code> and checking for an exception.</p>
+    <p>A <code>list</code> of <code>list</code>s with one element in the outer list for
+  each R version, contianing an innter list with elements <code>files</code> and
+  <code>packages</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw pkg'>swissknife</span><span class='kw ns'>:::</span><span class='fu'><a href='https://rdrr.io/pkg/swissknife/man/dot-isValidColor.html'>.isValidColor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"blackk"</span>))</div><div class='output co'>#&gt; [1]  TRUE FALSE</div><div class='input'><span class='kw pkg'>swissknife</span><span class='kw ns'>:::</span><span class='fu'><a href='https://rdrr.io/pkg/swissknife/man/dot-isValidColor.html'>.isValidColor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] FALSE  TRUE</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"parsePkgVersions"</span>,
+                            <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"swissknife"</span>),
+                <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>parsePkgVersions</span>(<span class='no'>f</span>)</div><div class='output co'>#&gt; $`R version 3.6.0 (2019-04-26)`
+#&gt; $`R version 3.6.0 (2019-04-26)`$files
+#&gt; [1] "/tungstenfs/scratch/gbioinfo/scratch_xenon6/stadler/RtmpoBYfPf/temp_libpath23d724d325b99/swissknife/extdata/parsePkgVersions/example.md"
+#&gt; 
+#&gt; $`R version 3.6.0 (2019-04-26)`$packages
+#&gt;  [1] "Biobase_2.44.0"              "BiocGenerics_0.30.0"        
+#&gt;  [3] "BiocParallel_1.18.0"         "DelayedArray_0.10.0"        
+#&gt;  [5] "DropletUtils_1.4.2"          "GenomeInfoDb_1.20.0"        
+#&gt;  [7] "GenomicRanges_1.36.0"        "IRanges_2.18.1"             
+#&gt;  [9] "RColorBrewer_1.1-2"          "S4Vectors_0.22.0"           
+#&gt; [11] "SingleCellExperiment_1.6.0"  "SummarizedExperiment_1.14.0"
+#&gt; [13] "dplyr_0.8.3"                 "ggplot2_3.2.0"              
+#&gt; [15] "matrixStats_0.54.0"          "scater_1.12.2"              
+#&gt; [17] "scran_1.12.1"                "sctransform_0.2.0"          
+#&gt; [19] "stringr_1.4.0"               "swissknife_0.12"            
+#&gt; [21] "tibble_2.1.3"                "tidyr_0.8.3"                
+#&gt; [23] "umap_0.2.2.0"               
+#&gt; 
+#&gt; 
+#&gt; $`R version 3.6.1 (2019-07-05)`
+#&gt; $`R version 3.6.1 (2019-07-05)`$files
+#&gt; [1] "/tungstenfs/scratch/gbioinfo/scratch_xenon6/stadler/RtmpoBYfPf/temp_libpath23d724d325b99/swissknife/extdata/parsePkgVersions/example.Rout"
+#&gt; 
+#&gt; $`R version 3.6.1 (2019-07-05)`$packages
+#&gt;  [1] "Biobase_2.44.0"              "BiocGenerics_0.30.0"        
+#&gt;  [3] "BiocParallel_1.18.1"         "DelayedArray_0.10.0"        
+#&gt;  [5] "GenomeInfoDb_1.20.0"         "GenomicRanges_1.36.1"       
+#&gt;  [7] "IRanges_2.18.3"              "Matrix_1.2-17"              
+#&gt;  [9] "RColorBrewer_1.1-2"          "S4Vectors_0.22.1"           
+#&gt; [11] "SingleCellExperiment_1.6.0"  "SummarizedExperiment_1.14.1"
+#&gt; [13] "dplyr_0.8.3"                 "matrixStats_0.55.0"         
+#&gt; [15] "tibble_2.1.3"                "tidyr_1.0.0"                
+#&gt; [17] "velocyto.R_0.6"             
+#&gt; 
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -148,7 +201,6 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

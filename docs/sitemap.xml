@@ -19,10 +19,19 @@
     <loc>http://fmicompbio.github.io/swissknife/reference/estimateNRL.html</loc>
   </url>
   <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/parsePkgVersions.html</loc>
+  </url>
+  <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/plotBitScatter.html</loc>
   </url>
   <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/plotGeneRegion.html</loc>
+  </url>
+  <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/plotPhasogram.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/prepareGTF.html</loc>
   </url>
   <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/readSampleTsvs.html</loc>

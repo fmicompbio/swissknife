@@ -18,7 +18,9 @@
 #'   \code{packages}.
 #'
 #' @examples
-#' f <- list.files(system.file("extdata", "parsePkgVersions", package = "swissknife"), full.names = TRUE)
+#' f <- list.files(system.file("extdata", "parsePkgVersions",
+#'                             package = "swissknife"),
+#'                 full.names = TRUE)
 #' parsePkgVersions(f)
 #'
 #' @importFrom utils sessionInfo

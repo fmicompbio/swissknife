@@ -25,7 +25,9 @@ The function parses the R version and R package versions from
   clean = FALSE)}, which will keep the intermediate \code{.md} file.}}
 }
 \examples{
-f <- list.files(system.file("extdata", "parsePkgVersions", package = "swissknife"), full.names = TRUE)
+f <- list.files(system.file("extdata", "parsePkgVersions",
+                            package = "swissknife"),
+                full.names = TRUE)
 parsePkgVersions(f)
 
 }

@@ -1,3 +1,8 @@
+# swissknife 0.13
+
+* Add parsePkgVersions
+* Add plotGeneRegion
+
 # swissknife 0.12
 
 * Add col2hex

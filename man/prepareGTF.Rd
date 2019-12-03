@@ -4,13 +4,38 @@
 \alias{prepareGTF}
 \title{Prepare GTF file for use with plotGeneRegion}
 \usage{
-prepareGTF(gtf)
+prepareGTF(
+  gtf,
+  transcriptIdColumn = "transcript_id",
+  geneIdColumn = "gene_id",
+  geneSymbolColumn = "gene_name"
+)
 }
 \arguments{
-\item{gtf}{Character scalar, path to gtf file (tested with Ensembl/Gencode files)}
+\item{gtf}{Character scalar, path to gtf file (tested with Ensembl/Gencode
+files).}
+
+\item{transcriptIdColumn}{Character scalar, the column in the gtf file that 
+contains the transcript ID.}
+
+\item{geneIdColumn}{Character scalar, the column in the gtf file that 
+contains the gene ID.}
+
+\item{geneSymbolColumn}{Character scalar, the column in the gtf file that 
+contains the gene symbol (if available). Set to \code{""} if not 
+available (in which case the gene IDs will be used in its place).}
 }
 \description{
-Prepare GTF file for use with plotGeneRegion
+This function sets the names of the transcript and gene ID columns of the
+gtf file to "transcript" and "gene", removes version tags of the 
+transcripts/genes and retains only the "exon" entries. The purpose is to 
+make the file amenable to plotting with Gviz, using the 
+\code{plotGeneRegion} function.
+}
+\examples{
+gtf <- prepareGTF(gtf = system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf",
+                                    package = "swissknife"))
+                                    
 }
 \author{
 Charlotte Soneson

@@ -13,34 +13,65 @@ plotGeneRegion(
   showgene = "",
   bigwigFiles = "",
   bigwigCond = "",
-  geneTrackTitle = "Genes"
+  geneTrackTitle = "Genes",
+  transcriptIdColumn = "transcript_id",
+  geneIdColumn = "gene_id",
+  geneSymbolColumn = "gene_name",
+  lowerPadding = 0.15,
+  upperPadding = 0.05
 )
 }
 \arguments{
 \item{gtf}{Character scalar, path to gtf file (tested with Ensembl/Gencode
-files)}
+files).}
 
 \item{granges}{GRanges object, typically generated from a GTF file using the
-\code{prepareGTF} function}
+\code{prepareGTF} function. This is an alternative to providing the link 
+to the gtf file directly, and will take precedence over the \code{gtf} 
+argument if provided.}
 
-\item{chr}{Character scalar, name of chromosome to show}
+\item{chr}{Character scalar, name of the chromosome to show.}
 
 \item{start, end}{Numeric scalars, start and end position of the region to
-show}
+show.}
 
-\item{showgene}{Character scalar, the gene ID/name to display}
+\item{showgene}{Character scalar, the gene ID/name to display. Will take 
+precedence over positional range specification if provided.}
 
-\item{bigwigFiles}{Named character vector, paths to bigwig files}
+\item{bigwigFiles}{Named character vector, paths to bigwig files.}
 
 \item{bigwigCond}{Named character vector, the grouping of the bigwig files
-(used for coloring of the coverage tracks)}
+(used for coloring of the coverage tracks).}
 
-\item{geneTrackTitle}{Character scalar, name of the gene track}
+\item{geneTrackTitle}{Character scalar, name of the gene track.}
+
+\item{transcriptIdColumn}{Character scalar, the column in the gtf file that 
+contains the transcript ID. Passed to \code{prepareGTF}.}
+
+\item{geneIdColumn}{Character scalar, the column in the gtf file that 
+contains the gene ID. Passed to \code{prepareGTF}.}
+
+\item{geneSymbolColumn}{Character scalar, the column in the gtf file that 
+contains the gene symbol (if available). Set to \code{""} if not 
+available (in which case the gene IDs will be used in its place).
+Passed to \code{prepareGTF}.}
+
+\item{lowerPadding, upperPadding}{Numeric scalars, setting the amount of 
+padding in the lower and upper range of the plot, respectively. For 
+example, a value of 0.05 will expand the range by 
+0.05 * (max coordinate - min coordinate) in the specified direction.}
 }
 \description{
 Visualize the gene model for a gene of interest, or for all genes in a
-provided region. Also show one or more coverage tracks based on bigwig
+provided region, and/or show one or more coverage tracks based on bigwig
 file(s).
+}
+\details{
+The gene annotation can be provided either as a path to a gtf file, or as a 
+GRanges object (generated using the \code{prepareGTF} function to ensure 
+compatibility). The region to display can be determined either by 
+specifying a gene (ID or symbol) or by specifying a viewing range 
+(chromosome, start and end positions).
 }
 \examples{
 gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf", 

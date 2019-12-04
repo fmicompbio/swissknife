@@ -24,7 +24,10 @@ reference:
     - '`plotBitScatter`'
     - '`valueToColor`'
     - '`col2hex`'
+    - '`plotGeneRegion`'
 - title: Misc functions
   contents:
     - '`readSampleTsvs`'
     - '`sampleControlElements`'
+    - '`parsePkgVersions`'
+    - '`prepareGTF`'

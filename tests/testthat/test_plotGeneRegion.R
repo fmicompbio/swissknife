@@ -132,4 +132,8 @@ test_that("plotGeneRegion works", {
     ## GTF file, no bigwig, color
     a8 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1", colorByStrand = TRUE)
     expect_is(a8, "list")
+    
+    ## GTF file, no bigwig, color, gene with other overlaps
+    a9 <- plotGeneRegion(gtf = gtffile, showgene = "Gm48249", colorByStrand = TRUE)
+    expect_is(a9, "list")
 })

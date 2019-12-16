@@ -62,6 +62,21 @@ test_that("plotGeneRegion fails with incorrect input", {
     expect_error(plotGeneRegion(gtf = gtffile, upperPadding = "1"))
     expect_error(plotGeneRegion(gtf = gtffile, lowerPadding = c(1, 2)))
     expect_error(plotGeneRegion(gtf = gtffile, upperPadding = c(1, 2)))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100, end = 200,
+                                colorByStrand = 1))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100, end = 200,
+                                colorByStrand = c(TRUE, FALSE)))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100, end = 200,
+                                colorByStrand = TRUE, 
+                                featureColors = "blue"))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100, end = 200,
+                                colorByStrand = TRUE, 
+                                featureColors = c(plusmain = "blue", "red", 
+                                                  "green", "yellow")))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100, end = 200,
+                                colorByStrand = TRUE, 
+                                featureColors = c(plusmain = 1, minsmain = 2, 
+                                                  plusother = 3, minusother = 4)))
 })
 
 test_that("plotGeneRegion works", {
@@ -113,4 +128,12 @@ test_that("plotGeneRegion works", {
                          chr = "chr10", start = 20310000, end = 20340000)
     expect_is(a7, "list")
     expect_equal(a6, a7)
+    
+    ## GTF file, no bigwig, color
+    a8 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1", colorByStrand = TRUE)
+    expect_is(a8, "list")
+    
+    ## GTF file, no bigwig, color, gene with other overlaps
+    a9 <- plotGeneRegion(gtf = gtffile, showgene = "Gm48249", colorByStrand = TRUE)
+    expect_is(a9, "list")
 })

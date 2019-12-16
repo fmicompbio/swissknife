@@ -101,16 +101,22 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #'   padding in the lower and upper range of the plot, respectively. For 
 #'   example, a value of 0.05 will expand the range by 
 #'   0.05 * (max coordinate - min coordinate) in the specified direction. 
+#' @param colorByStrand Logical scalar, determining whether gene features are 
+#'   colored by the annotated strand.
+#' @param featureColors Named character vector of length 4, with elements 
+#'   \code{plusmain}, \code{minusmain}, \code{plusother}, \code{minusother}, 
+#'   giving the colors to use for the features if \code{colorByStrand} is TRUE. 
 #' 
 #' @author Charlotte Soneson
 #' 
 #' @export
 #' 
-#' @importFrom BiocGenerics subset start end
+#' @importFrom BiocGenerics subset start end strand
 #' @importFrom GenomeInfoDb seqnames
 #' @importFrom IRanges overlapsAny IRanges
 #' @importFrom GenomicRanges GRanges
-#' @importFrom Gviz GeneRegionTrack DataTrack GenomeAxisTrack plotTracks
+#' @importFrom Gviz GeneRegionTrack DataTrack GenomeAxisTrack plotTracks 
+#'   feature
 #' @importFrom S4Vectors %in%
 #' @importFrom methods is
 #'   
@@ -144,7 +150,12 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                            geneIdColumn = "gene_id",
                            geneSymbolColumn = "gene_name",
                            lowerPadding = 0.15, 
-                           upperPadding = 0.05) {
+                           upperPadding = 0.05,
+                           colorByStrand = FALSE, 
+                           featureColors = c(plusmain = "#0E14D0", 
+                                             minusmain = "#D0350E",
+                                             plusother = "#9E9BEB", 
+                                             minusother = "#DA907E")) {
     options(ucscChromosomeNames = FALSE)
     
     ## ---------------------------------------------------------------------- ##
@@ -197,6 +208,19 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
         !methods::is(upperPadding, "numeric") || 
         length(lowerPadding) != 1 || length(upperPadding) != 1) {
         stop("'lowerPadding' and 'upperPadding' must be numeric scalars")
+    }
+    if (!is.logical(colorByStrand) || 
+        length(colorByStrand) != 1) {
+        stop("'colorByStrand' must be a logical scalar")
+    }
+    if (!methods::is(featureColors, "character") || 
+        length(featureColors) != 4) {
+        stop("'featureColors' must be a character vector of length 4")
+    }
+    if (length(intersect(names(featureColors), 
+                         c("plusmain", "minusmain", "plusother", "minusother"))) != 4) {
+        stop("'featureColors must have elements 'plusmain', 'minusmain', ",
+             "'plusother', 'minusother'")
     }
     ## Must have at least one of bigwigFiles, gtf and granges
     if (all(bigwigFiles == "") && is.null(granges) && gtf == "") {
@@ -265,8 +289,24 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
         
         grtr <- Gviz::GeneRegionTrack(gr, showId = TRUE, col = NULL, fill = "gray80",
                                       name = geneTrackTitle, col.title = "black")
-        grtr2 <- Gviz::GeneRegionTrack(gro, showId = TRUE, col = "black", fill = "white",
-                                       name = "", col.title = "black")
+        
+        if (colorByStrand) {
+            grtr2 <- Gviz::GeneRegionTrack(gro, showId = TRUE, col = NULL, 
+                                           fill = "white",
+                                           name = "", col.title = "black")
+            if (length(grtr) > 0) {
+                Gviz::feature(grtr) <- ifelse(BiocGenerics::strand(grtr) == "+", 
+                                              "plusmain", "minusmain")
+            }
+            if (length(grtr2) > 0) {
+                Gviz::feature(grtr2) <- ifelse(BiocGenerics::strand(grtr2) == "+", 
+                                               "plusother", "minusother")
+            }
+        } else {
+            grtr2 <- Gviz::GeneRegionTrack(gro, showId = TRUE, col = "black", 
+                                           fill = "white",
+                                           name = "", col.title = "black")
+        }
     } else {
         gr <- gro <- grtr <- grtr2 <- NULL
     }    
@@ -341,5 +381,9 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     Gviz::plotTracks(tracks, chromosome = chr, from = minCoord, 
                      to = maxCoord, main = plotTitle, 
                      transcriptAnnotation = "transcript",
-                     min.width = 0, min.distance = 0, collapse = FALSE)
+                     min.width = 0, min.distance = 0, collapse = FALSE,
+                     plusmain = featureColors["plusmain"], 
+                     minusmain = featureColors["minusmain"],
+                     plusother = featureColors["plusother"], 
+                     minusother = featureColors["minusother"])
 }

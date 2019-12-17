@@ -106,6 +106,9 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #' @param featureColors Named character vector of length 4, with elements 
 #'   \code{plusmain}, \code{minusmain}, \code{plusother}, \code{minusother}, 
 #'   giving the colors to use for the features if \code{colorByStrand} is TRUE. 
+#' @param condColors Either NULL or a named character vector (with the same 
+#'   names as the unique values of \code{bigwigCond}), giving the colors to use
+#'   for the coverage tracks if \code{bigwigCond} is provided. 
 #' 
 #' @author Charlotte Soneson
 #' 
@@ -155,7 +158,8 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                            featureColors = c(plusmain = "#0E14D0", 
                                              minusmain = "#D0350E",
                                              plusother = "#9E9BEB", 
-                                             minusother = "#DA907E")) {
+                                             minusother = "#DA907E"),
+                           condColors = NULL) {
     options(ucscChromosomeNames = FALSE)
     
     ## ---------------------------------------------------------------------- ##
@@ -221,6 +225,17 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                          c("plusmain", "minusmain", "plusother", "minusother"))) != 4) {
         stop("'featureColors must have elements 'plusmain', 'minusmain', ",
              "'plusother', 'minusother'")
+    }
+    if (!is.null(condColors)) {
+        if (!is(condColors, "character")) {
+            stop("'condColors' must be a character vector or NULL")
+        }
+        if (any(bigwigCond != "") && 
+                length(intersect(unique(bigwigCond), names(condColors))) != 
+                length(condColors)) {
+            stop("'condColors' must be a named vector with names equal to the ",
+                 "values of bigwigCond")
+        }
     }
     ## Must have at least one of bigwigFiles, gtf and granges
     if (all(bigwigFiles == "") && is.null(granges) && gtf == "") {
@@ -339,20 +354,24 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
         ## ---------------------------------------------------------------------- ##
         ## Define colors if bigwigCond is provided
         ## ---------------------------------------------------------------------- ##
-        ## Define colors for coverage tracks
-        color_list <- rep(c("#DC050C", "#7BAFDE", "#B17BA6", "#F1932D", "#F7EE55",
-                            "#90C987", "#777777", "#E8601C", "#1965B0", "#882E72",
-                            "#F6C141", "#4EB265", "#CAEDAB"), 
-                          ceiling(length(unique(bigwigCond))/13))
-        
-        if (length(bigwigCond) > 1 || bigwigCond != "") {
-            usecol <- color_list[match(bigwigCond, 
-                                       unique(bigwigCond))]
+        if (!is.null(condColors)) {
+            usecol <- condColors
         } else {
-            usecol <- rep("gray", length(bigwigFiles))
-        }
-        names(usecol) <- names(bigwigCond)
+            ## Define colors for coverage tracks
+            color_list <- rep(c("#DC050C", "#7BAFDE", "#B17BA6", "#F1932D", "#F7EE55",
+                                "#90C987", "#777777", "#E8601C", "#1965B0", "#882E72",
+                                "#F6C141", "#4EB265", "#CAEDAB"), 
+                              ceiling(length(unique(bigwigCond))/13))
             
+            if (length(bigwigCond) > 1 || bigwigCond != "") {
+                usecol <- color_list[match(bigwigCond, 
+                                           unique(bigwigCond))]
+            } else {
+                usecol <- rep("gray", length(bigwigFiles))
+            }
+            names(usecol) <- names(bigwigCond)
+        }
+        
         ## ------------------------------------------------------------------ ##
         ## Prepare final plot
         ## ------------------------------------------------------------------ ##

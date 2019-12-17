@@ -21,7 +21,8 @@ plotGeneRegion(
   upperPadding = 0.05,
   colorByStrand = FALSE,
   featureColors = c(plusmain = "#0E14D0", minusmain = "#D0350E", plusother = "#9E9BEB",
-    minusother = "#DA907E")
+    minusother = "#DA907E"),
+  condColors = NULL
 )
 }
 \arguments{
@@ -70,6 +71,10 @@ colored by the annotated strand.}
 \item{featureColors}{Named character vector of length 4, with elements 
 \code{plusmain}, \code{minusmain}, \code{plusother}, \code{minusother}, 
 giving the colors to use for the features if \code{colorByStrand} is TRUE.}
+
+\item{condColors}{Either NULL or a named character vector (with the same 
+names as the unique values of \code{bigwigCond}), giving the colors to use
+for the coverage tracks if \code{bigwigCond} is provided.}
 }
 \description{
 Visualize the gene model for a gene of interest, or for all genes in a

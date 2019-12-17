@@ -22,7 +22,8 @@ plotGeneRegion(
   colorByStrand = FALSE,
   featureColors = c(plusmain = "#0E14D0", minusmain = "#D0350E", plusother = "#9E9BEB",
     minusother = "#DA907E"),
-  condColors = NULL
+  condColors = NULL,
+  scaleDataTracks = FALSE
 )
 }
 \arguments{
@@ -75,6 +76,9 @@ giving the colors to use for the features if \code{colorByStrand} is TRUE.}
 \item{condColors}{Either NULL or a named character vector (with the same 
 names as the unique values of \code{bigwigCond}), giving the colors to use
 for the coverage tracks if \code{bigwigCond} is provided.}
+
+\item{scaleDataTracks}{Logical scalar, indicating whether the data tracks 
+should be scaled to have the same y-axis limits.}
 }
 \description{
 Visualize the gene model for a gene of interest, or for all genes in a

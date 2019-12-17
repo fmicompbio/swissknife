@@ -109,6 +109,8 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #' @param condColors Either NULL or a named character vector (with the same 
 #'   names as the unique values of \code{bigwigCond}), giving the colors to use
 #'   for the coverage tracks if \code{bigwigCond} is provided. 
+#' @param scaleDataTracks Logical scalar, indicating whether the data tracks 
+#'   should be scaled to have the same y-axis limits. 
 #' 
 #' @author Charlotte Soneson
 #' 
@@ -116,7 +118,8 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #' 
 #' @importFrom BiocGenerics subset start end strand
 #' @importFrom GenomeInfoDb seqnames
-#' @importFrom IRanges overlapsAny IRanges
+#' @importFrom IRanges overlapsAny IRanges subsetByOverlaps
+#' @importFrom rtracklayer import
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Gviz GeneRegionTrack DataTrack GenomeAxisTrack plotTracks 
 #'   feature
@@ -159,7 +162,8 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                                              minusmain = "#D0350E",
                                              plusother = "#9E9BEB", 
                                              minusother = "#DA907E"),
-                           condColors = NULL) {
+                           condColors = NULL,
+                           scaleDataTracks = FALSE) {
     options(ucscChromosomeNames = FALSE)
     
     ## ---------------------------------------------------------------------- ##
@@ -231,11 +235,14 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
             stop("'condColors' must be a character vector or NULL")
         }
         if (any(bigwigCond != "") && 
-                length(intersect(unique(bigwigCond), names(condColors))) != 
-                length(condColors)) {
+            length(intersect(unique(bigwigCond), names(condColors))) != 
+            length(condColors)) {
             stop("'condColors' must be a named vector with names equal to the ",
                  "values of bigwigCond")
         }
+    }
+    if (length(scaleDataTracks) != 1 || !is.logical(scaleDataTracks)) {
+        stop("'scaleDataTracks' must be a logical scalar")
     }
     ## Must have at least one of bigwigFiles, gtf and granges
     if (all(bigwigFiles == "") && is.null(granges) && gtf == "") {
@@ -351,6 +358,28 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     ## character strings)
     if (!any(bigwigFiles == "")) {
         
+        ## Determine the y limits
+        ## Thanks to http://adomingues.github.io/2016/11/13/max-coverage-in-bigwigs/
+        ## for the idea
+        if (!scaleDataTracks) {
+            ylim <- NULL
+        } else {
+            g <- GenomicRanges::GRanges(seqnames = chr,
+                                        ranges = IRanges(start = minCoord,
+                                                         end = maxCoord),
+                                        strand = "*")
+            ymax <- max(vapply(bigwigFiles, function(f) {
+                ff <- rtracklayer::import(f)
+                ovlp <- IRanges::subsetByOverlaps(ff, g)
+                if (length(ovlp) > 0) {
+                    return(max(ovlp$score))
+                } else {
+                    return(0)
+                }
+            }, 0))
+            ylim <- c(0, ymax)
+        }
+        
         ## ---------------------------------------------------------------------- ##
         ## Define colors if bigwigCond is provided
         ## ---------------------------------------------------------------------- ##
@@ -385,7 +414,8 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                                    fill = usecol[i],
                                    col = usecol[i],
                                    col.histogram = usecol[i],
-                                   fill.histogram = usecol[i]))
+                                   fill.histogram = usecol[i],
+                                   ylim = ylim))
         })
     } else {
         tracks <- NULL

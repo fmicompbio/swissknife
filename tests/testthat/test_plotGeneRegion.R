@@ -89,6 +89,13 @@ test_that("plotGeneRegion fails with incorrect input", {
                                 bigwigFiles = structure(bwfile, names = "s1"),
                                 bigwigCond = structure("cond1", names = "s1"),
                                 condColors = structure(3, names = "cond1")))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, scaleDataTracks = 1))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, scaleDataTracks = "TRUE"))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, scaleDataTracks = c(TRUE, FALSE)))
+    
 })
 
 test_that("plotGeneRegion works", {
@@ -161,5 +168,11 @@ test_that("plotGeneRegion works", {
                           bigwigCond = structure(c("cond1", "cond2"), names = c("s1", "s2")),
                           condColors = structure(c("blue", "green"), names = c("cond1", "cond2")))
     expect_is(a11, "list")
+    
+    ## scale data tracks
+    a12 <- plotGeneRegion(gtf = gtffile, showgene = "Gm48249",
+                          bigwigFiles = structure(c(bwfile, bwfile), names = c("bw1", "bw2")),
+                          scaleDataTracks = TRUE)
+    expect_is(a12, "list")
     
 })

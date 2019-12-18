@@ -1,3 +1,7 @@
+# swissknife 0.15
+
+* Allow specification of colors for coverage tracks in plotGeneRegion
+
 # swissknife 0.14
 
 * Allow coloring features by strand in plotGeneRegion

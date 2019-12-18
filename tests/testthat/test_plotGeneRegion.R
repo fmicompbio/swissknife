@@ -77,6 +77,25 @@ test_that("plotGeneRegion fails with incorrect input", {
                                 colorByStrand = TRUE, 
                                 featureColors = c(plusmain = 1, minsmain = 2, 
                                                   plusother = 3, minusother = 4)))
+    expect_error(plotGeneRegion(gtf = gtffile, showgene = "Bclaf1",
+                                bigwigFiles = structure(bwfile, names = "s1"),
+                                bigwigCond = structure("cond1", names = "s1"),
+                                condColors = "blue"))
+    expect_error(plotGeneRegion(gtf = gtffile, showgene = "Bclaf1",
+                                bigwigFiles = structure(bwfile, names = "s1"),
+                                bigwigCond = structure("cond1", names = "s1"),
+                                condColors = structure(c("blue", "green"), names = c("cond1", "cond2"))))
+    expect_error(plotGeneRegion(gtf = gtffile, showgene = "Bclaf1",
+                                bigwigFiles = structure(bwfile, names = "s1"),
+                                bigwigCond = structure("cond1", names = "s1"),
+                                condColors = structure(3, names = "cond1")))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, scaleDataTracks = 1))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, scaleDataTracks = "TRUE"))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, scaleDataTracks = c(TRUE, FALSE)))
+    
 })
 
 test_that("plotGeneRegion works", {
@@ -136,4 +155,24 @@ test_that("plotGeneRegion works", {
     ## GTF file, no bigwig, color, gene with other overlaps
     a9 <- plotGeneRegion(gtf = gtffile, showgene = "Gm48249", colorByStrand = TRUE)
     expect_is(a9, "list")
+    
+    ## color tracks
+    a10 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1",
+                          bigwigFiles = structure(bwfile, names = "s1"),
+                          bigwigCond = structure("cond1", names = "s1"),
+                          condColors = structure("blue", names = "cond1"))
+    expect_is(a10, "list")
+    
+    a11 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1",
+                          bigwigFiles = structure(c(bwfile, bwfile), names = c("s1", "s2")),
+                          bigwigCond = structure(c("cond1", "cond2"), names = c("s1", "s2")),
+                          condColors = structure(c("blue", "green"), names = c("cond1", "cond2")))
+    expect_is(a11, "list")
+    
+    ## scale data tracks
+    a12 <- plotGeneRegion(gtf = gtffile, showgene = "Gm48249",
+                          bigwigFiles = structure(c(bwfile, bwfile), names = c("bw1", "bw2")),
+                          scaleDataTracks = TRUE)
+    expect_is(a12, "list")
+    
 })

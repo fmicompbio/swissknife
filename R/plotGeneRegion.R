@@ -369,10 +369,9 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                                                          end = maxCoord),
                                         strand = "*")
             ymax <- max(vapply(bigwigFiles, function(f) {
-                ff <- rtracklayer::import(f)
-                ovlp <- IRanges::subsetByOverlaps(ff, g)
-                if (length(ovlp) > 0) {
-                    return(max(ovlp$score))
+                ff <- rtracklayer::import(f, format = "bw", which = g)
+                if (length(ff) > 0) {
+                    return(max(ff$score))
                 } else {
                     return(0)
                 }

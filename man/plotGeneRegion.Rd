@@ -18,7 +18,12 @@ plotGeneRegion(
   geneIdColumn = "gene_id",
   geneSymbolColumn = "gene_name",
   lowerPadding = 0.15,
-  upperPadding = 0.05
+  upperPadding = 0.05,
+  colorByStrand = FALSE,
+  featureColors = c(plusmain = "#0E14D0", minusmain = "#D0350E", plusother = "#9E9BEB",
+    minusother = "#DA907E"),
+  condColors = NULL,
+  scaleDataTracks = FALSE
 )
 }
 \arguments{
@@ -60,6 +65,20 @@ Passed to \code{prepareGTF}.}
 padding in the lower and upper range of the plot, respectively. For 
 example, a value of 0.05 will expand the range by 
 0.05 * (max coordinate - min coordinate) in the specified direction.}
+
+\item{colorByStrand}{Logical scalar, determining whether gene features are 
+colored by the annotated strand.}
+
+\item{featureColors}{Named character vector of length 4, with elements 
+\code{plusmain}, \code{minusmain}, \code{plusother}, \code{minusother}, 
+giving the colors to use for the features if \code{colorByStrand} is TRUE.}
+
+\item{condColors}{Either NULL or a named character vector (with the same 
+names as the unique values of \code{bigwigCond}), giving the colors to use
+for the coverage tracks if \code{bigwigCond} is provided.}
+
+\item{scaleDataTracks}{Logical scalar, indicating whether the data tracks 
+should be scaled to have the same y-axis limits.}
 }
 \description{
 Visualize the gene model for a gene of interest, or for all genes in a

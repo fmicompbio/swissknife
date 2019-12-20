@@ -23,7 +23,7 @@ test_that("getDistMat() works properly", {
      expect_error(getDistMat(loessModel=lo, x=x, x_curve=x_curve))
      expect_error(getDistMat(loessModel=lo, x=x, y=y))
      expect_true(!is.null(euclMat2))
-     expect_equal(euclMat, euclMat3)
+     expect_true(all(rownames(euclMat3)==names(x2)))
 
 })
 

@@ -1,4 +1,4 @@
-#' @title Get (Euclidean) Distance
+#' @title Get Distance
 #' 
 #' @description This function gets the euclidean (by default) distances between all points in a 2-D coordinate 
 #'   system (x,y) to a group of points that fall on a fitted loess curve. It uses the \code{dist.matrix} 
@@ -11,11 +11,10 @@
 #' @param y the y values of all points.
 #' @param x_curve the x values of the points on the loess curve.
 #' @param method distance measure to be used.
-#' @param ... additional parameters for the \code(dist.matrix) function.
-#'
-#' @details 
+#' @param ... additional parameters for the \code{dist.matrix} function.
 #' 
-#' @return 
+#' @return An object of class \code{matrix} and \code{dist.matrix}, containing the
+#'    distances between all points to the specified points on the loess curve.
 #'
 #' @examples 
 #'   library(stats)
@@ -143,9 +142,11 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
      normCounts <- sweep(as.matrix(counts(sce)), 2, sizeFactors(sce), "/")
      if(is.null(rownames(normCounts))){
           rownames(normCounts) <- paste0("Gene_", 1:nrow(normCounts))
+          message("Count row names are empty, naming them now ... ")
      }
      if(is.null(colnames(normCounts))){
           colnames(normCounts) <- paste0("Cell_", 1:ncol(normCounts))
+          message("Count column names are empty, naming them now ... ")
      }
      
      ## keep genes with minExpression in at least minCells

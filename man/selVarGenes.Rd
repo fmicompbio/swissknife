@@ -82,7 +82,6 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
   are \code{Nmads} MADs away from the median are selected.
 }
 \examples{
-   example_sce <- ZeiselBrainData()
 
 }
 \author{

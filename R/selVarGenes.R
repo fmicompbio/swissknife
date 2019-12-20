@@ -124,6 +124,22 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
 #'   }
 #'   
 #' @examples 
+#'    # libraries
+#'    library(scater)
+#'    library(scran)
+#'    
+#'    # example sce
+#'    sce <- scater::mockSCE(ncells=500)
+#'  
+#'    # calculate sizeFactors
+#'    sce <- scran::computeSumFactors(sce)
+#'    
+#'    # select variable genes
+#'    varGenes <- selVarGenes(sce)
+#'    
+#'    # plot
+#'    plotSelVarGenesGroups(varGenes)
+#'    plotSelVarGenes(varGenes)
 #'
 #' @importFrom stats loess loess.control predict mad median quantile sd
 #' @importFrom SingleCellExperiment sizeFactors counts
@@ -217,12 +233,26 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
 #' @param main title for plot.
 #' @param asp the y/x aspect ratio.
 #' @param ... additional parameters for the \code{plot} function.
-#'
-#' @details 
 #' 
 #' @return plot
 #'
 #' @examples 
+#'    # libraries
+#'    library(scater)
+#'    library(scran)
+#'    
+#'    # example sce
+#'    sce <- scater::mockSCE(ncells=500)
+#'  
+#'    # calculate sizeFactors
+#'    sce <- scran::computeSumFactors(sce)
+#'    
+#'    # select variable genes
+#'    varGenes <- selVarGenes(sce)
+#'    
+#'    # plot
+#'    plotSelVarGenesGroups(varGenes)
+#'    
 #'
 #' @importFrom grDevices colors
 #' 
@@ -277,12 +307,26 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab="logMean",
 #' @param col point color.
 #' @param sel_col point color of the selected variable genes.
 #' @param ... additional parameters for the \code{plot} function.
-#'
-#' @details 
 #' 
 #' @return plot
 #'
 #' @examples 
+#'    # libraries
+#'    library(scater)
+#'    library(scran)
+#'    
+#'    # example sce
+#'    sce <- scater::mockSCE(ncells=500)
+#'  
+#'    # calculate sizeFactors
+#'    sce <- scran::computeSumFactors(sce)
+#'    
+#'    # select variable genes
+#'    varGenes <- selVarGenes(sce)
+#'    
+#'    # plot
+#'    plotSelVarGenes(varGenes)
+#'    
 #' 
 #' @export
 #' 

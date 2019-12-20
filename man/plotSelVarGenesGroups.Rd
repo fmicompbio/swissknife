@@ -34,10 +34,23 @@ This function take the output from \code{selVarGenes} and plots the group or bin
   gene has been assigned to on the scatter plot showing the log2 coefficient of variation as a
   function of the log2 mean.
 }
-\details{
-
-}
 \examples{
+   # libraries
+   library(scater)
+   library(scran)
+   
+   # example sce
+   sce <- scater::mockSCE(ncells=500)
+ 
+   # calculate sizeFactors
+   sce <- scran::computeSumFactors(sce)
+   
+   # select variable genes
+   varGenes <- selVarGenes(sce)
+   
+   # plot
+   plotSelVarGenesGroups(varGenes)
+   
 
 }
 \author{

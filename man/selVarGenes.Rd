@@ -82,6 +82,22 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
   are \code{Nmads} MADs away from the median are selected.
 }
 \examples{
+   # libraries
+   library(scater)
+   library(scran)
+   
+   # example sce
+   sce <- scater::mockSCE(ncells=500)
+ 
+   # calculate sizeFactors
+   sce <- scran::computeSumFactors(sce)
+   
+   # select variable genes
+   varGenes <- selVarGenes(sce)
+   
+   # plot
+   plotSelVarGenesGroups(varGenes)
+   plotSelVarGenes(varGenes)
 
 }
 \author{

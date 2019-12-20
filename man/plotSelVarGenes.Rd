@@ -40,10 +40,23 @@ This function take the output from \code{selVarGenes} and plots the genes that h
   selected to be highly variable across the cells. It plot the log2 coefficient of variation as
   a function of the log mean.
 }
-\details{
-
-}
 \examples{
+   # libraries
+   library(scater)
+   library(scran)
+   
+   # example sce
+   sce <- scater::mockSCE(ncells=500)
+ 
+   # calculate sizeFactors
+   sce <- scran::computeSumFactors(sce)
+   
+   # select variable genes
+   varGenes <- selVarGenes(sce)
+   
+   # plot
+   plotSelVarGenes(varGenes)
+   
 
 }
 \author{

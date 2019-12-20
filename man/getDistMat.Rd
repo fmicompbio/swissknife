@@ -2,7 +2,7 @@
 % Please edit documentation in R/selVarGenes.R
 \name{getDistMat}
 \alias{getDistMat}
-\title{Get (Euclidean) Distance}
+\title{Get Distance}
 \usage{
 getDistMat(
   loessModel = NULL,
@@ -27,7 +27,7 @@ getDistMat(
 \item{...}{additional parameters for the \code{dist.matrix} function.}
 }
 \value{
-an object of class \code{matrix} and \code{dist.matrix}, containing the
+An object of class \code{matrix} and \code{dist.matrix}, containing the
    distances between all points to the specified points on the loess curve.
 }
 \description{

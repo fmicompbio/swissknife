@@ -11,7 +11,7 @@ selVarGenes(
   minExpr = 1,
   topExprPerc = 0.01,
   span = 0.2,
-  control = loess.control(surface = "direct"),
+  control = stats::loess.control(surface = "direct"),
   binBreaks = 100,
   accurateDistBreaks = ceiling(nrow(sce)/4),
   ...

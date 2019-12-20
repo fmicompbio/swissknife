@@ -125,7 +125,8 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
 #'   
 #' @examples 
 #'
-#' @importFrom stats loess predict mad median
+#' @importFrom stats loess loess.control predict mad median quantile sd
+#' @importFrom SingleCellExperiment sizeFactors counts
 #' 
 #' @export
 #' 
@@ -136,10 +137,10 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
      ## checks
      if(is.null(sce)){stop("'sce' is empty")}
      if(class(sce)!="SingleCellExperiment"){stop("sce must be a SingleCellExperiment object")}
-     if(isEmpty(sizeFactors(sce))){stop("sce must contain sizeFactors to normalize the raw counts")}
+     if(is.null(SingleCellExperiment::sizeFactors(sce))){stop("sce must contain sizeFactors to normalize the raw counts")}
      
      ## normCounts
-     normCounts <- sweep(as.matrix(counts(sce)), 2, sizeFactors(sce), "/")
+     normCounts <- sweep(as.matrix(SingleCellExperiment::counts(sce)), 2, SingleCellExperiment::sizeFactors(sce), "/")
      if(is.null(rownames(normCounts))){
           rownames(normCounts) <- paste0("Gene_", 1:nrow(normCounts))
           message("Count row names are empty, naming them now ... ")
@@ -155,48 +156,48 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
      
      ## log2(mean expression) and log2(coefficient of variaition)
      logMean <- log2(rowMeans(normCounts))
-     logCV <- log2(apply(normCounts, 1, sd)/rowMeans(normCounts))
-     df <- data.frame(logMean = logMean, logCV = logCV)
+     logCV <- log2(apply(normCounts, 1, stats::sd)/rowMeans(normCounts))
+     datfr <- data.frame(logMean = logMean, logCV = logCV)
      
      ## loess fit, excluding the top topExprPerc
-     points_for_loess <- which(logMean < quantile(logMean, (1-topExprPerc)))
+     points_for_loess <- which(logMean < stats::quantile(logMean, (1-topExprPerc)))
      lo <- stats::loess(logCV ~ logMean, span = span, control = control, subset = points_for_loess, ...)
-     df$pred_logCV <- stats::predict(lo, newdata = df$logMean)
+     datfr$pred_logCV <- stats::predict(lo, newdata = datfr$logMean)
      
      ## assign to groups (min eucl distance to points on the loess curve)
      dist1 <- getDistMat(loessModel=lo, x=logMean, y=logCV, x_curve=seq(from = range(logMean)[1], to = range(logMean)[2], length.out = binBreaks))
-     df$bin_per_gene <- apply(X = dist1, MARGIN = 1, FUN = function(x){which.min(x)}) 
-     df$min_dist1_per_gene <- sapply(seq_along(df$bin_per_gene), function(i){dist1[i, df$bin_per_gene[i]]})
+     datfr$bin_per_gene <- apply(X = dist1, MARGIN = 1, FUN = function(x){which.min(x)}) 
+     datfr$min_dist1_per_gene <- sapply(seq_along(datfr$bin_per_gene), function(i){dist1[i, datfr$bin_per_gene[i]]})
      
      ## get more accurate eucl dist to the curve for each gene
      dist2 <- getDistMat(loessModel=lo, x=logMean, y=logCV, x_curve=seq(from = range(logMean)[1], to = range(logMean)[2], length.out = accurateDistBreaks))
      sel <- apply(X = dist2, MARGIN = 1, FUN = function(x){which.min(x)}) 
-     df$min_dist2_per_gene <- sapply(seq_along(sel), function(i){dist2[i, sel[i]]})
+     datfr$min_dist2_per_gene <- sapply(seq_along(sel), function(i){dist2[i, sel[i]]})
      
      ## give dist2 a sign: + for above the curve, and - for below the curve
      y_pred_for_x <- stats::predict(lo, newdata = logMean)
      w_down <- logCV < y_pred_for_x
-     df$min_dist2_per_gene[w_down] <- -df$min_dist2_per_gene[w_down]
+     datfr$min_dist2_per_gene[w_down] <- -datfr$min_dist2_per_gene[w_down]
      
      ## genes per group
-     genes_per_bin <- lapply(unique(df$bin_per_gene), function(i){rownames(df)[df$bin_per_gene==i]}) # assuming df has rownames!
-     names(genes_per_bin) <- unique(df$bin_per_gene)
+     genes_per_bin <- lapply(unique(datfr$bin_per_gene), function(i){rownames(datfr)[datfr$bin_per_gene==i]})
+     names(genes_per_bin) <- unique(datfr$bin_per_gene)
      
      ## MAD (this includes genes that were excluded from the loess) per group
-     mads <- sapply(genes_per_bin, function(x){stats::mad(df[x, ]$min_dist2_per_gene)})
+     mads <- sapply(genes_per_bin, function(x){stats::mad(datfr[x, ]$min_dist2_per_gene)})
      mads <- mads*Nmads
      
      ## select outlier genes per group
      out_genes <- unlist(lapply(seq_along(genes_per_bin), function(i){
           genes <- genes_per_bin[[i]]
-          distances <- df[genes, ]$min_dist2_per_gene
+          distances <- datfr[genes, ]$min_dist2_per_gene
           median <- stats::median(distances)
           genes[distances > (median + mads[i])]
      }))
      out_genes <- out_genes[!is.na(out_genes)]
      
      ## return outlier genes
-     list(varGenes=out_genes, geneInfo=df)
+     list(varGenes=out_genes, geneInfo=datfr)
      
 }
 
@@ -232,7 +233,7 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab="logMean",
                                   asp=1, ...) {
      
      ## checks
-     if(any(isEmpty(selVarGenes_list))){
+     if(any(is.null(selVarGenes_list))){
           stop("'selVarGenes_list' is empty")
      }
      if(class(selVarGenes_list)!="list"){
@@ -290,7 +291,7 @@ plotSelVarGenes <- function(selVarGenes_list = NULL, xlab="logMean",
                             pch=16, col="#BEBEBE40", sel_col="steelblue", ...) {
      
      ## checks
-     if(any(isEmpty(selVarGenes_list))){
+     if(any(is.null(selVarGenes_list))){
           stop("'selVarGenes_list' is empty")
      }
      if(class(selVarGenes_list)!="list"){

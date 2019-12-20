@@ -48,7 +48,7 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
      stopifnot(is.numeric(x_curve))
      stopifnot(is.numeric(x))
      stopifnot(is.numeric(y))
-     
+
      ## predict y_curv for x_curve using loessModel
      y_curve <- predict(loessModel, newdata = x_curve)
      

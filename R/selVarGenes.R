@@ -307,7 +307,9 @@ plotSelVarGenes <- function(selVarGenes_list = NULL, xlab="logMean",
           xlab=xlab, ylab=ylab, main=main, pch=pch, col=col, ...)
      points(selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logMean, selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logCV, 
             pch=pch, col=sel_col)
-     lines(df$logMean[order(df$logMean)], df$pred_logCV[order(df$logMean)], col="red")
+     lines(x = selVarGenes_list$geneInfo$logMean[order(selVarGenes_list$geneInfo$logMean)], 
+           y = selVarGenes_list$geneInfo$pred_logCV[order(selVarGenes_list$geneInfo$logMean)], 
+           col="red")
      legend("bottomleft", bty="n", col=c(sel_col, "red"), pch=c(pch, NA), 
             lty=c(NA, 1), legend=c("SelVarGene", "loess fit"))
      

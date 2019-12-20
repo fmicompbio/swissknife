@@ -131,7 +131,7 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
 #' @export
 #' 
 selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprPerc = 0.01, span = 0.2, 
-                        control=loess.control(surface = "direct"), binBreaks=100, 
+                        control=stats::loess.control(surface = "direct"), binBreaks=100, 
                         accurateDistBreaks = ceiling(nrow(sce)/4), ...){
      
      ## checks

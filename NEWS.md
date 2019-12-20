@@ -1,3 +1,7 @@
+# swissknife 0.16
+
+* Add R/selVarGenes.R to select variable genes in a single cell RNA-seq experiment
+
 # swissknife 0.15
 
 * Allow specification of colors for coverage tracks in plotGeneRegion

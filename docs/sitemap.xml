@@ -19,6 +19,9 @@
     <loc>http://fmicompbio.github.io/swissknife/reference/estimateNRL.html</loc>
   </url>
   <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/getDistMat.html</loc>
+  </url>
+  <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/parsePkgVersions.html</loc>
   </url>
   <url>
@@ -31,6 +34,12 @@
     <loc>http://fmicompbio.github.io/swissknife/reference/plotPhasogram.html</loc>
   </url>
   <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/plotSelVarGenes.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/plotSelVarGenesGroups.html</loc>
+  </url>
+  <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/prepareGTF.html</loc>
   </url>
   <url>
@@ -38,6 +47,9 @@
   </url>
   <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/sampleControlElements.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/selVarGenes.html</loc>
   </url>
   <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/swissknife-package.html</loc>

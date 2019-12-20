@@ -24,18 +24,16 @@ getDistMat(
 
 \item{method}{distance measure to be used.}
 
-\item{...}{additional parameters for the \code(dist.matrix) function.}
+\item{...}{additional parameters for the \code{dist.matrix} function.}
 }
 \value{
-
+an object of class \code{matrix} and \code{dist.matrix}, containing the
+   distances between all points to the specified points on the loess curve.
 }
 \description{
 This function gets the euclidean (by default) distances between all points in a 2-D coordinate 
   system (x,y) to a group of points that fall on a fitted loess curve. It uses the \code{dist.matrix} 
   function from the \code{wordspace} package.It is used in the \code{selVarGenes} function.
-}
-\details{
-
 }
 \examples{
   library(stats)

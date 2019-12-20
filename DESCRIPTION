@@ -37,7 +37,8 @@ Imports:
     GenomeInfoDb,
     Gviz,
     S4Vectors,
-    rtracklayer
+    rtracklayer,
+    wordspace
 LinkingTo: 
     Rcpp
 VignetteBuilder: knitr

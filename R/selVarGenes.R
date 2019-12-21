@@ -228,7 +228,6 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
 }
 
 
-
 #' @title Plot Groups Genes Have Been Assigned to
 #' 
 #' @description This function take the output from \code{selVarGenes} and plots the group or bin each
@@ -306,8 +305,6 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab="logMean",
      invisible(TRUE)
      
 }
-
-
 
 
 #' @title Plot Selected Variable Genes

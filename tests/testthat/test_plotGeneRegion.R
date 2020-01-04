@@ -19,7 +19,7 @@ test_that("prepareGTF works", {
     expect_true("transcript" %in% colnames(S4Vectors::mcols(gtf)))
     expect_true("gene" %in% colnames(S4Vectors::mcols(gtf)))
     expect_true("gene_name" %in% colnames(S4Vectors::mcols(gtf)))
-    expect_true(all(gtf$type == "exon"))
+    expect_true(all(gtf$type %in% c("exon", "gene")))
     
     expect_message(prepareGTF(gtffile, transcriptIdColumn = "transcript_id",
                               geneIdColumn = "gene_id", 

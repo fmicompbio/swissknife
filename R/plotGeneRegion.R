@@ -309,14 +309,14 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
         }
         
         ## Other features in the region
-        gro <- grangesgene[IRanges::overlapsAny(
-            grangesgene,
+        grogene <- BiocGenerics::subset(grangesgene, !(gene %in% gr$gene))
+        gro <- grogene[IRanges::overlapsAny(
+            grogene,
             GenomicRanges::GRanges(seqnames = chr,
                                    ranges = IRanges::IRanges(start = start,
                                                              end = end),
                                    strand = "*"))]
         gro <- BiocGenerics::subset(granges, gene %in% gro$gene)
-        gro <- gro[!(S4Vectors::`%in%`(gro, gr))]
         
         grtr <- Gviz::GeneRegionTrack(gr, showId = TRUE, col = NULL, fill = "gray80",
                                       name = geneTrackTitle, col.title = "black")

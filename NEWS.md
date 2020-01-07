@@ -1,3 +1,7 @@
+# swissknife 0.17
+
+* Add R/selVarGenes.R to select variable genes in a single cell RNA-seq experiment
+
 # swissknife 0.16
 
 * Show features that overlap selected regions only with their introns in plotGeneRegion

@@ -1,3 +1,7 @@
+# swissknife 0.16
+
+* Show features that overlap selected regions only with their introns in plotGeneRegion
+
 # swissknife 0.15
 
 * Allow specification of colors for coverage tracks in plotGeneRegion

@@ -57,7 +57,7 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
     }
     
     ## Keep only exons
-    gtf <- BiocGenerics::subset(gtf, type == "exon")
+    gtf <- BiocGenerics::subset(gtf, type %in% c("exon", "gene"))
     
     gtf
 }
@@ -261,6 +261,13 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
         stop("Either an annotation has to be given, or the viewing region must be set")
     }
     
+    ## Extract full gene loci into its own GRanges object, in order to 
+    ## show also features where only the introns overlap the selected region
+    if (!is.null(granges)) {
+        grangesgene <- BiocGenerics::subset(granges, type == "gene")
+        granges <- BiocGenerics::subset(granges, type == "exon")
+    }
+    
     if (!is.na(start)) {
         start <- as.integer(start)
     }
@@ -292,22 +299,24 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
             start <- min(BiocGenerics::start(gr))
             end <- max(BiocGenerics::end(gr))
         } else {
-            gr <- granges[IRanges::overlapsAny(
-                granges,
+            gr <- grangesgene[IRanges::overlapsAny(
+                grangesgene,
                 GenomicRanges::GRanges(seqnames = chr,
                                        ranges = IRanges::IRanges(start = start,
                                                                  end = end),
                                        strand = "*")), ]
+            gr <- BiocGenerics::subset(granges, gene %in% gr$gene)
         }
         
         ## Other features in the region
-        gro <- granges[IRanges::overlapsAny(
-            granges,
+        grogene <- BiocGenerics::subset(grangesgene, !(gene %in% gr$gene))
+        gro <- grogene[IRanges::overlapsAny(
+            grogene,
             GenomicRanges::GRanges(seqnames = chr,
                                    ranges = IRanges::IRanges(start = start,
                                                              end = end),
                                    strand = "*"))]
-        gro <- gro[!(S4Vectors::`%in%`(gro, gr))]
+        gro <- BiocGenerics::subset(granges, gene %in% gro$gene)
         
         grtr <- Gviz::GeneRegionTrack(gr, showId = TRUE, col = NULL, fill = "gray80",
                                       name = geneTrackTitle, col.title = "black")

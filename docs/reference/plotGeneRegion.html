@@ -71,7 +71,7 @@ file(s)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.17</span>
       </span>
     </div>
 
@@ -135,7 +135,12 @@ file(s).</p>
   <span class='kw'>geneIdColumn</span> <span class='kw'>=</span> <span class='st'>"gene_id"</span>,
   <span class='kw'>geneSymbolColumn</span> <span class='kw'>=</span> <span class='st'>"gene_name"</span>,
   <span class='kw'>lowerPadding</span> <span class='kw'>=</span> <span class='fl'>0.15</span>,
-  <span class='kw'>upperPadding</span> <span class='kw'>=</span> <span class='fl'>0.05</span>
+  <span class='kw'>upperPadding</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
+  <span class='kw'>colorByStrand</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>featureColors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>plusmain</span> <span class='kw'>=</span> <span class='st'>"#0E14D0"</span>, <span class='kw'>minusmain</span> <span class='kw'>=</span> <span class='st'>"#D0350E"</span>, <span class='kw'>plusother</span> <span class='kw'>=</span> <span class='st'>"#9E9BEB"</span>,
+    <span class='kw'>minusother</span> <span class='kw'>=</span> <span class='st'>"#DA907E"</span>),
+  <span class='kw'>condColors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>scaleDataTracks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -203,6 +208,28 @@ Passed to <code>prepareGTF</code>.</p></td>
 padding in the lower and upper range of the plot, respectively. For 
 example, a value of 0.05 will expand the range by 
 0.05 * (max coordinate - min coordinate) in the specified direction.</p></td>
+    </tr>
+    <tr>
+      <th>colorByStrand</th>
+      <td><p>Logical scalar, determining whether gene features are 
+colored by the annotated strand.</p></td>
+    </tr>
+    <tr>
+      <th>featureColors</th>
+      <td><p>Named character vector of length 4, with elements 
+<code>plusmain</code>, <code>minusmain</code>, <code>plusother</code>, <code>minusother</code>, 
+giving the colors to use for the features if <code>colorByStrand</code> is TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>condColors</th>
+      <td><p>Either NULL or a named character vector (with the same 
+names as the unique values of <code>bigwigCond</code>), giving the colors to use
+for the coverage tracks if <code>bigwigCond</code> is provided.</p></td>
+    </tr>
+    <tr>
+      <th>scaleDataTracks</th>
+      <td><p>Logical scalar, indicating whether the data tracks 
+should be scaled to have the same y-axis limits.</p></td>
     </tr>
     </table>
 

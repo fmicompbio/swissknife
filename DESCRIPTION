@@ -1,4 +1,4 @@
-Package: swissknife
+Package: swissknife 
 Title: Handy code shared in the FMI CompBio group
 Version: 0.16.1
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),

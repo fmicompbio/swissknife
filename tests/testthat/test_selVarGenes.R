@@ -27,3 +27,87 @@ test_that("getDistMat() works properly", {
 
 })
 
+
+test_that("selVarGenes() works properly", {
+        
+        ## create data
+        mu <- ceiling(runif(n = 2000, min = 0, max = 100))
+        counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
+        counts <- counts + 1
+        i <- sample(x = 1:nrow(counts), size = 500)
+        j <- sample(x = 1:ncol(counts), size = 500)
+        counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
+        sce <- SingleCellExperiment::SingleCellExperiment(list(counts=counts))
+        libsizes <- colSums(counts)
+        SingleCellExperiment::sizeFactors(sce) <- libsizes/mean(libsizes)
+        
+        ## run function
+        sel <- selVarGenes(sce = sce)
+          
+        ## tests
+        expect_error(selVarGenes())
+        expect_error(selVarGenes(sce = mu))
+        expect_error(selVarGenes(sce = SingleCellExperiment::SingleCellExperiment(list(counts=counts))))
+        expect_true(all(sel$varGenes%in%rownames(sel$geneInfo)))
+        expect_true(!is.null(sel$varGenes))
+        
+})
+
+
+test_that("plotSelVarGenesGroups() works properly", {
+        
+        ## create data
+        mu <- ceiling(runif(n = 2000, min = 0, max = 100))
+        counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
+        counts <- counts + 1
+        i <- sample(x = 1:nrow(counts), size = 500)
+        j <- sample(x = 1:ncol(counts), size = 500)
+        counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
+        sce <- SingleCellExperiment::SingleCellExperiment(list(counts=counts))
+        libsizes <- colSums(counts)
+        SingleCellExperiment::sizeFactors(sce) <- libsizes/mean(libsizes)
+        
+        ## run selVarGenes
+        sel <- selVarGenes(sce = sce)
+        
+        ## tests
+        expect_true(plotSelVarGenesGroups(sel))
+        expect_error(plotSelVarGenesGroups())
+        expect_error(plotSelVarGenesGroups(mu))
+        expect_error(plotSelVarGenesGroups(list(mu=mu)))
+        
+})
+
+
+test_that("plotSelVarGenes() works properly", {
+        
+        ## create data
+        mu <- ceiling(runif(n = 2000, min = 0, max = 100))
+        counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
+        counts <- counts + 1
+        i <- sample(x = 1:nrow(counts), size = 500)
+        j <- sample(x = 1:ncol(counts), size = 500)
+        counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
+        sce <- SingleCellExperiment::SingleCellExperiment(list(counts=counts))
+        libsizes <- colSums(counts)
+        SingleCellExperiment::sizeFactors(sce) <- libsizes/mean(libsizes)
+        
+        ## run selVarGenes
+        sel <- selVarGenes(sce = sce)
+        
+        ## tests
+        expect_true(plotSelVarGenes(sel))
+        expect_error(plotSelVarGenes())
+        expect_error(plotSelVarGenes(mu))
+        expect_error(plotSelVarGenes(list(mu=mu)))
+        
+})
+
+
+
+
+
+
+
+
+

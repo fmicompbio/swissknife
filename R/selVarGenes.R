@@ -38,14 +38,14 @@
 #' 
 #' @export
 #' 
-getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="euclidean", ...){
+getDistMat <- function(loessModel = NULL, x = NULL, y = NULL, x_curve = NULL, method = "euclidean", ...){
      
      ## checks
      stopifnot(!is.null(x_curve))
      stopifnot(!is.null(x))
      stopifnot(!is.null(y))
      stopifnot(!is.null(loessModel))
-     stopifnot(length(x)==length(y))
+     stopifnot(length(x) == length(y))
      stopifnot(is.numeric(x_curve))
      stopifnot(is.numeric(x))
      stopifnot(is.numeric(y))
@@ -54,12 +54,12 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
      y_curve <- stats::predict(loessModel, newdata = x_curve)
      
      ## get distances
-     distMat <- wordspace::dist.matrix(M = cbind(x,y), M2 = cbind(x_curve, y_curve), method = method, ... )
-     colnames(distMat) <- paste0("pointOnCurve", 1:length(y_curve))
-     if(!is.null(names(x))){
+     distMat <- wordspace::dist.matrix(M = cbind(x, y), M2 = cbind(x_curve, y_curve), method = method, ... )
+     colnames(distMat) <- paste0("pointOnCurve", seq_len(length(y_curve)))
+     if (!is.null(names(x))) {
           rownames(distMat) <- names(x)
      } else {
-          rownames(distMat) <- paste0("xy", 1:length(x))
+          rownames(distMat) <- paste0("xy", seq_len(length(x)))
      }
      
      ## return
@@ -70,13 +70,13 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
 
 #' @title Select Variable Genes in Single Cell RNA-seq
 #' 
-#' @description This function selects the most variable genes from a \code{Single Cell Experiment} object
+#' @description This function selects the most variable genes from a \code{SingleCellExperiment} object
 #'   using the plot that displays the log2 coefficient of variation as a function of the log2 mean for 
 #'   all genes across all the cells.
 #' 
 #' @author Dania Machlab 
 #' 
-#' @param sce \code{SingleCellExperiment} object containing the raw counts and the scaling factors.
+#' @param sce \code{SingleCellExperiment} object containing the raw counts and the size factors.
 #' @param Nmads number of MADs beyond which genes are selected per bin.
 #' @param minCells keep genes with minimum expression in at least this number of cells.
 #' @param minExpr keep genes with expression greater than or equal to this in \code{minCells} cells using 
@@ -119,13 +119,13 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
 #'                         \item logCV: log2(coefficient of variation) of genes across cells.
 #'                         \item pred_logCV: predicted log2(coefficient of variation) from loess fit.
 #'                         \item bin_per_gene: bin each gene has been assigned to.
-#'                         \item min_dist1_per_gene: first round of calcultaing distances.
-#'                         \item min_dist2_per_gene: second round of calcultaing more accurate distances
+#'                         \item min_dist1_per_gene: first round of calculating distances.
+#'                         \item min_dist2_per_gene: second round of calculating more accurate distances
 #'                      }
 #'   }
 #'   
 #' @examples 
-#'    # libraries
+#'    # packages
 #'    library(SingleCellExperiment)
 #'    
 #'    # create example count matrix
@@ -141,7 +141,7 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
 #'    # create SCE
 #'    sce <- SingleCellExperiment(list(counts=counts))
 #'    
-#'    # caclulate sizeFactors
+#'    # calculate sizeFactors
 #'    libsizes <- colSums(counts)
 #'    sizeFactors(sce) <- libsizes/mean(libsizes)
 #'  
@@ -158,46 +158,57 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
 #' @export
 #' 
 selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprPerc = 0.01, span = 0.2, 
-                        control=stats::loess.control(surface = "direct"), binBreaks=100, 
+                        control=stats::loess.control(surface = "direct"), binBreaks = 100, 
                         accurateDistBreaks = ceiling(nrow(sce)/4), ...){
      
      ## checks
-     if(is.null(sce)){stop("'sce' is empty")}
-     if(class(sce)!="SingleCellExperiment"){stop("sce must be a SingleCellExperiment object")}
-     if(is.null(SingleCellExperiment::sizeFactors(sce))){stop("sce must contain sizeFactors to normalize the raw counts")}
+     if (is.null(sce)) {stop("'sce' is empty")}
+     if (!is(sce, "SingleCellExperiment")) {stop("sce must be a SingleCellExperiment object")}
+     if (is.null(SingleCellExperiment::sizeFactors(sce))) {
+             stop("sce must contain sizeFactors to normalize the raw counts")
+     }
      
      ## normCounts
-     normCounts <- sweep(as.matrix(SingleCellExperiment::counts(sce)), 2, SingleCellExperiment::sizeFactors(sce), "/")
-     if(is.null(rownames(normCounts))){
-          rownames(normCounts) <- paste0("Gene_", 1:nrow(normCounts))
+     normCounts <- sweep(as.matrix(SingleCellExperiment::counts(sce)), 2, 
+                         SingleCellExperiment::sizeFactors(sce), "/")
+     if (is.null(rownames(normCounts))) {
+          rownames(normCounts) <- paste0("Gene_", seq_len(nrow(normCounts)))
           message("Count row names are empty, naming them now ... ")
      }
-     if(is.null(colnames(normCounts))){
-          colnames(normCounts) <- paste0("Cell_", 1:ncol(normCounts))
+     if (is.null(colnames(normCounts))) {
+          colnames(normCounts) <- paste0("Cell_", seq_len(ncol(normCounts)))
           message("Count column names are empty, naming them now ... ")
      }
      
      ## keep genes with minExpression in at least minCells
-     keep <- rowSums(normCounts>=minExpr) >= minCells
-     normCounts <- normCounts[keep, ]
+     keep <- rowSums(normCounts >= minExpr) >= minCells
+     normCounts <- normCounts[keep, , drop = FALSE]
      
-     ## log2(mean expression) and log2(coefficient of variaition)
+     ## log2(mean expression) and log2(coefficient of variation)
      logMean <- log2(rowMeans(normCounts))
      logCV <- log2(apply(normCounts, 1, stats::sd)/rowMeans(normCounts))
      datfr <- data.frame(logMean = logMean, logCV = logCV)
      
      ## loess fit, excluding the top topExprPerc
-     points_for_loess <- which(logMean < stats::quantile(logMean, (1-topExprPerc)))
-     lo <- stats::loess(logCV ~ logMean, span = span, control = control, subset = points_for_loess, ...)
+     points_for_loess <- which(logMean < stats::quantile(logMean, (1 - topExprPerc)))
+     lo <- stats::loess(logCV ~ logMean, span = span, control = control, 
+                        subset = points_for_loess, ...)
      datfr$pred_logCV <- stats::predict(lo, newdata = datfr$logMean)
      
      ## assign to groups (min eucl distance to points on the loess curve)
-     dist1 <- getDistMat(loessModel=lo, x=logMean, y=logCV, x_curve=seq(from = range(logMean)[1], to = range(logMean)[2], length.out = binBreaks))
+     dist1 <- getDistMat(loessModel = lo, x = logMean, y = logCV, 
+                         x_curve = seq(from = range(logMean)[1], 
+                                       to = range(logMean)[2], 
+                                       length.out = binBreaks))
      datfr$bin_per_gene <- apply(X = dist1, MARGIN = 1, FUN = function(x){which.min(x)}) 
-     datfr$min_dist1_per_gene <- sapply(seq_along(datfr$bin_per_gene), function(i){dist1[i, datfr$bin_per_gene[i]]})
+     datfr$min_dist1_per_gene <- sapply(seq_along(datfr$bin_per_gene), 
+                                        function(i){dist1[i, datfr$bin_per_gene[i]]})
      
      ## get more accurate eucl dist to the curve for each gene
-     dist2 <- getDistMat(loessModel=lo, x=logMean, y=logCV, x_curve=seq(from = range(logMean)[1], to = range(logMean)[2], length.out = accurateDistBreaks))
+     dist2 <- getDistMat(loessModel = lo, x = logMean, y = logCV, 
+                         x_curve = seq(from = range(logMean)[1], 
+                                       to = range(logMean)[2], 
+                                       length.out = accurateDistBreaks))
      sel <- apply(X = dist2, MARGIN = 1, FUN = function(x){which.min(x)}) 
      datfr$min_dist2_per_gene <- sapply(seq_along(sel), function(i){dist2[i, sel[i]]})
      
@@ -207,7 +218,8 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
      datfr$min_dist2_per_gene[w_down] <- -datfr$min_dist2_per_gene[w_down]
      
      ## genes per group
-     genes_per_bin <- lapply(unique(datfr$bin_per_gene), function(i){rownames(datfr)[datfr$bin_per_gene==i]})
+     genes_per_bin <- lapply(unique(datfr$bin_per_gene), 
+                             function(i){rownames(datfr)[datfr$bin_per_gene == i]})
      names(genes_per_bin) <- unique(datfr$bin_per_gene)
      
      ## MAD (this includes genes that were excluded from the loess) per group
@@ -224,7 +236,7 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
      out_genes <- out_genes[!is.na(out_genes)]
      
      ## return outlier genes
-     list(varGenes=out_genes, geneInfo=datfr)
+     list(varGenes = out_genes, geneInfo = datfr)
      
 }
 
@@ -247,7 +259,7 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
 #' @return plot
 #'
 #' @examples 
-#'    # libraries
+#'    # packages
 #'    library(SingleCellExperiment)
 #'    
 #'    # create example count matrix
@@ -263,7 +275,7 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
 #'    # create SCE
 #'    sce <- SingleCellExperiment(list(counts=counts))
 #'    
-#'    # caclulate sizeFactors
+#'    # calculate sizeFactors
 #'    libsizes <- colSums(counts)
 #'    sizeFactors(sce) <- libsizes/mean(libsizes)
 #'  
@@ -277,30 +289,30 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
 #' 
 #' @export
 #' 
-plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab="logMean", 
-                                  ylab="logCV", main = "Group Assignment per Gene", 
-                                  asp=1, ...) {
+plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab = "logMean", 
+                                  ylab = "logCV", main = "Group Assignment per Gene", 
+                                  asp = 1, ...) {
      
      ## checks
-     if(any(is.null(selVarGenes_list))){
+     if (any(is.null(selVarGenes_list))) {
           stop("'selVarGenes_list' is empty")
      }
-     if(class(selVarGenes_list)!="list"){
+     if (!is(selVarGenes_list, "list")) {
           stop("'selVarGenes_list' must be of class 'list'")
      }
-     if(!all(names(selVarGenes_list)%in%c("varGenes", "geneInfo"))){
+     if (!all(names(selVarGenes_list) %in% c("varGenes", "geneInfo"))) {
           stop("names of 'selVarGenes_list' must be 'varGenes' and 'geneInfo', 
            the output from the 'selVarGenes' function")
      }
      
      ## prepare for plot
-     colors <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert=TRUE)]
+     colors <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = TRUE)]
      yHat_cols <- sample(colors, length(unique(selVarGenes_list$geneInfo$bin_per_gene)))
      cols <- yHat_cols[selVarGenes_list$geneInfo$bin_per_gene]
      
      ## plot
-     plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, bg=cols, pch=21, 
-          asp=asp, xlab=xlab, ylab=ylab, main=main, ...)
+     plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 
+          bg = cols, pch = 21, asp = asp, xlab = xlab, ylab = ylab, main = main, ...)
      
      ## return TRUE
      invisible(TRUE)
@@ -328,7 +340,7 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab="logMean",
 #' @return plot
 #'
 #' @examples 
-#'    # libraries
+#'    # packages
 #'    library(SingleCellExperiment)
 #'    
 #'    # create example count matrix
@@ -344,7 +356,7 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab="logMean",
 #'    # create SCE
 #'    sce <- SingleCellExperiment(list(counts=counts))
 #'    
-#'    # caclulate sizeFactors
+#'    # calculate sizeFactors
 #'    libsizes <- colSums(counts)
 #'    sizeFactors(sce) <- libsizes/mean(libsizes)
 #'  
@@ -356,32 +368,33 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab="logMean",
 #' 
 #' @export
 #' 
-plotSelVarGenes <- function(selVarGenes_list = NULL, xlab="logMean", 
-                            ylab="logCV", main = "Selected Variable Genes", 
-                            pch=16, col="#BEBEBE40", sel_col="steelblue", ...) {
+plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean", 
+                            ylab = "logCV", main = "Selected Variable Genes", 
+                            pch = 16, col = "#BEBEBE40", sel_col = "steelblue", ...) {
      
      ## checks
-     if(any(is.null(selVarGenes_list))){
+     if (any(is.null(selVarGenes_list))) {
           stop("'selVarGenes_list' is empty")
      }
-     if(class(selVarGenes_list)!="list"){
+     if (!is(selVarGenes_list, "list")) {
           stop("'selVarGenes_list' must be of class 'list'")
      }
-     if(!all(names(selVarGenes_list)%in%c("varGenes", "geneInfo"))){
+     if (!all(names(selVarGenes_list) %in% c("varGenes", "geneInfo"))) {
           stop("names of 'selVarGenes_list' must be 'varGenes' and 'geneInfo', 
            the output from the 'selVarGenes' function")
      }
      
      ## plot
      plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 
-          xlab=xlab, ylab=ylab, main=main, pch=pch, col=col, ...)
-     points(selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logMean, selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logCV, 
-            pch=pch, col=sel_col)
+          xlab = xlab, ylab = ylab, main = main, pch = pch, col = col, ...)
+     points(selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logMean, 
+            selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logCV, 
+            pch = pch, col = sel_col)
      lines(x = selVarGenes_list$geneInfo$logMean[order(selVarGenes_list$geneInfo$logMean)], 
            y = selVarGenes_list$geneInfo$pred_logCV[order(selVarGenes_list$geneInfo$logMean)], 
-           col="red")
-     legend("bottomleft", bty="n", col=c(sel_col, "red"), pch=c(pch, NA), 
-            lty=c(NA, 1), legend=c("SelVarGene", "loess fit"))
+           col = "red")
+     legend("bottomleft", bty = "n", col = c(sel_col, "red"), pch = c(pch, NA), 
+            lty = c(NA, 1), legend = c("SelVarGene", "loess fit"))
      
      ## return TRUE
      invisible(TRUE)

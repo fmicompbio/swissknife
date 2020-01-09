@@ -18,7 +18,7 @@ selVarGenes(
 )
 }
 \arguments{
-\item{sce}{\code{SingleCellExperiment} object containing the raw counts and the scaling factors.}
+\item{sce}{\code{SingleCellExperiment} object containing the raw counts and the size factors.}
 
 \item{Nmads}{number of MADs beyond which genes are selected per bin.}
 
@@ -51,13 +51,13 @@ a \code{list} of length 2:
                         \item logCV: log2(coefficient of variation) of genes across cells.
                         \item pred_logCV: predicted log2(coefficient of variation) from loess fit.
                         \item bin_per_gene: bin each gene has been assigned to.
-                        \item min_dist1_per_gene: first round of calcultaing distances.
-                        \item min_dist2_per_gene: second round of calcultaing more accurate distances
+                        \item min_dist1_per_gene: first round of calculating distances.
+                        \item min_dist2_per_gene: second round of calculating more accurate distances
                      }
   }
 }
 \description{
-This function selects the most variable genes from a \code{Single Cell Experiment} object
+This function selects the most variable genes from a \code{SingleCellExperiment} object
   using the plot that displays the log2 coefficient of variation as a function of the log2 mean for 
   all genes across all the cells.
 }
@@ -82,7 +82,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
   are \code{Nmads} MADs away from the median are selected.
 }
 \examples{
-   # libraries
+   # packages
    library(SingleCellExperiment)
    
    # create example count matrix
@@ -98,7 +98,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
    # create SCE
    sce <- SingleCellExperiment(list(counts=counts))
    
-   # caclulate sizeFactors
+   # calculate sizeFactors
    libsizes <- colSums(counts)
    sizeFactors(sce) <- libsizes/mean(libsizes)
  

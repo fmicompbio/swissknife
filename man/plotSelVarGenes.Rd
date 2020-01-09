@@ -41,7 +41,7 @@ This function take the output from \code{selVarGenes} and plots the genes that h
   a function of the log mean.
 }
 \examples{
-   # libraries
+   # packages
    library(SingleCellExperiment)
    
    # create example count matrix
@@ -57,7 +57,7 @@ This function take the output from \code{selVarGenes} and plots the genes that h
    # create SCE
    sce <- SingleCellExperiment(list(counts=counts))
    
-   # caclulate sizeFactors
+   # calculate sizeFactors
    libsizes <- colSums(counts)
    sizeFactors(sce) <- libsizes/mean(libsizes)
  

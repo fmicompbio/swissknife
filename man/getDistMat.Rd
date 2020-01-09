@@ -32,7 +32,7 @@ An object of class \code{matrix} and \code{dist.matrix}, containing the
 }
 \description{
 This function gets the euclidean (by default) distances between all points in a 2-D coordinate 
-  system (x,y) to a group of points that fall on a fitted loess curve. It uses the \code{dist.matrix} 
+  system (x,y) to a group of points that fall on a fitted loess curve. It uses the \code{\link[wordspace]{dist.matrix}}
   function from the \code{wordspace} package.It is used in the \code{selVarGenes} function.
 }
 \examples{
@@ -49,11 +49,11 @@ This function gets the euclidean (by default) distances between all points in a 
   lines(x_curve, predict(lo, newdata = x_curve), col = "red")
   
   # get euclidean distance of all points to the curve (red)
-  euclMat <- .getDistMat(loessModel = lo, x = x, y = y, x_curve = x_curve)
+  euclMat <- swissknife:::.getDistMat(loessModel = lo, x = x, y = y, x_curve = x_curve)
   euclMat[1:6, 1:6]
 
 }
 \author{
 Dania Machlab
 }
-\keyword{INTERNAL}
+\keyword{internal}

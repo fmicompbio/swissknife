@@ -34,6 +34,7 @@
 #'   euclMat[1:6, 1:6]
 #'
 #' @importFrom wordspace dist.matrix
+#' @importFrom stats predict
 #' 
 #' @export
 #' 
@@ -50,7 +51,7 @@ getDistMat <- function(loessModel=NULL, x=NULL, y=NULL, x_curve=NULL, method="eu
      stopifnot(is.numeric(y))
 
      ## predict y_curv for x_curve using loessModel
-     y_curve <- predict(loessModel, newdata = x_curve)
+     y_curve <- stats::predict(loessModel, newdata = x_curve)
      
      ## get distances
      distMat <- wordspace::dist.matrix(M = cbind(x,y), M2 = cbind(x_curve, y_curve), method = method, ... )

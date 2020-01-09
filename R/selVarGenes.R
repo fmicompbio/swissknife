@@ -38,7 +38,7 @@
 #' 
 #' @keywords internal
 #' 
-getDistMat <- function(loessModel = NULL, x = NULL, y = NULL, x_curve = NULL, method = "euclidean", ...){
+.getDistMat <- function(loessModel = NULL, x = NULL, y = NULL, x_curve = NULL, method = "euclidean", ...){
      
      ## checks
      stopifnot(!is.null(x_curve))

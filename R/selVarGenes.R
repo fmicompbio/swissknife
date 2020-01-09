@@ -336,6 +336,8 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab = "logMean",
 #' @param pch point pch.
 #' @param col point color.
 #' @param sel_col point color of the selected variable genes.
+#' @param colByGroup if TRUE, color the genes by the bin they've been assigned to.
+#' @param asp the y/x aspect ratio. Set to 1 when \code{colByGroup} is TRUE.
 #' @param ... additional parameters for the \code{plot} function.
 #' 
 #' @return plot
@@ -371,7 +373,8 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab = "logMean",
 #' 
 plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean", 
                             ylab = "logCV", main = "Selected Variable Genes", 
-                            pch = 16, col = "#BEBEBE40", sel_col = "steelblue", ...) {
+                            pch = 16, col = "#BEBEBE40", sel_col = "steelblue", 
+                            colByGroup = FALSE, asp = 1, ...) {
      
      ## checks
      if (any(is.null(selVarGenes_list))) {
@@ -384,21 +387,41 @@ plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean",
           stop("names of 'selVarGenes_list' must be 'varGenes' and 'geneInfo', 
            the output from the 'selVarGenes' function")
      }
-     
+             
      ## plot
-     plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 
-          xlab = xlab, ylab = ylab, main = main, pch = pch, col = col, ...)
-     points(selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logMean, 
-            selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logCV, 
-            pch = pch, col = sel_col)
-     lines(x = selVarGenes_list$geneInfo$logMean[order(selVarGenes_list$geneInfo$logMean)], 
-           y = selVarGenes_list$geneInfo$pred_logCV[order(selVarGenes_list$geneInfo$logMean)], 
-           col = "red")
-     legend("bottomleft", bty = "n", col = c(sel_col, "red"), pch = c(pch, NA), 
-            lty = c(NA, 1), legend = c("SelVarGene", "loess fit"))
+     if(colByGroup) {
+             
+          ## prepare for plot
+          colors <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = TRUE)]
+          yHat_cols <- sample(colors, length(unique(selVarGenes_list$geneInfo$bin_per_gene)))
+          grpCols <- yHat_cols[selVarGenes_list$geneInfo$bin_per_gene]
+             
+          ## plot
+          plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 
+               xlab = xlab, ylab = ylab, main = main, pch = pch, col = grpCols, 
+               asp = asp, pch = pch, ...)
+          
+          ## return TRUE
+          invisible(TRUE)
+             
+     } else {
+        
+          plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 
+               xlab = xlab, ylab = ylab, main = main, pch = pch, col = col, ...)
+          points(selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logMean, 
+                 selVarGenes_list$geneInfo[selVarGenes_list$varGenes, ]$logCV, 
+                 pch = pch, col = sel_col)
+          lines(x = selVarGenes_list$geneInfo$logMean[order(selVarGenes_list$geneInfo$logMean)], 
+                y = selVarGenes_list$geneInfo$pred_logCV[order(selVarGenes_list$geneInfo$logMean)], 
+                col = "red")
+          legend("bottomleft", bty = "n", col = c(sel_col, "red"), pch = c(pch, NA), 
+                 lty = c(NA, 1), legend = c("SelVarGene", "loess fit"))
+          
+          ## return TRUE
+          invisible(TRUE)
      
-     ## return TRUE
-     invisible(TRUE)
+     }
+
      
 }
 

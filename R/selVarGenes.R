@@ -30,13 +30,13 @@
 #'   lines(x_curve, predict(lo, newdata = x_curve), col = "red")
 #'   
 #'   # get euclidean distance of all points to the curve (red)
-#'   euclMat <- getDistMat(loessModel = lo, x = x, y = y, x_curve = x_curve)
+#'   euclMat <- .getDistMat(loessModel = lo, x = x, y = y, x_curve = x_curve)
 #'   euclMat[1:6, 1:6]
 #'
 #' @importFrom wordspace dist.matrix
 #' @importFrom stats predict
 #' 
-#' @export
+#' @keywords INTERNAL
 #' 
 getDistMat <- function(loessModel = NULL, x = NULL, y = NULL, x_curve = NULL, method = "euclidean", ...){
      
@@ -81,7 +81,8 @@ getDistMat <- function(loessModel = NULL, x = NULL, y = NULL, x_curve = NULL, me
 #' @param minCells keep genes with minimum expression in at least this number of cells.
 #' @param minExpr keep genes with expression greater than or equal to this in \code{minCells} cells using 
 #'    the raw count matrix corrected for library size differences using the sizeFactors from \code{sce}.
-#' @param topExprPerc the top percent expressed genes that will be excluded from the loess fit. 
+#' @param topExprFrac the fraction of top expressed genes that will be excluded from the loess fit 
+#'    (value between 0 and 1). 
 #' @param span span parameter for \code{loess} function.
 #' @param control control parameters for \code{loess} function.
 #' @param binBreaks number of bins or groups to place the points(genes) into.
@@ -157,7 +158,7 @@ getDistMat <- function(loessModel = NULL, x = NULL, y = NULL, x_curve = NULL, me
 #' 
 #' @export
 #' 
-selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprPerc = 0.01, span = 0.2, 
+selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprFrac = 0.01, span = 0.2, 
                         control=stats::loess.control(surface = "direct"), binBreaks = 100, 
                         accurateDistBreaks = ceiling(nrow(sce)/4), ...){
      
@@ -189,23 +190,23 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprP
      logCV <- log2(apply(normCounts, 1, stats::sd)/rowMeans(normCounts))
      datfr <- data.frame(logMean = logMean, logCV = logCV)
      
-     ## loess fit, excluding the top topExprPerc
-     points_for_loess <- which(logMean < stats::quantile(logMean, (1 - topExprPerc)))
+     ## loess fit, excluding the top topExprFrac
+     points_for_loess <- which(logMean < stats::quantile(logMean, (1 - topExprFrac)))
      lo <- stats::loess(logCV ~ logMean, span = span, control = control, 
                         subset = points_for_loess, ...)
      datfr$pred_logCV <- stats::predict(lo, newdata = datfr$logMean)
      
      ## assign to groups (min eucl distance to points on the loess curve)
-     dist1 <- getDistMat(loessModel = lo, x = logMean, y = logCV, 
-                         x_curve = seq(from = range(logMean)[1], 
-                                       to = range(logMean)[2], 
-                                       length.out = binBreaks))
+     dist1 <- .getDistMat(loessModel = lo, x = logMean, y = logCV, 
+                          x_curve = seq(from = range(logMean)[1], 
+                                        to = range(logMean)[2], 
+                                        length.out = binBreaks))
      datfr$bin_per_gene <- apply(X = dist1, MARGIN = 1, FUN = function(x){which.min(x)}) 
      datfr$min_dist1_per_gene <- sapply(seq_along(datfr$bin_per_gene), 
                                         function(i){dist1[i, datfr$bin_per_gene[i]]})
      
      ## get more accurate eucl dist to the curve for each gene
-     dist2 <- getDistMat(loessModel = lo, x = logMean, y = logCV, 
+     dist2 <- .getDistMat(loessModel = lo, x = logMean, y = logCV, 
                          x_curve = seq(from = range(logMean)[1], 
                                        to = range(logMean)[2], 
                                        length.out = accurateDistBreaks))

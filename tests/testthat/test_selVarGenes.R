@@ -1,6 +1,6 @@
 context("selVarGenes")
 
-test_that("getDistMat() works properly", {
+test_that(".getDistMat() works properly", {
      
      ## create data
      x <- 1:1000
@@ -11,17 +11,17 @@ test_that("getDistMat() works properly", {
      x_curve <- seq(range(x)[1], range(x)[2], length.out=100)
      
      ## run function
-     euclMat <- getDistMat(loessModel=lo, x=x, y=y, x_curve=x_curve)
-     euclMat2 <- getDistMat(loessModel=lo, x=x, y=y, x_curve=x_curve, method="manhattan")
-     euclMat3 <- getDistMat(loessModel=lo, x=x2, y=y, x_curve=x_curve)
+     euclMat <- .getDistMat(loessModel=lo, x=x, y=y, x_curve=x_curve)
+     euclMat2 <- .getDistMat(loessModel=lo, x=x, y=y, x_curve=x_curve, method="manhattan")
+     euclMat3 <- .getDistMat(loessModel=lo, x=x2, y=y, x_curve=x_curve)
      
      ## tests
      expect_true(length(x)==nrow(euclMat))
      expect_true(length(x_curve)==ncol(euclMat))
-     expect_error(getDistMat(x=x, y=y, x_curve=x_curve))
-     expect_error(getDistMat(loessModel=lo, y=y, x_curve=x_curve))
-     expect_error(getDistMat(loessModel=lo, x=x, x_curve=x_curve))
-     expect_error(getDistMat(loessModel=lo, x=x, y=y))
+     expect_error(.getDistMat(x=x, y=y, x_curve=x_curve))
+     expect_error(.getDistMat(loessModel=lo, y=y, x_curve=x_curve))
+     expect_error(.getDistMat(loessModel=lo, x=x, x_curve=x_curve))
+     expect_error(.getDistMat(loessModel=lo, x=x, y=y))
      expect_true(!is.null(euclMat2))
      expect_true(all(rownames(euclMat3)==names(x2)))
 

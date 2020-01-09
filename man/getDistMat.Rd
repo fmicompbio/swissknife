@@ -42,17 +42,18 @@ This function gets the euclidean (by default) distances between all points in a 
   x <- 1:1000
   y <- sort(rnorm(n = 1000, mean = 0, sd = 5)) + runif(n = 1000, min = 0, max = 10)
   lo <- loess(y ~ x)
-  x_curve <- seq(range(x)[1], range(x)[2], length.out=100)
+  x_curve <- seq(range(x)[1], range(x)[2], length.out = 100)
   
   # plot
-  plot(x, y, pch = 16, col="#BEBEBE90")
-  lines(x_curve, predict(lo, newdata=x_curve), col="red")
+  plot(x, y, pch = 16, col = "#BEBEBE90")
+  lines(x_curve, predict(lo, newdata = x_curve), col = "red")
   
   # get euclidean distance of all points to the curve (red)
-  euclMat <- getDistMat(loessModel=lo, x=x, y=y, x_curve=x_curve)
+  euclMat <- .getDistMat(loessModel = lo, x = x, y = y, x_curve = x_curve)
   euclMat[1:6, 1:6]
 
 }
 \author{
 Dania Machlab
 }
+\keyword{INTERNAL}

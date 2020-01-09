@@ -9,7 +9,7 @@ selVarGenes(
   Nmads = 3,
   minCells = 5,
   minExpr = 1,
-  topExprPerc = 0.01,
+  topExprFrac = 0.01,
   span = 0.2,
   control = stats::loess.control(surface = "direct"),
   binBreaks = 100,
@@ -27,7 +27,8 @@ selVarGenes(
 \item{minExpr}{keep genes with expression greater than or equal to this in \code{minCells} cells using 
 the raw count matrix corrected for library size differences using the sizeFactors from \code{sce}.}
 
-\item{topExprPerc}{the top percent expressed genes that will be excluded from the loess fit.}
+\item{topExprFrac}{the fraction of top expressed genes that will be excluded from the loess fit 
+(value between 0 and 1).}
 
 \item{span}{span parameter for \code{loess} function.}
 

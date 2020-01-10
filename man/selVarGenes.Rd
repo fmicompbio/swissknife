@@ -56,7 +56,7 @@ a \code{list} of length 2:
                         \item logCV: log2(coefficient of variation) of genes across cells.
                         \item pred_logCV: predicted log2(coefficient of variation) from loess fit.
                         \item assigned_bin: bin each gene has been assigned to.
-                        \item distance: second round of calculating more accurate distances
+                        \item distance: accurate distance measuses. Points below the loess fit get a negative sign.
                      }
   }
 }

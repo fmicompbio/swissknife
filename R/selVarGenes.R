@@ -323,7 +323,7 @@ plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean",
           ## plot
           plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 
                xlab = xlab, ylab = ylab, main = main, pch = pch, col = grpCols, 
-               asp = asp, pch = pch, ...)
+               asp = asp, ...)
           
           ## return TRUE
           invisible(TRUE)

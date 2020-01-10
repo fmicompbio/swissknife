@@ -81,9 +81,9 @@
 #'    or 'logcounts'. The default is 'counts'.
 #' @param Nmads number of MADs beyond which genes are selected per bin.
 #' @param minCells keep genes with minimum expression in at least this number of cells.
-#' @param minExpr keep genes with expression greater than or equal to this in \code{minCells} cells using 
-#'    the raw count matrix corrected for library size differences using the sizeFactors from \code{data}.
-#' @param topExprFrac the fraction of top expressed genes that will be excluded from the loess fit 
+#' @param minExpr keep genes with expression greater than or equal to this in \code{minCells} cells in the 
+#'    normalized count matrix.
+#' @param exclTopExprFrac the fraction of top expressed genes that will be excluded from the loess fit 
 #'    (value between 0 and 1). 
 #' @param span span parameter for \code{loess} function.
 #' @param control control parameters for \code{loess} function.
@@ -160,7 +160,7 @@
 #' 
 #' @export
 #' 
-selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5, minExpr = 1, topExprFrac = 0.01, span = 0.2, 
+selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5, minExpr = 1, exclTopExprFrac = 0.01, span = 0.2, 
                         control=stats::loess.control(surface = "direct"), nBins = 100, 
                         nBinsDense = ceiling(nrow(data)/4), ...){
      
@@ -213,8 +213,8 @@ selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5,
      logCV <- log2(apply(normCounts, 1, stats::sd)/rowMeans(normCounts))
      datfr <- data.frame(logMean = logMean, logCV = logCV)
      
-     ## loess fit, excluding the top topExprFrac
-     points_for_loess <- which(logMean < stats::quantile(logMean, (1 - topExprFrac)))
+     ## loess fit, excluding the top exclTopExprFrac
+     points_for_loess <- which(logMean < stats::quantile(logMean, (1 - exclTopExprFrac)))
      lo <- stats::loess(logCV ~ logMean, span = span, control = control, 
                         subset = points_for_loess, ...)
      datfr$pred_logCV <- stats::predict(lo, newdata = datfr$logMean)

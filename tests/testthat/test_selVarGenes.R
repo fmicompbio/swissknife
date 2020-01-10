@@ -72,7 +72,7 @@ test_that("plotSelVarGenes() works properly", {
         
         ## tests
         expect_true(plotSelVarGenes(sel))
-        expect_true(plotSelVarGenes(sel), colByGroup=TRUE)
+        expect_true(plotSelVarGenes(sel, colByGroup=TRUE))
         expect_error(plotSelVarGenes())
         expect_error(plotSelVarGenes(mu))
         expect_error(plotSelVarGenes(list(mu=mu)))

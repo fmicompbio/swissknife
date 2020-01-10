@@ -105,7 +105,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
    sizeFactors(sce) <- libsizes/mean(libsizes)
  
    # select variable genes
-   varGenes <- selVarGenes(sce, assay.type="logcounts")
+   varGenes <- selVarGenes(sce, assay.type="counts")
    
    # plot
    plotSelVarGenes(varGenes, colByGroup=TRUE)

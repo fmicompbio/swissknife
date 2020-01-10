@@ -96,7 +96,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
    j <- sample(x = 1:ncol(counts), size = 500)
    counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
    
-   # create SCE
+   # create SCE 
    sce <- SingleCellExperiment(list(counts=counts))
    
    # calculate sizeFactors

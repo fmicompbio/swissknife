@@ -76,11 +76,11 @@
 #' 
 #' @author Dania Machlab 
 #' 
-#' @param sce \code{SingleCellExperiment} object containing the raw counts and the size factors.
+#' @param data \code{SingleCellExperiment} object or (normalized) count \code{matrix} containing the genes as rows and cells as columns.
 #' @param Nmads number of MADs beyond which genes are selected per bin.
 #' @param minCells keep genes with minimum expression in at least this number of cells.
 #' @param minExpr keep genes with expression greater than or equal to this in \code{minCells} cells using 
-#'    the raw count matrix corrected for library size differences using the sizeFactors from \code{sce}.
+#'    the raw count matrix corrected for library size differences using the sizeFactors from \code{data}.
 #' @param topExprFrac the fraction of top expressed genes that will be excluded from the loess fit 
 #'    (value between 0 and 1). 
 #' @param span span parameter for \code{loess} function.
@@ -103,7 +103,7 @@
 #'   we select 100 points on the loess fit and calculate the distances each gene has to all those points on 
 #'   the curve. Each gene is assigned to the point on the curve for which it has the shortest distance. In 
 #'   the second step, more accurate distances to the curve are calculated by using a higher number of 
-#'   points on the curve.
+#'   points on the curve. Distances are calculated using the \code{\link[wordspace]{dist.matrix}} function.
 #'   
 #'   Finally, for each bin, the most variable genes are selected using the more accurate distance
 #'   measures. Genes that fall below the loess fit are assigned a negative sign and the genes that 
@@ -147,31 +147,53 @@
 #'    sizeFactors(sce) <- libsizes/mean(libsizes)
 #'  
 #'    # select variable genes
-#'    varGenes <- selVarGenes(sce)
+#'    varGenes <- selVarGenes(sce, assay.type="logcounts")
 #'    
 #'    # plot
 #'    plotSelVarGenes(varGenes, colByGroup=TRUE)
 #'    plotSelVarGenes(varGenes)
 #'
 #' @importFrom stats loess loess.control predict mad median quantile sd
-#' @importFrom SingleCellExperiment sizeFactors counts
+#' @importFrom SingleCellExperiment sizeFactors counts logcounts
+#' @importFrom SummarizedExperiment assays
 #' 
 #' @export
 #' 
-selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprFrac = 0.01, span = 0.2, 
+selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5, minExpr = 1, topExprFrac = 0.01, span = 0.2, 
                         control=stats::loess.control(surface = "direct"), binBreaks = 100, 
-                        accurateDistBreaks = ceiling(nrow(sce)/4), ...){
+                        accurateDistBreaks = ceiling(nrow(data)/4), ...){
      
      ## checks
-     if (is.null(sce)) {stop("'sce' is empty")}
-     if (!is(sce, "SingleCellExperiment")) {stop("sce must be a SingleCellExperiment object")}
-     if (is.null(SingleCellExperiment::sizeFactors(sce))) {
-             stop("sce must contain sizeFactors to normalize the raw counts")
+     if (is.null(data)) {stop("'data' is empty")}
+     if (!is(data, "SingleCellExperiment") & !is(data, "matrix")) {stop("data must be a SingleCellExperiment object or a count matrix")}
+     if (is(data, "SingleCellExperiment") & !any(assay.type%in%c("counts", "logcounts"))) {stop("assay.type must be either counts or logcounts")}
+     if (is(data, "SingleCellExperiment") & assay.type=="counts") {
+          if(!any(names(SummarizedExperiment::assays(data)) %in% "counts")) {stop("counts assay is missing from SCE object")}
      }
+     if (is(data, "SingleCellExperiment") & assay.type=="logcounts") {
+          if(!any(names(SummarizedExperiment::assays(data)) %in% "logcounts")) {stop("logcounts assay is missing from SCE object")}
+     }
+     if (is(data, "SingleCellExperiment") & assay.type=="counts") {
+          if(is.null(SingleCellExperiment::sizeFactors(data))) {stop("missing sizeFactors to normalize counts")}
+     }
+        
+     ## when data is SCE
+     if(is(data, "SingleCellExperiment")) {
+          if(assay.type=="logcounts"){
+               normCounts <- SingleCellExperiment::logcounts(data)
+          } else {
+               normCounts <- sweep(as.matrix(SingleCellExperiment::counts(data)), 2, SingleCellExperiment::sizeFactors(data), "/")  
+          }
+             
+     } 
      
-     ## normCounts
-     normCounts <- sweep(as.matrix(SingleCellExperiment::counts(sce)), 2, 
-                         SingleCellExperiment::sizeFactors(sce), "/")
+     ## when data is count matrix
+     if(is(data, "matrix")){
+          message("assuming that data is a normalized count matrix with genes as rows and cells as columns, if that's not the case make sure it is ... ")
+          normCounts <- data
+     }
+        
+     ## normCounts rownames and colnames
      if (is.null(rownames(normCounts))) {
           rownames(normCounts) <- paste0("Gene_", seq_len(nrow(normCounts)))
           message("Count row names are empty, naming them now ... ")

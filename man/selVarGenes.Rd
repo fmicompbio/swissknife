@@ -5,7 +5,8 @@
 \title{Select Variable Genes in Single Cell RNA-seq}
 \usage{
 selVarGenes(
-  sce = NULL,
+  data = NULL,
+  assay.type = "counts",
   Nmads = 3,
   minCells = 5,
   minExpr = 1,
@@ -13,19 +14,19 @@ selVarGenes(
   span = 0.2,
   control = stats::loess.control(surface = "direct"),
   binBreaks = 100,
-  accurateDistBreaks = ceiling(nrow(sce)/4),
+  accurateDistBreaks = ceiling(nrow(data)/4),
   ...
 )
 }
 \arguments{
-\item{sce}{\code{SingleCellExperiment} object containing the raw counts and the size factors.}
+\item{data}{\code{SingleCellExperiment} object or (normalized) count \code{matrix} containing the genes as rows and cells as columns.}
 
 \item{Nmads}{number of MADs beyond which genes are selected per bin.}
 
 \item{minCells}{keep genes with minimum expression in at least this number of cells.}
 
 \item{minExpr}{keep genes with expression greater than or equal to this in \code{minCells} cells using 
-the raw count matrix corrected for library size differences using the sizeFactors from \code{sce}.}
+the raw count matrix corrected for library size differences using the sizeFactors from \code{data}.}
 
 \item{topExprFrac}{the fraction of top expressed genes that will be excluded from the loess fit 
 (value between 0 and 1).}
@@ -76,7 +77,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
   we select 100 points on the loess fit and calculate the distances each gene has to all those points on 
   the curve. Each gene is assigned to the point on the curve for which it has the shortest distance. In 
   the second step, more accurate distances to the curve are calculated by using a higher number of 
-  points on the curve.
+  points on the curve. Distances are calculated using the \code{\link[wordspace]{dist.matrix}} function.
   
   Finally, for each bin, the most variable genes are selected using the more accurate distance
   measures. Genes that fall below the loess fit are assigned a negative sign and the genes that 
@@ -104,7 +105,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
    sizeFactors(sce) <- libsizes/mean(libsizes)
  
    # select variable genes
-   varGenes <- selVarGenes(sce)
+   varGenes <- selVarGenes(sce, assay.type="logcounts")
    
    # plot
    plotSelVarGenes(varGenes, colByGroup=TRUE)

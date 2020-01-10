@@ -41,16 +41,25 @@ test_that("selVarGenes() works properly", {
         libsizes <- colSums(counts)
         SingleCellExperiment::sizeFactors(sce) <- libsizes/mean(libsizes)
         
+        SingleCellExperiment::logcounts(sce) <- sweep(as.matrix(SingleCellExperiment::counts(sce)), 2, SingleCellExperiment::sizeFactors(sce), "/") 
+
+        
         ## run function
-        sel <- selVarGenes(sce = sce)
+        sel <- selVarGenes(data = sce, assay.type = "counts")
+        sel2 <- selVarGenes(data = SingleCellExperiment::logcounts(sce))
+        sel3 <- selVarGenes(data = sce, assay.type = "logcounts")
           
         ## tests
         expect_error(selVarGenes())
-        expect_error(selVarGenes(sce = mu))
-        expect_error(selVarGenes(sce = SingleCellExperiment::SingleCellExperiment(list(counts=counts))))
+        expect_error(selVarGenes(data = mu))
+        expect_error(selVarGenes(data = sce, assay.type = "normCounts"))
+        expect_error(selVarGenes(data = SingleCellExperiment::SingleCellExperiment(assays = list(counts=counts))))
+        expect_error(selVarGenes(data = SingleCellExperiment::SingleCellExperiment(assays = list())))
+        expect_error(selVarGenes(data = SingleCellExperiment::SingleCellExperiment(assays = list(counts=counts)), assay.type="logcounts"))
         expect_true(all(sel$varGenes%in%rownames(sel$geneInfo)))
         expect_true(!is.null(sel$varGenes))
-        
+        expect_true(all(sel$varGenes==sel2$varGenes))
+        expect_true(all(sel$varGenes==sel3$varGenes))
 })
 
 
@@ -68,7 +77,7 @@ test_that("plotSelVarGenes() works properly", {
         SingleCellExperiment::sizeFactors(sce) <- libsizes/mean(libsizes)
         
         ## run selVarGenes
-        sel <- selVarGenes(sce = sce)
+        sel <- selVarGenes(data = sce)
         
         ## tests
         expect_true(plotSelVarGenes(sel))

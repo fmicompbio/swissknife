@@ -67,9 +67,10 @@ This function selects the most variable genes from a \code{SingleCellExperiment}
 }
 \details{
 The function takes in a \code{SingleCellExperiment} object and calculates the normalized
-  counts by dividing the raw counts by the corresponding sizeFactors per cell. Only genes that have
-  an expression greater than or equal to \code{minExpr} in at least \code{minCells} cells will be
-  kept.
+  counts by dividing the raw counts by the corresponding sizeFactors per cell, or a matrix of already normalized counts. 
+  Only genes that have an expression greater than or equal to \code{minExpr} in at least \code{minCells} cells will be
+  kept. If \code{assay.type} is set to 'logcounts', that assay is transformed back to the raw normalized count space
+  by performing 2^logcounts(data) - 1, under the assumption the logcounts data is in log2 form and had a pseudocount of 1.
   
   The genes that vary most on the log2(coefficient of variation) vs log2(mean) plot of genes will 
   be selected. A loess fit is done on this plot and the distance (euclidean by default) each point has

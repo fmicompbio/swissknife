@@ -41,12 +41,12 @@ test_that("selVarGenes() works properly", {
         libsizes <- colSums(counts)
         SingleCellExperiment::sizeFactors(sce) <- libsizes/mean(libsizes)
         
-        SingleCellExperiment::logcounts(sce) <- sweep(as.matrix(SingleCellExperiment::counts(sce)), 2, SingleCellExperiment::sizeFactors(sce), "/") 
+        SingleCellExperiment::logcounts(sce) <- log2(sweep(as.matrix(SingleCellExperiment::counts(sce)), 2, SingleCellExperiment::sizeFactors(sce), "/") + 1)
 
         
         ## run function
         sel <- selVarGenes(data = sce, assay.type = "counts")
-        sel2 <- selVarGenes(data = SingleCellExperiment::logcounts(sce))
+        sel2 <- selVarGenes(data = 2^SingleCellExperiment::logcounts(sce)-1)
         sel3 <- selVarGenes(data = sce, assay.type = "logcounts")
           
         ## tests

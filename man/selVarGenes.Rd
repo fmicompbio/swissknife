@@ -107,7 +107,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
    varGenes <- selVarGenes(sce)
    
    # plot
-   plotSelVarGenesGroups(varGenes)
+   plotSelVarGenes(varGenes, colByGroup=TRUE)
    plotSelVarGenes(varGenes)
 
 }

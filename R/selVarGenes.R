@@ -150,7 +150,7 @@
 #'    varGenes <- selVarGenes(sce)
 #'    
 #'    # plot
-#'    plotSelVarGenesGroups(varGenes)
+#'    plotSelVarGenes(varGenes, colByGroup=TRUE)
 #'    plotSelVarGenes(varGenes)
 #'
 #' @importFrom stats loess loess.control predict mad median quantile sd

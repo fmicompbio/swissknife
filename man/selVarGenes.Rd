@@ -13,8 +13,8 @@ selVarGenes(
   topExprFrac = 0.01,
   span = 0.2,
   control = stats::loess.control(surface = "direct"),
-  binBreaks = 100,
-  accurateDistBreaks = ceiling(nrow(data)/4),
+  nBins = 100,
+  nBinsDense = ceiling(nrow(data)/4),
   ...
 )
 }
@@ -35,9 +35,9 @@ the raw count matrix corrected for library size differences using the sizeFactor
 
 \item{control}{control parameters for \code{loess} function.}
 
-\item{binBreaks}{number of bins or groups to place the points(genes) into.}
+\item{nBins}{number of bins or groups to place the points(genes) into.}
 
-\item{accurateDistBreaks}{number of bins or groups to use  to place the points(genes) into
+\item{nBinsDense}{number of bins or groups to use  to place the points(genes) into
 when calculating more accurate distance values to the curve from the loess fit.}
 
 \item{...}{additional parameters for the \code{loess} function from the \code{stats} package.}
@@ -52,9 +52,8 @@ a \code{list} of length 2:
                         \item logMean: log2(mean) expression of genes across cells.
                         \item logCV: log2(coefficient of variation) of genes across cells.
                         \item pred_logCV: predicted log2(coefficient of variation) from loess fit.
-                        \item bin_per_gene: bin each gene has been assigned to.
-                        \item min_dist1_per_gene: first round of calculating distances.
-                        \item min_dist2_per_gene: second round of calculating more accurate distances
+                        \item assigned_bin: bin each gene has been assigned to.
+                        \item distance: second round of calculating more accurate distances
                      }
   }
 }

@@ -85,8 +85,8 @@
 #'    (value between 0 and 1). 
 #' @param span span parameter for \code{loess} function.
 #' @param control control parameters for \code{loess} function.
-#' @param binBreaks number of bins or groups to place the points(genes) into.
-#' @param accurateDistBreaks number of bins or groups to use  to place the points(genes) into
+#' @param nBins number of bins or groups to place the points(genes) into.
+#' @param nBinsDense number of bins or groups to use  to place the points(genes) into
 #'    when calculating more accurate distance values to the curve from the loess fit.
 #' @param ... additional parameters for the \code{loess} function from the \code{stats} package.
 #'
@@ -119,9 +119,8 @@
 #'                         \item logMean: log2(mean) expression of genes across cells.
 #'                         \item logCV: log2(coefficient of variation) of genes across cells.
 #'                         \item pred_logCV: predicted log2(coefficient of variation) from loess fit.
-#'                         \item bin_per_gene: bin each gene has been assigned to.
-#'                         \item min_dist1_per_gene: first round of calculating distances.
-#'                         \item min_dist2_per_gene: second round of calculating more accurate distances
+#'                         \item assigned_bin: bin each gene has been assigned to.
+#'                         \item distance: second round of calculating more accurate distances
 #'                      }
 #'   }
 #'   
@@ -160,8 +159,8 @@
 #' @export
 #' 
 selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5, minExpr = 1, topExprFrac = 0.01, span = 0.2, 
-                        control=stats::loess.control(surface = "direct"), binBreaks = 100, 
-                        accurateDistBreaks = ceiling(nrow(data)/4), ...){
+                        control=stats::loess.control(surface = "direct"), nBins = 100, 
+                        nBinsDense = ceiling(nrow(data)/4), ...){
      
      ## checks
      if (is.null(data)) {stop("'data' is empty")}
@@ -222,37 +221,37 @@ selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5,
      dist1 <- .getDistMat(loessModel = lo, x = logMean, y = logCV, 
                           x_curve = seq(from = range(logMean)[1], 
                                         to = range(logMean)[2], 
-                                        length.out = binBreaks))
-     datfr$bin_per_gene <- apply(X = dist1, MARGIN = 1, FUN = function(x){which.min(x)}) 
-     datfr$min_dist1_per_gene <- sapply(seq_along(datfr$bin_per_gene), 
-                                        function(i){dist1[i, datfr$bin_per_gene[i]]})
-     
+                                        length.out = nBins))
+     datfr$assigned_bin <- apply(X = dist1, MARGIN = 1, FUN = function(x){which.min(x)}) 
+     # datfr$min_dist1_per_gene <- sapply(seq_along(datfr$assigned_bin), 
+     #                                    function(i){dist1[i, datfr$assigned_bin[i]]})
+      
      ## get more accurate eucl dist to the curve for each gene
      dist2 <- .getDistMat(loessModel = lo, x = logMean, y = logCV, 
                          x_curve = seq(from = range(logMean)[1], 
                                        to = range(logMean)[2], 
-                                       length.out = accurateDistBreaks))
+                                       length.out = nBinsDense))
      sel <- apply(X = dist2, MARGIN = 1, FUN = function(x){which.min(x)}) 
-     datfr$min_dist2_per_gene <- sapply(seq_along(sel), function(i){dist2[i, sel[i]]})
+     datfr$distance <- sapply(seq_along(sel), function(i){dist2[i, sel[i]]})
      
      ## give dist2 a sign: + for above the curve, and - for below the curve
      y_pred_for_x <- stats::predict(lo, newdata = logMean)
      w_down <- logCV < y_pred_for_x
-     datfr$min_dist2_per_gene[w_down] <- -datfr$min_dist2_per_gene[w_down]
+     datfr$distance[w_down] <- -datfr$distance[w_down]
      
      ## genes per group
-     genes_per_bin <- lapply(unique(datfr$bin_per_gene), 
-                             function(i){rownames(datfr)[datfr$bin_per_gene == i]})
-     names(genes_per_bin) <- unique(datfr$bin_per_gene)
+     genes_per_bin <- lapply(unique(datfr$assigned_bin), 
+                             function(i){rownames(datfr)[datfr$assigned_bin == i]})
+     names(genes_per_bin) <- unique(datfr$assigned_bin)
      
      ## MAD (this includes genes that were excluded from the loess) per group
-     mads <- sapply(genes_per_bin, function(x){stats::mad(datfr[x, ]$min_dist2_per_gene)})
+     mads <- sapply(genes_per_bin, function(x){stats::mad(datfr[x, ]$distance)})
      mads <- mads*Nmads
      
      ## select outlier genes per group
      out_genes <- unlist(lapply(seq_along(genes_per_bin), function(i){
           genes <- genes_per_bin[[i]]
-          distances <- datfr[genes, ]$min_dist2_per_gene
+          distances <- datfr[genes, ]$distance
           median <- stats::median(distances)
           genes[distances > (median + mads[i])]
      }))
@@ -339,8 +338,8 @@ plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean",
              
           ## prepare for plot
           colors <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = TRUE)]
-          yHat_cols <- sample(colors, length(unique(selVarGenes_list$geneInfo$bin_per_gene)))
-          grpCols <- yHat_cols[selVarGenes_list$geneInfo$bin_per_gene]
+          yHat_cols <- sample(colors, length(unique(selVarGenes_list$geneInfo$assigned_bin)))
+          grpCols <- yHat_cols[selVarGenes_list$geneInfo$assigned_bin]
              
           ## plot
           plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 

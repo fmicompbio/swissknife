@@ -12,7 +12,7 @@ plotSelVarGenes(
   pch = 16,
   col = "#BEBEBE40",
   sel_col = "steelblue",
-  colByGroup = FALSE,
+  colByBin = FALSE,
   asp = 1,
   ...
 )
@@ -32,9 +32,9 @@ plotSelVarGenes(
 
 \item{sel_col}{point color of the selected variable genes.}
 
-\item{colByGroup}{if TRUE, color the genes by the bin they've been assigned to.}
+\item{colByBin}{if TRUE, color the genes by the bin they've been assigned to.}
 
-\item{asp}{the y/x aspect ratio. Set to 1 when \code{colByGroup} is TRUE.}
+\item{asp}{the y/x aspect ratio. Set to 1 when \code{colByBin} is TRUE.}
 
 \item{...}{additional parameters for the \code{plot} function.}
 }
@@ -72,7 +72,7 @@ This function take the output from \code{selVarGenes} and plots the genes that h
    
    # plot
    plotSelVarGenes(varGenes)
-   plotSelVarGenes(varGenes, colByGroup=TRUE)
+   plotSelVarGenes(varGenes, colByBin=TRUE)
 
 }
 \author{

@@ -77,6 +77,8 @@
 #' @author Dania Machlab 
 #' 
 #' @param data \code{SingleCellExperiment} object or (normalized) count \code{matrix} containing the genes as rows and cells as columns.
+#' @param assay.type the type of assay to use if \code{data} is a \code{SingleCellExperiment}. It can be either 'counts' 
+#'    or 'logcounts'. The default is 'counts'.
 #' @param Nmads number of MADs beyond which genes are selected per bin.
 #' @param minCells keep genes with minimum expression in at least this number of cells.
 #' @param minExpr keep genes with expression greater than or equal to this in \code{minCells} cells using 
@@ -149,7 +151,7 @@
 #'    varGenes <- selVarGenes(sce, assay.type="counts")
 #'    
 #'    # plot
-#'    plotSelVarGenes(varGenes, colByGroup=TRUE)
+#'    plotSelVarGenes(varGenes, colByBin=TRUE)
 #'    plotSelVarGenes(varGenes)
 #'
 #' @importFrom stats loess loess.control predict mad median quantile sd
@@ -278,8 +280,8 @@ selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5,
 #' @param pch point pch.
 #' @param col point color.
 #' @param sel_col point color of the selected variable genes.
-#' @param colByGroup if TRUE, color the genes by the bin they've been assigned to.
-#' @param asp the y/x aspect ratio. Set to 1 when \code{colByGroup} is TRUE.
+#' @param colByBin if TRUE, color the genes by the bin they've been assigned to.
+#' @param asp the y/x aspect ratio. Set to 1 when \code{colByBin} is TRUE.
 #' @param ... additional parameters for the \code{plot} function.
 #' 
 #' @return plot
@@ -310,7 +312,7 @@ selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5,
 #'    
 #'    # plot
 #'    plotSelVarGenes(varGenes)
-#'    plotSelVarGenes(varGenes, colByGroup=TRUE)
+#'    plotSelVarGenes(varGenes, colByBin=TRUE)
 #' 
 #' @importFrom grDevices colors
 #' 
@@ -319,7 +321,7 @@ selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5,
 plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean", 
                             ylab = "logCV", main = "Selected Variable Genes", 
                             pch = 16, col = "#BEBEBE40", sel_col = "steelblue", 
-                            colByGroup = FALSE, asp = 1, ...) {
+                            colByBin = FALSE, asp = 1, ...) {
      
      ## checks
      if (any(is.null(selVarGenes_list))) {
@@ -334,7 +336,7 @@ plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean",
      }
              
      ## plot
-     if(colByGroup) {
+     if(colByBin) {
              
           ## prepare for plot
           colors <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = TRUE)]

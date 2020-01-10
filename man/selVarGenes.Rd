@@ -21,6 +21,9 @@ selVarGenes(
 \arguments{
 \item{data}{\code{SingleCellExperiment} object or (normalized) count \code{matrix} containing the genes as rows and cells as columns.}
 
+\item{assay.type}{the type of assay to use if \code{data} is a \code{SingleCellExperiment}. It can be either 'counts' 
+or 'logcounts'. The default is 'counts'.}
+
 \item{Nmads}{number of MADs beyond which genes are selected per bin.}
 
 \item{minCells}{keep genes with minimum expression in at least this number of cells.}
@@ -107,7 +110,7 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
    varGenes <- selVarGenes(sce, assay.type="counts")
    
    # plot
-   plotSelVarGenes(varGenes, colByGroup=TRUE)
+   plotSelVarGenes(varGenes, colByBin=TRUE)
    plotSelVarGenes(varGenes)
 
 }

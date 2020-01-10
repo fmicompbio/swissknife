@@ -242,85 +242,6 @@ selVarGenes <- function(sce=NULL, Nmads = 3, minCells = 5, minExpr = 1, topExprF
 }
 
 
-#' @title Plot Groups Genes Have Been Assigned to
-#' 
-#' @description This function take the output from \code{selVarGenes} and plots the group or bin each
-#'   gene has been assigned to on the scatter plot showing the log2 coefficient of variation as a
-#'   function of the log2 mean.
-#' 
-#' @author Dania Machlab 
-#' 
-#' @param selVarGenes_list the output list from the \code{selVarGenes} function.
-#' @param xlab label for x-axis.
-#' @param ylab label for y-axis.
-#' @param main title for plot.
-#' @param asp the y/x aspect ratio.
-#' @param ... additional parameters for the \code{plot} function.
-#' 
-#' @return plot
-#'
-#' @examples 
-#'    # packages
-#'    library(SingleCellExperiment)
-#'    
-#'    # create example count matrix
-#'    # ... poisson distr per gene
-#'    mu <- ceiling(runif(n = 2000, min = 0, max = 100))
-#'    counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
-#'    counts <- counts + 1
-#'    # ... add signal to subset of genes (rows) and cells (columns)
-#'    i <- sample(x = 1:nrow(counts), size = 500)
-#'    j <- sample(x = 1:ncol(counts), size = 500)
-#'    counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
-#'    
-#'    # create SCE
-#'    sce <- SingleCellExperiment(list(counts=counts))
-#'    
-#'    # calculate sizeFactors
-#'    libsizes <- colSums(counts)
-#'    sizeFactors(sce) <- libsizes/mean(libsizes)
-#'  
-#'    # select variable genes
-#'    varGenes <- selVarGenes(sce)
-#'    
-#'    # plot
-#'    plotSelVarGenesGroups(varGenes)
-#'
-#' @importFrom grDevices colors
-#' 
-#' @export
-#' 
-plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab = "logMean", 
-                                  ylab = "logCV", main = "Group Assignment per Gene", 
-                                  asp = 1, ...) {
-     
-     ## checks
-     if (any(is.null(selVarGenes_list))) {
-          stop("'selVarGenes_list' is empty")
-     }
-     if (!is(selVarGenes_list, "list")) {
-          stop("'selVarGenes_list' must be of class 'list'")
-     }
-     if (!all(names(selVarGenes_list) %in% c("varGenes", "geneInfo"))) {
-          stop("names of 'selVarGenes_list' must be 'varGenes' and 'geneInfo', 
-           the output from the 'selVarGenes' function")
-     }
-     
-     ## prepare for plot
-     colors <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = TRUE)]
-     yHat_cols <- sample(colors, length(unique(selVarGenes_list$geneInfo$bin_per_gene)))
-     cols <- yHat_cols[selVarGenes_list$geneInfo$bin_per_gene]
-     
-     ## plot
-     plot(selVarGenes_list$geneInfo$logMean, selVarGenes_list$geneInfo$logCV, 
-          bg = cols, pch = 21, asp = asp, xlab = xlab, ylab = ylab, main = main, ...)
-     
-     ## return TRUE
-     invisible(TRUE)
-     
-}
-
-
 #' @title Plot Selected Variable Genes
 #' 
 #' @description This function take the output from \code{selVarGenes} and plots the genes that have been 
@@ -368,6 +289,9 @@ plotSelVarGenesGroups <- function(selVarGenes_list = NULL, xlab = "logMean",
 #'    
 #'    # plot
 #'    plotSelVarGenes(varGenes)
+#'    plotSelVarGenes(varGenes, colByGroup=TRUE)
+#' 
+#' @importFrom grDevices colors
 #' 
 #' @export
 #' 

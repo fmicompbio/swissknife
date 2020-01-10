@@ -72,6 +72,7 @@ This function take the output from \code{selVarGenes} and plots the genes that h
    
    # plot
    plotSelVarGenes(varGenes)
+   plotSelVarGenes(varGenes, colByGroup=TRUE)
 
 }
 \author{

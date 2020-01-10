@@ -22,8 +22,6 @@ reference:
 - title: Single Cell RNAseq
   contents:
     - '`selVarGenes`'
-    - '`getDistMat`'
-    - '`plotSelVarGenesGroups`'
     - '`plotSelVarGenes`'
 - title: Visualization and plotting
   contents:

@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Select Variable Genes in Single Cell RNA-seq — selVarGenes" />
-<meta property="og:description" content="This function selects the most variable genes from a Single Cell Experiment object
+<meta property="og:description" content="This function selects the most variable genes from a SingleCellExperiment object
   using the plot that displays the log2 coefficient of variation as a function of the log2 mean for 
   all genes across all the cells." />
 <meta name="twitter:card" content="summary" />
@@ -116,21 +116,22 @@
     </div>
 
     <div class="ref-description">
-    <p>This function selects the most variable genes from a <code>Single Cell Experiment</code> object
+    <p>This function selects the most variable genes from a <code>SingleCellExperiment</code> object
   using the plot that displays the log2 coefficient of variation as a function of the log2 mean for 
   all genes across all the cells.</p>
     </div>
 
     <pre class="usage"><span class='fu'>selVarGenes</span>(
-  <span class='kw'>sce</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>assay.type</span> <span class='kw'>=</span> <span class='st'>"counts"</span>,
   <span class='kw'>Nmads</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>minCells</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>minExpr</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>topExprPerc</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>exclTopExprFrac</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
   <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
   <span class='kw'>control</span> <span class='kw'>=</span> <span class='kw pkg'>stats</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/loess.control.html'>loess.control</a></span>(<span class='kw'>surface</span> <span class='kw'>=</span> <span class='st'>"direct"</span>),
-  <span class='kw'>binBreaks</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>accurateDistBreaks</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>sce</span>)/<span class='fl'>4</span>),
+  <span class='kw'>nBins</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>nBinsDense</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>data</span>)/<span class='fl'>4</span>),
   <span class='no'>...</span>
 )</pre>
 
@@ -138,8 +139,13 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>sce</th>
-      <td><p><code>SingleCellExperiment</code> object containing the raw counts and the scaling factors.</p></td>
+      <th>data</th>
+      <td><p><code>SingleCellExperiment</code> object or (normalized) count <code>matrix</code> containing the genes as rows and cells as columns.</p></td>
+    </tr>
+    <tr>
+      <th>assay.type</th>
+      <td><p>the type of assay to use if <code>data</code> is a <code>SingleCellExperiment</code>. It can be either 'counts' 
+or 'logcounts'. The default is 'counts'.</p></td>
     </tr>
     <tr>
       <th>Nmads</th>
@@ -151,12 +157,13 @@
     </tr>
     <tr>
       <th>minExpr</th>
-      <td><p>keep genes with expression greater than or equal to this in <code>minCells</code> cells using 
-the raw count matrix corrected for library size differences using the sizeFactors from <code>sce</code>.</p></td>
+      <td><p>keep genes with expression greater than or equal to this in <code>minCells</code> cells in the 
+normalized count matrix.</p></td>
     </tr>
     <tr>
-      <th>topExprPerc</th>
-      <td><p>the top percent expressed genes that will be excluded from the loess fit.</p></td>
+      <th>exclTopExprFrac</th>
+      <td><p>the fraction of top expressed genes that will be excluded from the loess fit 
+(value between 0 and 1).</p></td>
     </tr>
     <tr>
       <th>span</th>
@@ -167,11 +174,11 @@ the raw count matrix corrected for library size differences using the sizeFactor
       <td><p>control parameters for <code>loess</code> function.</p></td>
     </tr>
     <tr>
-      <th>binBreaks</th>
+      <th>nBins</th>
       <td><p>number of bins or groups to place the points(genes) into.</p></td>
     </tr>
     <tr>
-      <th>accurateDistBreaks</th>
+      <th>nBinsDense</th>
       <td><p>number of bins or groups to use  to place the points(genes) into
 when calculating more accurate distance values to the curve from the loess fit.</p></td>
     </tr>
@@ -190,18 +197,18 @@ when calculating more accurate distance values to the curve from the loess fit.<
 <li><p>logMean: log2(mean) expression of genes across cells.</p></li>
 <li><p>logCV: log2(coefficient of variation) of genes across cells.</p></li>
 <li><p>pred_logCV: predicted log2(coefficient of variation) from loess fit.</p></li>
-<li><p>bin_per_gene: bin each gene has been assigned to.</p></li>
-<li><p>min_dist1_per_gene: first round of calcultaing distances.</p></li>
-<li><p>min_dist2_per_gene: second round of calcultaing more accurate distances</p></li>
+<li><p>assigned_bin: bin each gene has been assigned to.</p></li>
+<li><p>distance: accurate distance measuses. Points below the loess fit get a negative sign.</p></li>
 </ul></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function takes in a <code>SingleCellExperiment</code> object and calculates the normalized
-  counts by dividing the raw counts by the corresponding sizeFactors per cell. Only genes that have
-  an expression greater than or equal to <code>minExpr</code> in at least <code>minCells</code> cells will be
-  kept.</p>  
+  counts by dividing the raw counts by the corresponding sizeFactors per cell, or a matrix of already normalized counts. 
+  Only genes that have an expression greater than or equal to <code>minExpr</code> in at least <code>minCells</code> cells will be
+  kept. If <code>assay.type</code> is set to 'logcounts', that assay is transformed back to the raw normalized count space
+  by performing 2^logcounts(data) - 1, under the assumption the logcounts data is in log2 form and had a pseudocount of 1.</p>  
 <p>The genes that vary most on the log2(coefficient of variation) vs log2(mean) plot of genes will 
   be selected. A loess fit is done on this plot and the distance (euclidean by default) each point has
   to the curve is calculated in two steps.</p>  
@@ -209,13 +216,13 @@ when calculating more accurate distance values to the curve from the loess fit.<
   we select 100 points on the loess fit and calculate the distances each gene has to all those points on 
   the curve. Each gene is assigned to the point on the curve for which it has the shortest distance. In 
   the second step, more accurate distances to the curve are calculated by using a higher number of 
-  points on the curve.</p>  
+  points on the curve. Distances are calculated using the <code><a href='https://rdrr.io/pkg/wordspace/man/dist_matrix.html'>dist.matrix</a></code> function.</p>  
 <p>Finally, for each bin, the most variable genes are selected using the more accurate distance
   measures. Genes that fall below the loess fit are assigned a negative sign and the genes that 
   are <code>Nmads</code> MADs away from the median are selected.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>   <span class='co'># libraries</span>
+    <pre class="examples"><div class='input'>   <span class='co'># packages</span>
    <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SingleCellExperiment</span>)
 
    <span class='co'># create example count matrix</span>
@@ -228,17 +235,17 @@ when calculating more accurate distance values to the curve from the loess fit.<
    <span class='no'>j</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>counts</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>500</span>)
    <span class='no'>counts</span>[<span class='no'>i</span>, <span class='no'>j</span>] <span class='kw'>&lt;-</span> <span class='no'>counts</span>[<span class='no'>i</span>, <span class='no'>j</span>] + <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>5</span>:<span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>i</span>), <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-   <span class='co'># create SCE</span>
+   <span class='co'># create SCE </span>
    <span class='no'>sce</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html'>SingleCellExperiment</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>counts</span><span class='kw'>=</span><span class='no'>counts</span>))
 
-   <span class='co'># caclulate sizeFactors</span>
+   <span class='co'># calculate sizeFactors</span>
    <span class='no'>libsizes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span>(<span class='no'>counts</span>)
    <span class='fu'><a href='https://rdrr.io/pkg/SingleCellExperiment/man/SCE-sizeFactors.html'>sizeFactors</a></span>(<span class='no'>sce</span>) <span class='kw'>&lt;-</span> <span class='no'>libsizes</span>/<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>libsizes</span>)
 
    <span class='co'># select variable genes</span>
-   <span class='no'>varGenes</span> <span class='kw'>&lt;-</span> <span class='fu'>selVarGenes</span>(<span class='no'>sce</span>)</div><div class='output co'>#&gt; <span class='message'>Count row names are empty, naming them now ... </span></div><div class='output co'>#&gt; <span class='message'>Count column names are empty, naming them now ... </span></div><div class='input'>
+   <span class='no'>varGenes</span> <span class='kw'>&lt;-</span> <span class='fu'>selVarGenes</span>(<span class='no'>sce</span>, <span class='kw'>assay.type</span><span class='kw'>=</span><span class='st'>"counts"</span>)</div><div class='output co'>#&gt; <span class='message'>Count row names are empty, naming them now ... </span></div><div class='output co'>#&gt; <span class='message'>Count column names are empty, naming them now ... </span></div><div class='input'>
    <span class='co'># plot</span>
-   <span class='fu'><a href='plotSelVarGenesGroups.html'>plotSelVarGenesGroups</a></span>(<span class='no'>varGenes</span>)</div><div class='img'><img src='selVarGenes-1.png' alt='' width='700' height='433' /></div><div class='input'>   <span class='fu'><a href='plotSelVarGenes.html'>plotSelVarGenes</a></span>(<span class='no'>varGenes</span>)</div><div class='img'><img src='selVarGenes-2.png' alt='' width='700' height='433' /></div><div class='input'>
+   <span class='fu'><a href='plotSelVarGenes.html'>plotSelVarGenes</a></span>(<span class='no'>varGenes</span>, <span class='kw'>colByBin</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='selVarGenes-1.png' alt='' width='700' height='433' /></div><div class='input'>   <span class='fu'><a href='plotSelVarGenes.html'>plotSelVarGenes</a></span>(<span class='no'>varGenes</span>)</div><div class='img'><img src='selVarGenes-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

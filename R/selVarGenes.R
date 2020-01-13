@@ -1,4 +1,4 @@
-#' @title Get Distance
+#' @title Get Distances between 2D Points and a Loess Fit
 #' 
 #' @description This function gets the euclidean (by default) distances between all points in a 2-D coordinate 
 #'   system (x,y) to a group of points that fall on a fitted loess curve. It uses the \code{\link[wordspace]{dist.matrix}}
@@ -76,9 +76,11 @@
 #' 
 #' @author Dania Machlab 
 #' 
-#' @param data \code{SingleCellExperiment} object or (normalized) count \code{matrix} containing the genes as rows and cells as columns.
+#' @param data \code{SingleCellExperiment} object or normalized count \code{matrix} containing the genes as rows and cells as columns.
 #' @param assay.type the type of assay to use if \code{data} is a \code{SingleCellExperiment}. It can be either 'counts' 
 #'    or 'logcounts'. The default is 'counts'.
+#' @param logPseudo pseudo-count to use when using the logcounts slot from the \code{SingleCellExperiment} to transform back to
+#'    normalized raw count space.
 #' @param Nmads number of MADs beyond which genes are selected per bin.
 #' @param minCells keep genes with minimum expression in at least this number of cells.
 #' @param minExpr keep genes with expression greater than or equal to this in \code{minCells} cells in the 
@@ -161,7 +163,7 @@
 #' 
 #' @export
 #' 
-selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5, minExpr = 1, exclTopExprFrac = 0.01, span = 0.2, 
+selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3, minCells = 5, minExpr = 1, exclTopExprFrac = 0.01, span = 0.2, 
                         control=stats::loess.control(surface = "direct"), nBins = 100, 
                         nBinsDense = ceiling(nrow(data)/4), ...){
      
@@ -183,7 +185,7 @@ selVarGenes <- function(data=NULL, assay.type="counts", Nmads = 3, minCells = 5,
      if(is(data, "SingleCellExperiment")) {
           if(assay.type=="logcounts"){
                message("using logcounts(data), assuming those counts are in the log2(raw norm counts + 1) space ...")
-               normCounts <- 2^SingleCellExperiment::logcounts(data)-1
+               normCounts <- 2^SingleCellExperiment::logcounts(data)-logPseudo
           } else {
                normCounts <- sweep(as.matrix(SingleCellExperiment::counts(data)), 2, SingleCellExperiment::sizeFactors(data), "/")  
           }

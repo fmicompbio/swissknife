@@ -7,6 +7,7 @@
 selVarGenes(
   data = NULL,
   assay.type = "counts",
+  logPseudo = 1,
   Nmads = 3,
   minCells = 5,
   minExpr = 1,
@@ -19,10 +20,13 @@ selVarGenes(
 )
 }
 \arguments{
-\item{data}{\code{SingleCellExperiment} object or (normalized) count \code{matrix} containing the genes as rows and cells as columns.}
+\item{data}{\code{SingleCellExperiment} object or normalized count \code{matrix} containing the genes as rows and cells as columns.}
 
 \item{assay.type}{the type of assay to use if \code{data} is a \code{SingleCellExperiment}. It can be either 'counts' 
 or 'logcounts'. The default is 'counts'.}
+
+\item{logPseudo}{pseudo-count to use when using the logcounts slot from the \code{SingleCellExperiment} to transform back to
+normalized raw count space.}
 
 \item{Nmads}{number of MADs beyond which genes are selected per bin.}
 

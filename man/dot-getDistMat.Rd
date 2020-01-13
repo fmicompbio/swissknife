@@ -2,7 +2,7 @@
 % Please edit documentation in R/selVarGenes.R
 \name{.getDistMat}
 \alias{.getDistMat}
-\title{Get Distance}
+\title{Get Distances between 2D Points and a Loess Fit}
 \usage{
 .getDistMat(
   loessModel = NULL,

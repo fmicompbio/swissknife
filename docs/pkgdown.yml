@@ -1,8 +1,0 @@
-pandoc: '2.5'
-pkgdown: 1.4.1
-pkgdown_sha: ~
-articles: []
-urls:
-  reference: http://fmicompbio.github.io/swissknife/reference
-  article: http://fmicompbio.github.io/swissknife/articles
-

@@ -1,6 +1,6 @@
 Package: swissknife
 Title: Handy code shared in the FMI CompBio group
-Version: 0.16.1
+Version: 0.17
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
@@ -19,25 +19,28 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
 Imports: 
-    methods,
-    grDevices,
-    graphics,
-    png,
-    KernSmooth,
+    BiocGenerics,
     dplyr,
-    tidyr,
-    utils,
-    Rcpp,
+    GenomeInfoDb,
     GenomicAlignments,
     GenomicRanges,
-    IRanges,
-    Rsamtools,
-    stats,
-    BiocGenerics,
-    GenomeInfoDb,
+    graphics,
+    grDevices,
     Gviz,
+    IRanges,
+    KernSmooth,
+    methods,
+    png,
+    Rcpp,
+    Rsamtools,
+    rtracklayer,
     S4Vectors,
-    rtracklayer
+    SingleCellExperiment,
+    SummarizedExperiment,
+    stats,
+    tidyr,
+    utils,
+    wordspace
 LinkingTo: 
     Rcpp
 VignetteBuilder: knitr

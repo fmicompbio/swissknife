@@ -1,6 +1,9 @@
 context("plotBitScatter")
 
 test_that("plotBitScatter() runs", {
+    
+    options(bitmapType = "cairo")
+    
     x <- rnorm(100)
     y <- rnorm(100)
 

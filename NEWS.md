@@ -1,6 +1,7 @@
 # swissknife 0.17
 
 * Add R/selVarGenes.R to select variable genes in a single cell RNA-seq experiment
+* configured travis/github to automatically run pkgdown::deploy_site_github()
 
 # swissknife 0.16
 

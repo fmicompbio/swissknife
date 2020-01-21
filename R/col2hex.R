@@ -31,7 +31,7 @@
 col2hex <- function(col, alpha=255) {
   
   # checks
-  if(any(!swissknife:::.isValidColor(col))) {
+  if(any(!.isValidColor(col))) {
     stop("the color provided is not a valid color in R")
   }
   if(!is.numeric(alpha)){

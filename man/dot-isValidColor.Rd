@@ -22,8 +22,8 @@ This is an internal function, used for example by \code{valueToColor}.
     passing them to \code{col2rgb} and checking for an exception.
 }
 \examples{
-swissknife:::.isValidColor(c("black", "blackk"))
-swissknife:::.isValidColor(c(-1, 1))
+.isValidColor(c("black", "blackk"))
+.isValidColor(c(-1, 1))
 
 }
 \author{

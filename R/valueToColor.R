@@ -14,8 +14,8 @@
 #' @return A \code{logical} vector of the same length as \code{x}.
 #'
 #' @examples
-#' .isValidColor(c("black", "blackk"))
-#' .isValidColor(c(-1, 1))
+#' swissknife:::.isValidColor(c("black", "blackk"))
+#' swissknife:::.isValidColor(c(-1, 1))
 #'
 #' @keywords internal
 #' 

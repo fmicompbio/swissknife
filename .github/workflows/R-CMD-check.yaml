@@ -37,7 +37,7 @@ jobs:
       - name: Query dependencies
         run: |
           install.packages(c('remotes', 'BiocManager'))
-          BiocManager::install(c('GenomeInfoDbData'))
+          BiocManager::install(c('GenomeInfoDbData', 'GenomicAlignments', 'Gviz', 'Rsamtools', 'rtracklayer'))
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
         shell: Rscript {0}
 

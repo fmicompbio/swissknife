@@ -34,15 +34,9 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Install system dependencies (needed early)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install libcurl4-openssl-dev
-
       - name: Query dependencies
         run: |
           install.packages(c('remotes', 'BiocManager'))
-          BiocManager::install(c('GenomeInfoDbData', 'GenomicAlignments', 'Gviz', 'Rsamtools', 'rtracklayer'))
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), "depends.Rds", version = 2)
         shell: Rscript {0}
 
@@ -54,17 +48,19 @@ jobs:
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-
 
-      - name: Install system dependencies (remaining)
+      - name: Install system dependencies
         if: runner.os == 'Linux'
         env:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
+          sudo apt-get install libcurl4-openssl-dev
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
       - name: Install dependencies
         run: |
+          BiocManager::install(c('GenomeInfoDbData', 'GenomicAlignments', 'Gviz', 'Rsamtools', 'rtracklayer'))
           remotes::install_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories()))
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}

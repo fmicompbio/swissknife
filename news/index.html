@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -53,7 +57,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.18</span>
       </span>
     </div>
 
@@ -88,7 +92,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/fmicompbio/swissknife">
+  <a href="https://github.com/fmicompbio/swissknife/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -106,120 +110,120 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/fmicompbio/swissknife/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="swissknife-0-17" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-17" class="anchor"></a>swissknife 0.17</h1>
+    <div id="swissknife-017" class="section level1">
+<h1 class="page-header" data-toc-text="0.17">
+<a href="#swissknife-017" class="anchor"></a>swissknife 0.17</h1>
 <ul>
 <li>Add R/selVarGenes.R to select variable genes in a single cell RNA-seq experiment</li>
 <li>configured travis/github to automatically run pkgdown::deploy_site_github()</li>
 </ul>
 </div>
-    <div id="swissknife-0-16" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-16" class="anchor"></a>swissknife 0.16</h1>
+    <div id="swissknife-016" class="section level1">
+<h1 class="page-header" data-toc-text="0.16">
+<a href="#swissknife-016" class="anchor"></a>swissknife 0.16</h1>
 <ul>
 <li>Show features that overlap selected regions only with their introns in plotGeneRegion</li>
 </ul>
 </div>
-    <div id="swissknife-0-15" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-15" class="anchor"></a>swissknife 0.15</h1>
+    <div id="swissknife-015" class="section level1">
+<h1 class="page-header" data-toc-text="0.15">
+<a href="#swissknife-015" class="anchor"></a>swissknife 0.15</h1>
 <ul>
 <li>Allow specification of colors for coverage tracks in plotGeneRegion</li>
 </ul>
 </div>
-    <div id="swissknife-0-14" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-14" class="anchor"></a>swissknife 0.14</h1>
+    <div id="swissknife-014" class="section level1">
+<h1 class="page-header" data-toc-text="0.14">
+<a href="#swissknife-014" class="anchor"></a>swissknife 0.14</h1>
 <ul>
 <li>Allow coloring features by strand in plotGeneRegion</li>
 </ul>
 </div>
-    <div id="swissknife-0-13" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-13" class="anchor"></a>swissknife 0.13</h1>
+    <div id="swissknife-013" class="section level1">
+<h1 class="page-header" data-toc-text="0.13">
+<a href="#swissknife-013" class="anchor"></a>swissknife 0.13</h1>
 <ul>
 <li>Add parsePkgVersions</li>
 <li>Add plotGeneRegion</li>
 </ul>
 </div>
-    <div id="swissknife-0-12" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-12" class="anchor"></a>swissknife 0.12</h1>
+    <div id="swissknife-012" class="section level1">
+<h1 class="page-header" data-toc-text="0.12">
+<a href="#swissknife-012" class="anchor"></a>swissknife 0.12</h1>
 <ul>
 <li>Add col2hex</li>
 </ul>
 </div>
-    <div id="swissknife-0-10-0-11" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-10-0-11" class="anchor"></a>swissknife 0.10 / 0.11</h1>
+    <div id="swissknife-010--011" class="section level1">
+<h1 class="page-header" data-toc-text="0.10">
+<a href="#swissknife-010--011" class="anchor"></a>swissknife 0.10 / 0.11</h1>
 <ul>
 <li>Add ypixels, pointsize argument to plotBitScatter</li>
 </ul>
 </div>
-    <div id="swissknife-0-9" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-9" class="anchor"></a>swissknife 0.9</h1>
+    <div id="swissknife-09" class="section level1">
+<h1 class="page-header" data-toc-text="0.9">
+<a href="#swissknife-09" class="anchor"></a>swissknife 0.9</h1>
 <ul>
 <li>Add R/valueToColor.R</li>
 </ul>
 </div>
-    <div id="swissknife-0-8" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-8" class="anchor"></a>swissknife 0.8</h1>
+    <div id="swissknife-08" class="section level1">
+<h1 class="page-header" data-toc-text="0.8">
+<a href="#swissknife-08" class="anchor"></a>swissknife 0.8</h1>
 <ul>
 <li>plotBitScatter(x, y = NULL) now also works for x being a two-column matrix</li>
 </ul>
 </div>
-    <div id="swissknife-0-7" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-7" class="anchor"></a>swissknife 0.7</h1>
+    <div id="swissknife-07" class="section level1">
+<h1 class="page-header" data-toc-text="0.7">
+<a href="#swissknife-07" class="anchor"></a>swissknife 0.7</h1>
 <ul>
-<li>add functions to calculate and plot phasograms, e.g. to measure nucleosome repeat length in MNase data (R/phasograms.R, src/phasograms.cpp)</li>
+<li>add functions to calculate and plot phasograms, e.g.Â to measure nucleosome repeat length in MNase data (R/phasograms.R, src/phasograms.cpp)</li>
 </ul>
 </div>
-    <div id="swissknife-0-6" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-6" class="anchor"></a>swissknife 0.6</h1>
+    <div id="swissknife-06" class="section level1">
+<h1 class="page-header" data-toc-text="0.6">
+<a href="#swissknife-06" class="anchor"></a>swissknife 0.6</h1>
 <ul>
 <li>added tests for sampleControlElements() to cover all code (coverage gaps detected with covr::zero_coverage(covr::package_coverage()))</li>
 </ul>
 </div>
-    <div id="swissknife-0-5" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-5" class="anchor"></a>swissknife 0.5</h1>
+    <div id="swissknife-05" class="section level1">
+<h1 class="page-header" data-toc-text="0.5">
+<a href="#swissknife-05" class="anchor"></a>swissknife 0.5</h1>
 <ul>
 <li>sampleControlElements() now catches cases with too few control elements to match the target distribution</li>
 </ul>
 </div>
-    <div id="swissknife-0-4" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-4" class="anchor"></a>swissknife 0.4</h1>
+    <div id="swissknife-04" class="section level1">
+<h1 class="page-header" data-toc-text="0.4">
+<a href="#swissknife-04" class="anchor"></a>swissknife 0.4</h1>
 <ul>
-<li>sampleControlElements(x = list(), …) now works correctly</li>
+<li>sampleControlElements(x = list(), â¦) now works correctly</li>
 </ul>
 </div>
-    <div id="swissknife-0-3" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-3" class="anchor"></a>swissknife 0.3</h1>
+    <div id="swissknife-03" class="section level1">
+<h1 class="page-header" data-toc-text="0.3">
+<a href="#swissknife-03" class="anchor"></a>swissknife 0.3</h1>
 <ul>
 <li>Add R/readSampleTsvs.R:readSampleTsvs()</li>
 </ul>
 </div>
-    <div id="swissknife-0-2" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-2" class="anchor"></a>swissknife 0.2</h1>
+    <div id="swissknife-02" class="section level1">
+<h1 class="page-header" data-toc-text="0.2">
+<a href="#swissknife-02" class="anchor"></a>swissknife 0.2</h1>
 <ul>
 <li>Add R/plotting.R:plotBitScatter()</li>
 </ul>
 </div>
-    <div id="swissknife-0-1" class="section level1">
-<h1 class="page-header">
-<a href="#swissknife-0-1" class="anchor"></a>swissknife 0.1</h1>
+    <div id="swissknife-01" class="section level1">
+<h1 class="page-header" data-toc-text="0.1">
+<a href="#swissknife-01" class="anchor"></a>swissknife 0.1</h1>
 <ul>
 <li>Initial version</li>
 <li>add R/misc.R:sampleControlElements()</li>
@@ -227,28 +231,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#swissknife-0-17">0.17</a></li>
-        <li><a href="#swissknife-0-16">0.16</a></li>
-        <li><a href="#swissknife-0-15">0.15</a></li>
-        <li><a href="#swissknife-0-14">0.14</a></li>
-        <li><a href="#swissknife-0-13">0.13</a></li>
-        <li><a href="#swissknife-0-12">0.12</a></li>
-        <li><a href="#swissknife-0-10-0-11">0.10</a></li>
-        <li><a href="#swissknife-0-9">0.9</a></li>
-        <li><a href="#swissknife-0-8">0.8</a></li>
-        <li><a href="#swissknife-0-7">0.7</a></li>
-        <li><a href="#swissknife-0-6">0.6</a></li>
-        <li><a href="#swissknife-0-5">0.5</a></li>
-        <li><a href="#swissknife-0-4">0.4</a></li>
-        <li><a href="#swissknife-0-3">0.3</a></li>
-        <li><a href="#swissknife-0-2">0.2</a></li>
-        <li><a href="#swissknife-0-1">0.1</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -260,7 +246,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
 </div>
 
       </footer>

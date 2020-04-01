@@ -86,6 +86,7 @@ jobs:
       - name: Deploy
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.config.os == 'ubuntu-16.04' && matrix.config.r == '3.6'
         run: |
+          git config --global user.name "mbstadler"
           R CMD INSTALL .
           Rscript -e "install.packages(c('remotes'))"
           Rscript -e "remotes::install_dev('pkgdown'); pkgdown::deploy_to_branch(new_process = FALSE)"

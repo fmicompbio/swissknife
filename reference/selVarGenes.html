@@ -249,7 +249,7 @@ when calculating more accurate distance values to the curve from the loess fit.<
 
    <span class='co'># calculate sizeFactors</span>
    <span class='no'>libsizes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span>(<span class='no'>counts</span>)
-   <span class='fu'><a href='https://rdrr.io/pkg/SingleCellExperiment/man/SCE-sizeFactors.html'>sizeFactors</a></span>(<span class='no'>sce</span>) <span class='kw'>&lt;-</span> <span class='no'>libsizes</span>/<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>libsizes</span>)
+   <span class='fu'><a href='https://rdrr.io/pkg/SingleCellExperiment/man/sizeFactors.html'>sizeFactors</a></span>(<span class='no'>sce</span>) <span class='kw'>&lt;-</span> <span class='no'>libsizes</span>/<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>libsizes</span>)
 
    <span class='co'># select variable genes</span>
    <span class='no'>varGenes</span> <span class='kw'>&lt;-</span> <span class='fu'>selVarGenes</span>(<span class='no'>sce</span>, <span class='kw'>assay.type</span><span class='kw'>=</span><span class='st'>"counts"</span>)</div><div class='output co'>#&gt; <span class='message'>Count row names are empty, naming them now ... </span></div><div class='output co'>#&gt; <span class='message'>Count column names are empty, naming them now ... </span></div><div class='input'>
@@ -271,7 +271,7 @@ when calculating more accurate distance values to the curve from the loess fit.<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

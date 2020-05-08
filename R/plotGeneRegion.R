@@ -392,7 +392,7 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
         ## Define colors if bigwigCond is provided
         ## ---------------------------------------------------------------------- ##
         if (!is.null(condColors)) {
-            usecol <- condColors
+            usecol <- condColors[match(bigwigCond, names(condColors))]
         } else {
             ## Define colors for coverage tracks
             color_list <- rep(c("#DC050C", "#7BAFDE", "#B17BA6", "#F1932D", "#F7EE55",

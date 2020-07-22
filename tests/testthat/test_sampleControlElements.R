@@ -6,6 +6,7 @@ test_that("sampleControlElements() works properly", {
     n.target <- 500
     i.control <- seq.int(n.control)
     i.target <- seq.int(n.target) + n.control
+    set.seed(0)
     x <- c(runif(n.control, min = 0, max = 10),
            rnorm(n.target, mean = 5, sd = 1))
 

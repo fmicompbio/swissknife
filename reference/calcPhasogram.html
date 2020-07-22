@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
   for efficiency.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calcPhasogram</span>(<span class='no'>fname</span>, <span class='kw'>regions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rmdup</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dmax</span> <span class='kw'>=</span> <span class='fl'>3000L</span>)</pre>
+    <pre class="usage"><span class='fu'>calcPhasogram</span>(<span class='kw'>fname</span>, regions = <span class='kw'>NULL</span>, rmdup = <span class='fl'>TRUE</span>, dmax = <span class='fl'>3000L</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,19 +176,21 @@ strand alignments to count.</p></td>
     <div class='dont-index'><p><code><a href='estimateNRL.html'>estimateNRL</a></code> to estimate the nucleosome repeat length
   from a phasogram, <code><a href='plotPhasogram.html'>plotPhasogram</a></code> to visualize an annotated
   phasogram, <code><a href='calcAndCountDist.html'>calcAndCountDist</a></code> for low-level distance counting.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael Stadler</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>bamf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"phasograms"</span>, <span class='st'>"mnase_mm10.bam"</span>,
-                    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"swissknife"</span>)
-<span class='no'>pg</span> <span class='kw'>&lt;-</span> <span class='fu'>calcPhasogram</span>(<span class='no'>bamf</span>)
-<span class='fu'><a href='estimateNRL.html'>estimateNRL</a></span>(<span class='no'>pg</span>, <span class='kw'>usePeaks</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>)[<span class='fl'>1</span>:<span class='fl'>2</span>]</div><div class='output co'>#&gt; $nrl
+    <pre class="examples"><div class='input'><span class='kw'>bamf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"phasograms"</span>, <span class='st'>"mnase_mm10.bam"</span>,
+                    package = <span class='st'>"swissknife"</span>)
+<span class='kw'>pg</span> <span class='op'>&lt;-</span> <span class='fu'>calcPhasogram</span>(<span class='kw'>bamf</span>)
+<span class='fu'><a href='estimateNRL.html'>estimateNRL</a></span>(<span class='kw'>pg</span>, usePeaks = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>)[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>]</div><div class='output co'>#&gt; $nrl
 #&gt; [1] 186
 #&gt; 
 #&gt; $nrl.CI95
 #&gt;    2.5 %   97.5 % 
 #&gt; 176.0015 195.9985 
-#&gt; </div><div class='input'><span class='fu'><a href='plotPhasogram.html'>plotPhasogram</a></span>(<span class='no'>pg</span>, <span class='kw'>usePeaks</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1000</span>))</div><div class='img'><img src='calcPhasogram-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+#&gt; </div><div class='input'><span class='fu'><a href='plotPhasogram.html'>plotPhasogram</a></span>(<span class='kw'>pg</span>, usePeaks = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, xlim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1000</span>))</div><div class='img'><img src='calcPhasogram-1.png' alt='' width='700' height='433' /></div><div class='input'></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

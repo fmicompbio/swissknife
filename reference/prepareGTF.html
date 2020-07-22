@@ -76,7 +76,7 @@ plotGeneRegion function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
       </span>
     </div>
 
@@ -129,10 +129,10 @@ make the file amenable to plotting with Gviz, using the
     </div>
 
     <pre class="usage"><span class='fu'>prepareGTF</span>(
-  <span class='no'>gtf</span>,
-  <span class='kw'>transcriptIdColumn</span> <span class='kw'>=</span> <span class='st'>"transcript_id"</span>,
-  <span class='kw'>geneIdColumn</span> <span class='kw'>=</span> <span class='st'>"gene_id"</span>,
-  <span class='kw'>geneSymbolColumn</span> <span class='kw'>=</span> <span class='st'>"gene_name"</span>
+  <span class='kw'>gtf</span>,
+  transcriptIdColumn = <span class='st'>"transcript_id"</span>,
+  geneIdColumn = <span class='st'>"gene_id"</span>,
+  geneSymbolColumn = <span class='st'>"gene_name"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,10 +161,14 @@ available (in which case the gene IDs will be used in its place).</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Charlotte Soneson</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>gtf</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareGTF</span>(<span class='kw'>gtf</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>,
-                                    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"swissknife"</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>gtf</span> <span class='op'>&lt;-</span> <span class='fu'>prepareGTF</span>(gtf = <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>,
+                                    package = <span class='st'>"swissknife"</span>))
+                                    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

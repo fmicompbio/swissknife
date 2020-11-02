@@ -2,7 +2,6 @@
 
 | Platforms |  OS  | R CMD check | Coverage |
 |:----------------:|:----------------:|:----------------:|:----------------:|
-| Travis CI | Linux | [![Build Status](https://travis-ci.com/fmicompbio/swissknife.svg?branch=master)](https://travis-ci.com/fmicompbio/swissknife) | [![Codecov.io coverage status](https://codecov.io/github/fmicompbio/swissknife/coverage.svg?branch=master)](https://codecov.io/github/fmicompbio/swissknife) |
 | GitHub Actions | Linux/Windows/macOS | [![R build status](https://github.com/fmicompbio/swissknife/workflows/R-CMD-check/badge.svg)](https://github.com/fmicompbio/swissknife/actions) | [![Codecov.io coverage status](https://codecov.io/github/fmicompbio/swissknife/coverage.svg?branch=master)](https://codecov.io/github/fmicompbio/swissknife) |
 
 

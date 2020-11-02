@@ -35,3 +35,6 @@ reference:
     - '`sampleControlElements`'
     - '`parsePkgVersions`'
     - '`prepareGTF`'
+- title: General package information
+  contents:
+    - '`swissknife-package`'

@@ -82,12 +82,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -126,17 +120,17 @@
     with scatter plots with many elements small, while retaining editability of axes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotBitScatter</span>(
-  <span class='kw'>x</span>,
-  y = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>,
-  densCols = <span class='fl'>TRUE</span>,
-  colpal = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#00007F"</span>, <span class='st'>"blue"</span>, <span class='st'>"#007FFF"</span>, <span class='st'>"cyan"</span>, <span class='st'>"#7FFF7F"</span>, <span class='st'>"yellow"</span>, <span class='st'>"#FF7F00"</span>,
-    <span class='st'>"red"</span>, <span class='st'>"#7F0000"</span>),
-  xpixels = <span class='fl'>1000</span>,
-  ypixels = <span class='kw'>NULL</span>,
-  pointsize = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotBitScatter</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  y <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  densCols <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  colpal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#00007F"</span>, <span class='st'>"blue"</span>, <span class='st'>"#007FFF"</span>, <span class='st'>"cyan"</span>, <span class='st'>"#7FFF7F"</span>, <span class='st'>"yellow"</span>, <span class='st'>"#FF7F00"</span>,
+    <span class='st'>"red"</span>, <span class='st'>"#7F0000"</span><span class='op'>)</span>,
+  xpixels <span class='op'>=</span> <span class='fl'>1000</span>,
+  ypixels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  pointsize <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,11 +200,13 @@ should be set manually using this argument.</p></td>
     <p>Michael Stadler</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>)
-<span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(mfrow=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>))
-<span class='fu'>plotBitScatter</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, main = <span class='st'>"bitmap"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, <span class='kw'>y</span>, main = <span class='st'>"default"</span>)</div><div class='img'><img src='plotBitScatter-1.png' alt='' width='700' height='433' /></div><div class='input'></div></pre>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>plotBitScatter</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, main <span class='op'>=</span> <span class='st'>"bitmap"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, main <span class='op'>=</span> <span class='st'>"default"</span><span class='op'>)</span>
+</div><div class='img'><img src='plotBitScatter-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -226,7 +222,7 @@ should be set manually using this argument.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

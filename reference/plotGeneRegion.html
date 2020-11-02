@@ -81,12 +81,6 @@ file(s)." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -124,27 +118,27 @@ provided region, and/or show one or more coverage tracks based on bigwig
 file(s).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotGeneRegion</span>(
-  gtf = <span class='st'>""</span>,
-  granges = <span class='kw'>NULL</span>,
-  chr = <span class='st'>""</span>,
-  start = <span class='fl'>NA_real_</span>,
-  end = <span class='fl'>NA_real_</span>,
-  showgene = <span class='st'>""</span>,
-  bigwigFiles = <span class='st'>""</span>,
-  bigwigCond = <span class='st'>""</span>,
-  geneTrackTitle = <span class='st'>"Genes"</span>,
-  transcriptIdColumn = <span class='st'>"transcript_id"</span>,
-  geneIdColumn = <span class='st'>"gene_id"</span>,
-  geneSymbolColumn = <span class='st'>"gene_name"</span>,
-  lowerPadding = <span class='fl'>0.15</span>,
-  upperPadding = <span class='fl'>0.05</span>,
-  colorByStrand = <span class='fl'>FALSE</span>,
-  featureColors = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(plusmain = <span class='st'>"#0E14D0"</span>, minusmain = <span class='st'>"#D0350E"</span>, plusother = <span class='st'>"#9E9BEB"</span>,
-    minusother = <span class='st'>"#DA907E"</span>),
-  condColors = <span class='kw'>NULL</span>,
-  scaleDataTracks = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotGeneRegion</span><span class='op'>(</span>
+  gtf <span class='op'>=</span> <span class='st'>""</span>,
+  granges <span class='op'>=</span> <span class='cn'>NULL</span>,
+  chr <span class='op'>=</span> <span class='st'>""</span>,
+  start <span class='op'>=</span> <span class='cn'>NA_real_</span>,
+  end <span class='op'>=</span> <span class='cn'>NA_real_</span>,
+  showgene <span class='op'>=</span> <span class='st'>""</span>,
+  bigwigFiles <span class='op'>=</span> <span class='st'>""</span>,
+  bigwigCond <span class='op'>=</span> <span class='st'>""</span>,
+  geneTrackTitle <span class='op'>=</span> <span class='st'>"Genes"</span>,
+  transcriptIdColumn <span class='op'>=</span> <span class='st'>"transcript_id"</span>,
+  geneIdColumn <span class='op'>=</span> <span class='st'>"gene_id"</span>,
+  geneSymbolColumn <span class='op'>=</span> <span class='st'>"gene_name"</span>,
+  lowerPadding <span class='op'>=</span> <span class='fl'>0.15</span>,
+  upperPadding <span class='op'>=</span> <span class='fl'>0.05</span>,
+  colorByStrand <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  featureColors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>plusmain <span class='op'>=</span> <span class='st'>"#0E14D0"</span>, minusmain <span class='op'>=</span> <span class='st'>"#D0350E"</span>, plusother <span class='op'>=</span> <span class='st'>"#9E9BEB"</span>,
+    minusother <span class='op'>=</span> <span class='st'>"#DA907E"</span><span class='op'>)</span>,
+  condColors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scaleDataTracks <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -248,23 +242,28 @@ specifying a gene (ID or symbol) or by specifying a viewing range
     <p>Charlotte Soneson</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>gtffile</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>, 
-                       package = <span class='st'>"swissknife"</span>)
-<span class='fu'>plotGeneRegion</span>(gtf = <span class='kw'>gtffile</span>, 
-               showgene = <span class='st'>"Tnfaip3"</span>)</div><div class='img'><img src='plotGeneRegion-1.png' alt='' width='700' height='433' /></div><div class='input'>               
-<span class='kw'>bwf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/plotGeneRegion/mnase_mm10.bw"</span>, 
-                   package = <span class='st'>"swissknife"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>bwf</span>) <span class='op'>&lt;-</span> <span class='st'>"bwf1"</span>
-<span class='fu'>plotGeneRegion</span>(gtf = <span class='kw'>gtffile</span>, 
-               bigwigFiles = <span class='kw'>bwf</span>,
-               chr = <span class='st'>"chr10"</span>, start = <span class='fl'>20000000</span>, end = <span class='fl'>20005000</span>)</div><div class='img'><img src='plotGeneRegion-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotGeneRegion</span>(bigwigFiles = <span class='kw'>bwf</span>,
-               chr = <span class='st'>"chr10"</span>, start = <span class='fl'>20000000</span>, end = <span class='fl'>20005000</span>)</div><div class='img'><img src='plotGeneRegion-3.png' alt='' width='700' height='433' /></div><div class='input'>               
-<span class='kw'>bwf2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>bwf</span>, <span class='kw'>bwf</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>bwf2</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bwf1"</span>, <span class='st'>"bwf2"</span>)
-<span class='kw'>bwc2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"c1"</span>, <span class='st'>"c2"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>bwc2</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>bwf2</span>)
-<span class='fu'>plotGeneRegion</span>(gtf = <span class='kw'>gtffile</span>, bigwigFiles = <span class='kw'>bwf2</span>, bigwigCond = <span class='kw'>bwc2</span>, 
-               showgene = <span class='st'>"Map3k5"</span>)</div><div class='img'><img src='plotGeneRegion-4.png' alt='' width='700' height='433' /></div><div class='input'></div></pre>
+    <pre class="examples"><div class='input'><span class='va'>gtffile</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>, 
+                       package <span class='op'>=</span> <span class='st'>"swissknife"</span><span class='op'>)</span>
+<span class='fu'>plotGeneRegion</span><span class='op'>(</span>gtf <span class='op'>=</span> <span class='va'>gtffile</span>, 
+               showgene <span class='op'>=</span> <span class='st'>"Tnfaip3"</span><span class='op'>)</span>
+</div><div class='img'><img src='plotGeneRegion-1.png' alt='' width='700' height='433' /></div><div class='input'>               
+<span class='va'>bwf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/plotGeneRegion/mnase_mm10.bw"</span>, 
+                   package <span class='op'>=</span> <span class='st'>"swissknife"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwf</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>"bwf1"</span>
+<span class='fu'>plotGeneRegion</span><span class='op'>(</span>gtf <span class='op'>=</span> <span class='va'>gtffile</span>, 
+               bigwigFiles <span class='op'>=</span> <span class='va'>bwf</span>,
+               chr <span class='op'>=</span> <span class='st'>"chr10"</span>, start <span class='op'>=</span> <span class='fl'>20000000</span>, end <span class='op'>=</span> <span class='fl'>20005000</span><span class='op'>)</span>
+</div><div class='img'><img src='plotGeneRegion-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotGeneRegion</span><span class='op'>(</span>bigwigFiles <span class='op'>=</span> <span class='va'>bwf</span>,
+               chr <span class='op'>=</span> <span class='st'>"chr10"</span>, start <span class='op'>=</span> <span class='fl'>20000000</span>, end <span class='op'>=</span> <span class='fl'>20005000</span><span class='op'>)</span>
+</div><div class='img'><img src='plotGeneRegion-3.png' alt='' width='700' height='433' /></div><div class='input'>               
+<span class='va'>bwf2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>bwf</span>, <span class='va'>bwf</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwf2</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"bwf1"</span>, <span class='st'>"bwf2"</span><span class='op'>)</span>
+<span class='va'>bwc2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>, <span class='st'>"c2"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwc2</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwf2</span><span class='op'>)</span>
+<span class='fu'>plotGeneRegion</span><span class='op'>(</span>gtf <span class='op'>=</span> <span class='va'>gtffile</span>, bigwigFiles <span class='op'>=</span> <span class='va'>bwf2</span>, bigwigCond <span class='op'>=</span> <span class='va'>bwc2</span>, 
+               showgene <span class='op'>=</span> <span class='st'>"Map3k5"</span><span class='op'>)</span>
+</div><div class='img'><img src='plotGeneRegion-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -280,7 +279,7 @@ specifying a gene (ID or symbol) or by specifying a viewing range
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

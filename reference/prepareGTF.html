@@ -83,12 +83,6 @@ plotGeneRegion function." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -128,12 +122,12 @@ make the file amenable to plotting with Gviz, using the
 <code>plotGeneRegion</code> function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prepareGTF</span>(
-  <span class='kw'>gtf</span>,
-  transcriptIdColumn = <span class='st'>"transcript_id"</span>,
-  geneIdColumn = <span class='st'>"gene_id"</span>,
-  geneSymbolColumn = <span class='st'>"gene_name"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>prepareGTF</span><span class='op'>(</span>
+  <span class='va'>gtf</span>,
+  transcriptIdColumn <span class='op'>=</span> <span class='st'>"transcript_id"</span>,
+  geneIdColumn <span class='op'>=</span> <span class='st'>"gene_id"</span>,
+  geneSymbolColumn <span class='op'>=</span> <span class='st'>"gene_name"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,9 +160,10 @@ available (in which case the gene IDs will be used in its place).</p></td>
     <p>Charlotte Soneson</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>gtf</span> <span class='op'>&lt;-</span> <span class='fu'>prepareGTF</span>(gtf = <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>,
-                                    package = <span class='st'>"swissknife"</span>))
-                                    </div></pre>
+    <pre class="examples"><div class='input'><span class='va'>gtf</span> <span class='op'>&lt;-</span> <span class='fu'>prepareGTF</span><span class='op'>(</span>gtf <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>,
+                                    package <span class='op'>=</span> <span class='st'>"swissknife"</span><span class='op'>)</span><span class='op'>)</span>
+                                    
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -184,7 +179,7 @@ available (in which case the gene IDs will be used in its place).</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

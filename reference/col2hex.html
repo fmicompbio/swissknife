@@ -79,12 +79,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -120,7 +114,7 @@
     <p>The function returns a color in hex form given a valid name of a color in R.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>col2hex</span>(<span class='kw'>col</span>, alpha = <span class='fl'>255</span>)</pre>
+    <pre class="usage"><span class='fu'>col2hex</span><span class='op'>(</span><span class='va'>col</span>, alpha <span class='op'>=</span> <span class='fl'>255</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,16 +140,19 @@ and provides maximum color. The default is set to 255.</p></td>
     <p>Dania Machlab</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>1</span>)
-<span class='kw'>cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"red"</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>y</span>))
-<span class='kw'>alpha</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,length.out=<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>y</span>))
-<span class='kw'>hexcols</span> <span class='op'>&lt;-</span> <span class='fu'>col2hex</span>(<span class='kw'>cols</span>, <span class='kw'>alpha</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>y</span>), <span class='kw'>y</span>, bg=<span class='kw'>hexcols</span>, pch=<span class='fl'>21</span>)</div><div class='img'><img src='col2hex-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>1</span>)
-<span class='kw'>cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"red"</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>y</span>))
-<span class='kw'>alpha</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>255</span>,length.out=<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>y</span>))
-<span class='kw'>hexcols</span> <span class='op'>&lt;-</span> <span class='fu'>col2hex</span>(<span class='kw'>cols</span>, <span class='kw'>alpha</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>y</span>), <span class='kw'>y</span>, bg=<span class='kw'>hexcols</span>, pch=<span class='fl'>21</span>)</div><div class='img'><img src='col2hex-2.png' alt='' width='700' height='433' /></div><div class='input'></div></pre>
+    <pre class="examples"><div class='input'><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>alpha</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,length.out<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>hexcols</span> <span class='op'>&lt;-</span> <span class='fu'>col2hex</span><span class='op'>(</span><span class='va'>cols</span>, <span class='va'>alpha</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>, <span class='va'>y</span>, bg<span class='op'>=</span><span class='va'>hexcols</span>, pch<span class='op'>=</span><span class='fl'>21</span><span class='op'>)</span>
+</div><div class='img'><img src='col2hex-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>alpha</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>255</span>,length.out<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>hexcols</span> <span class='op'>&lt;-</span> <span class='fu'>col2hex</span><span class='op'>(</span><span class='va'>cols</span>, <span class='va'>alpha</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>, <span class='va'>y</span>, bg<span class='op'>=</span><span class='va'>hexcols</span>, pch<span class='op'>=</span><span class='fl'>21</span><span class='op'>)</span>
+</div><div class='img'><img src='col2hex-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -171,7 +168,7 @@ and provides maximum color. The default is set to 255.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

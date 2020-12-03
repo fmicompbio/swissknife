@@ -20,6 +20,7 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
     BiocGenerics,
+    BiocParallel,
     dplyr,
     GenomeInfoDb,
     GenomicAlignments,
@@ -29,6 +30,7 @@ Imports:
     Gviz,
     IRanges,
     KernSmooth,
+    matrixStats,
     methods,
     png,
     Rcpp,
@@ -36,6 +38,7 @@ Imports:
     rtracklayer,
     S4Vectors,
     SingleCellExperiment,
+    SingleR,
     SummarizedExperiment,
     stats,
     tidyr,

@@ -82,7 +82,7 @@ normGenesetExpression <- function(sce,
 #' @author Michael Stadler
 #'
 #' @param sce \code{SingleCellExperiment} object.
-#' @param makergenes Named \code{list} of \code{character} vectors with the
+#' @param markergenes Named \code{list} of \code{character} vectors with the
 #'   marker genes for each cell types. The marker genes must be a subset of
 #'   \code{rownames(sce)}.
 #' @param fraction_topscoring \code{numeric} vector of length 1 or the same

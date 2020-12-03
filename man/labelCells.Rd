@@ -18,6 +18,10 @@ labelCells(
 \arguments{
 \item{sce}{\code{SingleCellExperiment} object.}
 
+\item{markergenes}{Named \code{list} of \code{character} vectors with the
+marker genes for each cell types. The marker genes must be a subset of
+\code{rownames(sce)}.}
+
 \item{fraction_topscoring}{\code{numeric} vector of length 1 or the same
 length as \code{markergenes} giving the fraction(s) of top scoring cells
 for each cell type to pick to create the reference transcriptome profile.}
@@ -36,10 +40,6 @@ for \code{\link[SinlgeR]{aggregateReference}}.}
 
 \item{BPPARAM}{An optional \code{\link[BiocParallel]{BiocParallelParam}}
 instance determining the parallel back-end to be used during evaluation.}
-
-\item{makergenes}{Named \code{list} of \code{character} vectors with the
-marker genes for each cell types. The marker genes must be a subset of
-\code{rownames(sce)}.}
 }
 \value{
 A \code{list} of three elements named \code{cells}, \code{refs} and \code{labels}.

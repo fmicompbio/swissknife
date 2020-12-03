@@ -19,10 +19,11 @@ reference:
     - '`estimateNRL`'
     - '`plotPhasogram`'
     - '`calcAndCountDist`'
-- title: Single Cell RNAseq
+- title: Single cell RNAseq
   contents:
     - '`selVarGenes`'
     - '`plotSelVarGenes`'
+    - '`normGenesetExpression`'
 - title: Visualization and plotting
   contents:
     - '`plotBitScatter`'

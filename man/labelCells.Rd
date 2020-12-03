@@ -33,7 +33,7 @@ for each cell type to pick to create the reference transcriptome profile.}
 for \code{\link{normGenesetExpression}}.}
 
 \item{aggregateReferenceParams}{\code{list} with additional parameters
-for \code{\link[SinlgeR]{aggregateReference}}.}
+for \code{\link[SingleR]{aggregateReference}}.}
 
 \item{SingleRParams}{\code{list} with additional parameters for
 \code{\link[SingleR]{SingleR}}.}

@@ -93,7 +93,7 @@ normGenesetExpression <- function(sce,
 #' @param normGenesetExpressionParams \code{list} with additional parameters
 #'   for \code{\link{normGenesetExpression}}.
 #' @param aggregateReferenceParams \code{list} with additional parameters
-#'   for \code{\link[SinlgeR]{aggregateReference}}.
+#'   for \code{\link[SingleR]{aggregateReference}}.
 #' @param SingleRParams \code{list} with additional parameters for
 #'   \code{\link[SingleR]{SingleR}}.
 #' @param BPPARAM An optional \code{\link[BiocParallel]{BiocParallelParam}}

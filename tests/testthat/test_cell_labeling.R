@@ -45,7 +45,7 @@ test_that("normGenesetExpression() works properly", {
                                   expr_values = "logcounts", R = 40,
                                   BPPARAM = BiocParallel::SerialParam())
     res2 <- normGenesetExpression(sce = sce, genes = selgns,
-                                  expr_values = "logcounts", R = 40,
+                                  expr_values = 2, R = 40,
                                   BPPARAM = BiocParallel::MulticoreParam(workers = 4L))
     
     ## tests
@@ -74,11 +74,17 @@ test_that("labelCells() works properly", {
 
     ## run function
     res1 <- labelCells(sce = sce, markergenes = markergenes,
+                       expr_values = "logcounts",
                        normGenesetExpressionParams = list(R = 40),
                        BPPARAM = BiocParallel::SerialParam())
+    expect_warning({
     res2 <- labelCells(sce = sce, markergenes = markergenes,
-                       normGenesetExpressionParams = list(R = 40),
+                       expr_values = 2,
+                       normGenesetExpressionParams = list(sce = sce, R = 40),
+                       aggregateReferenceParams = list(power = 0.5, BPPARAM = NULL),
+                       SingleRParams = list(BPPARAM = NULL),
                        BPPARAM = BiocParallel::MulticoreParam(workers = 4L))
+    })
     
     ## tests
     expect_is(res1, "list")

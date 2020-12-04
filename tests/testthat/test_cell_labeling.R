@@ -90,6 +90,6 @@ test_that("labelCells() works properly", {
     expect_is(res1, "list")
     expect_length(res1, 3L)
     expect_named(res1, c("cells", "refs", "labels"))
-    expect_true(all(diag(table(res1$labels$pruned.labels, celltypes)) > 98))
-    expect_true(all(diag(table(res2$labels$pruned.labels, celltypes)) > 98))
+    expect_true(all(diag(table(res1$labels$pruned.labels, celltypes)) > 95))
+    expect_true(all(diag(table(res2$labels$pruned.labels, celltypes)) > 95))
 })

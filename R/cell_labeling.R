@@ -41,14 +41,20 @@ normGenesetExpression <- function(sce,
         R > 0
         inherits(BPPARAM, "BiocParallelParam")
     })
-    if (is.numeric(expr_values) && length(expr_values) == 1L)
-        expr_values <- assayNames(sce)[expr_values]
-    stopifnot(exprs = {
-        is.character(expr_values)
-        length(expr_values) == 1L
-        expr_values %in% assayNames(sce)
-    })
-    
+    if (is.numeric(expr_values)) {
+        stopifnot(exprs = {
+            length(expr_values) == 1L
+            expr_values <= length(assays(sce))
+        })
+    } else if (is.character(expr_values)) {
+        stopifnot(exprs = {
+            length(expr_values) == 1L
+            expr_values %in% assayNames(sce)
+        })
+    } else {
+        stop("'expr_values' is not a valid value for use in assay()")
+    }
+
     # calculate average expression of selected genes
     expr <- assay(sce, expr_values)
     i <- match(genes[genes %in% rownames(expr)], rownames(expr))
@@ -153,15 +159,20 @@ labelCells <- function(sce,
         is(SingleRParams, "list")
         length(SingleRParams) == 0 || !is.null(names(SingleRParams))
     })
-    if (is.numeric(expr_values) && length(expr_values) == 1L)
-        expr_values <- assayNames(sce)[expr_values]
-    stopifnot(exprs = {
-        # expr_values
-        is.character(expr_values)
-        length(expr_values) == 1L
-        expr_values %in% assayNames(sce)
-    })
-    
+    if (is.numeric(expr_values)) {
+        stopifnot(exprs = {
+            length(expr_values) == 1L
+            expr_values <= length(assays(sce))
+        })
+    } else if (is.character(expr_values)) {
+        stopifnot(exprs = {
+            length(expr_values) == 1L
+            expr_values %in% assayNames(sce)
+        })
+    } else {
+        stop("'expr_values' is not a valid value for use in assay()")
+    }
+
     ## calculate scores for marker gene sets
     todrop <- intersect(names(normGenesetExpressionParams),
                         c("sce", "genes", "expr_values", "BPPARAM"))

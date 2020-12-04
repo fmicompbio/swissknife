@@ -164,6 +164,7 @@ normGenesetExpression <- function(sce,
 #' 
 #' @examples 
 #' # create SingleCellExperiment with cell-type specific genes
+#' library(SingleCellExperiment)
 #' n_types <- 3
 #' n_per_type <- 30
 #' n_cells <- n_types * n_per_type

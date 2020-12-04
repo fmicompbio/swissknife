@@ -14,6 +14,12 @@
 #'   \code{sce} contains the expression values.
 #' @param R Integer scalar giving the number of random gene sets to sample
 #'   for normalization.
+#' @param subset.row Sample random genes only from these. If \code{NULL}
+#'   (the default), the function will sample from all genes in \code{sce}.
+#'   Alternatively, \code{subset.row} can be a logical, integer or character
+#'   vector indicating the rows (genes) of \code{sce} to use for sampling.
+#'   This allows for example to exclude highly variable genes from the sampling
+#'   which are likely expressed only in certain cell types.
 #' @param BPPARAM An optional \code{\link[BiocParallel]{BiocParallelParam}}
 #'   instance determining the parallel back-end to be used during evaluation.
 #' 
@@ -28,6 +34,7 @@
 normGenesetExpression <- function(sce,
                                   genes,
                                   expr_values = "logcounts",
+                                  subset.row = NULL,
                                   R = 200,
                                   BPPARAM = SerialParam()) {
     # pre-flight checks
@@ -36,6 +43,7 @@ normGenesetExpression <- function(sce,
         is.character(genes)
         length(genes) > 1L
         all(genes %in% rownames(sce))
+        is.null(subset.row) || !any(is.na(subset.row))
         is.numeric(R)
         length(R) == 1L
         R > 0
@@ -55,9 +63,25 @@ normGenesetExpression <- function(sce,
         stop("'expr_values' is not a valid value for use in assay()")
     }
 
+    # exclude genes if subset.row is given
+    i <- match(genes[genes %in% rownames(sce)], rownames(sce))
+    if (!is.null(subset.row)) {
+        if (is.logical(subset.row) && length(subset.row) == nrow(sce)) {
+            sel <- which(subset.row)
+        } else if (is.numeric(subset.row) && min(subset.row) >= 0 && max(subset.row) <= nrow(sce)) {
+            sel <- subset.row
+        } else if (is.character(subset.row) && all(subset.row %in% rownames(sce))) {
+            sel <- match(subset.row, rownames(sce))
+        } else {
+            stop("'subset.row' is not a valid selector of rows (genes) in 'sce'")
+        }
+        sel <- unique(c(i, sel)) # keep marker genes
+        expr <- assay(sce, expr_values)[sel, ]
+    } else {
+        expr <- assay(sce, expr_values)
+    }
+    
     # calculate average expression of selected genes
-    expr <- assay(sce, expr_values)
-    i <- match(genes[genes %in% rownames(expr)], rownames(expr))
     avgExpr <- rowMeans(expr)
     val.obs <- colSums(expr[i, , drop = FALSE])
     

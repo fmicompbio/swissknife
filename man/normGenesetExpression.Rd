@@ -8,6 +8,7 @@ normGenesetExpression(
   sce,
   genes,
   expr_values = "logcounts",
+  subset.row = NULL,
   R = 200,
   BPPARAM = SerialParam()
 )
@@ -20,6 +21,13 @@ subset of \code{rownames(sce)}.}
 
 \item{expr_values}{Integer scalar or string indicating which assay of
 \code{sce} contains the expression values.}
+
+\item{subset.row}{Sample random genes only from these. If \code{NULL}
+(the default), the function will sample from all genes in \code{sce}.
+Alternatively, \code{subset.row} can be a logical, integer or character
+vector indicating the rows (genes) of \code{sce} to use for sampling.
+This allows for example to exclude highly variable genes from the sampling
+which are likely expressed only in certain cell types.}
 
 \item{R}{Integer scalar giving the number of random gene sets to sample
 for normalization.}

@@ -77,7 +77,10 @@ normGenesetExpression <- function(sce,
 #' @description Given marker gene sets for cell types, identify cells with
 #'   high expression of the marker genes (positive examples), then use these
 #'   cells to create a reference transcriptome profile for each cell type and
-#'   identify additional cells of each type using \code{SingleR}.
+#'   identify additional cells of each type using \code{SingleR}. These
+#'   marker genes should specifically expressed a single cell type, e.g.
+#'   CD3 which is expressed by all T cell subtypes would not be suitable
+#'   for specific T cell subtypes.
 #'
 #' @author Michael Stadler
 #'

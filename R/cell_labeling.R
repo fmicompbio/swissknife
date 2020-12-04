@@ -26,6 +26,22 @@
 #' @return A \code{numeric} vector with normalized gene set scores for each
 #'   cell in \code{sce}.
 #' 
+#' @examples 
+#' if (require(SingleCellExperiment)) {
+#'     # get sce
+#'     example(SingleCellExperiment, echo=FALSE)
+#'     rownames(sce) <- paste0("g", seq.int(nrow(sce)))
+#'     
+#'     # calculate gene set expression scores
+#'     markers <- c("g1", "g13", "g27")
+#'     scores <- normGenesetExpression(sce, markers, R = 50)
+#'     
+#'     # compare expression of marker genes with scores
+#'     plotdat <- cbind(scores, t(logcounts(sce)[markers, ]))
+#'     cor(plotdat)
+#'     pairs(plotdat)
+#' }
+#' 
 #' @importFrom BiocParallel SerialParam bplapply
 #' @importFrom SummarizedExperiment assay assayNames
 #' @importFrom matrixStats rowMeans2 rowSds
@@ -145,7 +161,52 @@ normGenesetExpression <- function(sce,
 #'    marker gene sets; \code{\link[SingleR]{aggregateReference}} used to
 #'    create reference profiles; \code{\link[SingleR]{SingleR}} used to assign
 #'    labels to cells.
-#'    
+#' 
+#' @examples 
+#' # create SingleCellExperiment with cell-type specific genes
+#' n_types <- 3
+#' n_per_type <- 30
+#' n_cells <- n_types * n_per_type
+#' n_genes <- 500
+#' fraction_specific <- 0.1
+#' n_specific <- round(n_genes * fraction_specific)
+#' 
+#' set.seed(42)
+#' mu <- ceiling(runif(n = n_genes, min = 0, max = 30))
+#' u <- do.call(rbind, lapply(mu, function(x) rpois(n_cells, lambda = x)))
+#' rownames(u) <- paste0("g", seq.int(nrow(u)))
+#' celltype.labels <- rep(paste0("t", seq.int(n_types)), each = n_per_type)
+#' celltype.genes <- split(sample(rownames(u), size = n_types * n_specific),
+#'                         rep(paste0("t", seq.int(n_types)), each = n_specific))
+#' for (i in seq_along(celltype.genes)) {
+#'     j <- celltype.genes[[i]]
+#'     k <- celltype.labels == paste0("t", i)
+#'     u[j, k] <- 2 * u[j, k]
+#' }
+#' v <- log2(u + 1)
+#' sce <- SingleCellExperiment(assays=list(counts=u, logcounts=v))
+#'
+#' # define marker genes (subset of true cell-type-specific genes)
+#' marker.genes <- lapply(celltype.genes, "[", 1:5)
+#' marker.genes
+#' 
+#' # predict cell types
+#' res <- labelCells(sce, marker.genes,
+#'                   fraction_topscoring = 0.1,
+#'                   normGenesetExpressionParams = list(R = 50))
+#' 
+#' # high-scoring cells used as references for each celltype
+#' res$cells
+#' 
+#' # ... from these, pseudo-bulks were created:
+#' res$refs
+#' 
+#' # ... and used to predict labels for all cells
+#' res$labels$pruned.labels
+#' 
+#' # compare predicted to true cell types
+#' table(true = celltype.labels, predicted = res$labels$pruned.labels)
+#'       
 #' @importFrom SingleR SingleR aggregateReference
 #' @importFrom BiocParallel SerialParam bplapply
 #' 

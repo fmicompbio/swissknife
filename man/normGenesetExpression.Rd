@@ -45,6 +45,23 @@ Calculate normalized expression for a set of genes in each cell
   expressed genes as background to account for cell quality and
   sequencing depth.
 }
+\examples{
+if (require(SingleCellExperiment)) {
+    # get sce
+    example(SingleCellExperiment, echo=FALSE)
+    rownames(sce) <- paste0("g", seq.int(nrow(sce)))
+    
+    # calculate gene set expression scores
+    markers <- c("g1", "g13", "g27")
+    scores <- normGenesetExpression(sce, markers, R = 50)
+    
+    # compare expression of marker genes with scores
+    plotdat <- cbind(scores, t(logcounts(sce)[markers, ]))
+    cor(plotdat)
+    pairs(plotdat)
+}
+
+}
 \author{
 Michael Stadler
 }

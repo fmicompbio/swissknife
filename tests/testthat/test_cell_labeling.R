@@ -37,12 +37,16 @@ test_that("normGenesetExpression() works properly", {
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = "error"))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 1:3))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = -1))
+    expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 20, subset.row = c(TRUE, FALSE)))
+    expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 20, subset.row = c(-1, 10)))
+    expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 20, subset.row = c("g99999")))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 20, BPPARAM = "error"))
     
     ## run function
     selgns <- sample(rownames(sce), size = 20)
     res1 <- normGenesetExpression(sce = sce, genes = selgns,
                                   expr_values = "logcounts", R = 40,
+                                  subset.row = rownames(sce),
                                   BPPARAM = BiocParallel::SerialParam())
     res2 <- normGenesetExpression(sce = sce, genes = selgns,
                                   expr_values = 2, R = 40,

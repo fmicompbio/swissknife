@@ -64,7 +64,8 @@ normGenesetExpression <- function(sce,
     }
 
     # exclude genes if subset.row is given
-    i <- match(genes[genes %in% rownames(sce)], rownames(sce))
+    expr <- assay(sce, expr_values)
+    i <- match(genes, rownames(sce))
     if (!is.null(subset.row)) {
         if (is.logical(subset.row) && length(subset.row) == nrow(sce)) {
             sel <- which(subset.row)
@@ -76,9 +77,8 @@ normGenesetExpression <- function(sce,
             stop("'subset.row' is not a valid selector of rows (genes) in 'sce'")
         }
         sel <- unique(c(i, sel)) # keep marker genes
-        expr <- assay(sce, expr_values)[sel, ]
-    } else {
-        expr <- assay(sce, expr_values)
+        expr <- expr[sel, ]
+        i <- match(genes, rownames(expr))
     }
     
     # calculate average expression of selected genes

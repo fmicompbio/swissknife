@@ -80,7 +80,7 @@ normGenesetExpression <- function(sce,
     }
 
     # exclude genes if subset.row is given
-    expr <- assay(sce, expr_values)
+    expr <- as.matrix(assay(sce, expr_values))
     i <- match(genes, rownames(sce))
     if (!is.null(subset.row)) {
         if (is.logical(subset.row) && length(subset.row) == nrow(sce)) {

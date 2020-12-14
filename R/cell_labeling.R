@@ -80,7 +80,7 @@ normGenesetExpression <- function(sce,
     }
 
     # exclude genes if subset.row is given
-    expr <- assay(sce, expr_values)
+    expr <- as.matrix(assay(sce, expr_values))
     i <- match(genes, rownames(sce))
     if (!is.null(subset.row)) {
         if (is.logical(subset.row) && length(subset.row) == nrow(sce)) {
@@ -281,7 +281,7 @@ labelCells <- function(sce,
         fraction_topscoring <- rep(fraction_topscoring, length(markergenes))
     topL <- lapply(seq_along(scoreL), function(i) {
         which(scoreL[[i]] > quantile(scoreL[[i]],
-                                     probs = 1 - fraction_topscoring[i]))
+                                     probs = 1 - fraction_topscoring[i], na.rm = TRUE))
     })
     names(topL) <- names(scoreL)
     topcells <- unlist(topL, use.names = FALSE)

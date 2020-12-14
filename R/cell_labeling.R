@@ -281,7 +281,7 @@ labelCells <- function(sce,
         fraction_topscoring <- rep(fraction_topscoring, length(markergenes))
     topL <- lapply(seq_along(scoreL), function(i) {
         which(scoreL[[i]] > quantile(scoreL[[i]],
-                                     probs = 1 - fraction_topscoring[i]))
+                                     probs = 1 - fraction_topscoring[i], na.rm = TRUE))
     })
     names(topL) <- names(scoreL)
     topcells <- unlist(topL, use.names = FALSE)

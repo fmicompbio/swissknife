@@ -25,6 +25,7 @@ reference:
     - '`plotSelVarGenes`'
     - '`normGenesetExpression`'
     - '`labelCells`'
+    - '`specificityScore`'
 - title: Visualization and plotting
   contents:
     - '`plotBitScatter`'

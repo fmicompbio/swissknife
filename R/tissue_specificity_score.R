@@ -40,7 +40,12 @@
 #' doi: 10.1093/bib/bbw008, PMCID: PMC5444245, PMID: 26891983
 #' 
 #' @examples 
-#' TODO
+#' x <- rbind(g1 = runif(5),
+#'            g2 = c(1, 0, 0, 0, 0),
+#'            g3 = c(.6, .1, .1, .1, .1))
+#' specificityScore(x)
+#' specificityScore(x, method = "TSI")
+#' specificityScore(x, method = "counts", thresh = 0.5)
 #' 
 #' @importFrom SummarizedExperiment assay assays assayNames
 #' @importFrom matrixStats rowAvgsPerColSet rowSums2 rowMaxs

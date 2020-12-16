@@ -81,7 +81,12 @@ Calculate expression specificity scores for genes that quantify
    specific expression of a gene in groups of samples (e.g. from different tissues).
 }
 \examples{
-TODO
+x <- rbind(g1 = runif(5),
+           g2 = c(1, 0, 0, 0, 0),
+           g3 = c(.6, .1, .1, .1, .1))
+specificityScore(x)
+specificityScore(x, method = "TSI")
+specificityScore(x, method = "counts", thresh = 0.5)
 
 }
 \references{

@@ -8,6 +8,8 @@ x <- rbind(matrix(runif(n = 90, min = 0, max = 100), ncol = 5),
            rep(c(100,0), c(1, 4)))
 x.NA <- x; x.NA[sample(length(x), size = 5)] <- NA
 x2 <- x[, rep(seq.int(ncol(x)), each = 2)]
+x3.grp <- rep(seq.int(ncol(x)), seq.int(ncol(x)))
+x3 <- x[, x3.grp]
 se <- SummarizedExperiment::SummarizedExperiment(list(e = x))
 sce <- as(se, "SingleCellExperiment")
 
@@ -39,6 +41,7 @@ test_that("specificityScore() works properly", {
     res.tau7 <- specificityScore(x.NA, method = "tau", na.rm = TRUE)
     res.tau8 <- specificityScore(x2, method = "tau",
                                  group = rep(seq.int(ncol(x)), each = 2))
+    res.tau9 <- specificityScore(x3, method = "tau", group = x3.grp)
     ## ... TSI
     res.TSI1 <- specificityScore(x, method = "TSI")
     res.TSI2 <- specificityScore(x2, method = "TSI",
@@ -64,6 +67,7 @@ test_that("specificityScore() works properly", {
     expect_identical(res.tau1[!is.na(res.tau6)], res.tau7[!is.na(res.tau6)])
     expect_true(all(res.tau1[is.na(res.tau6)] != res.tau7[is.na(res.tau6)]))
     expect_identical(res.tau1, res.tau8)
+    expect_identical(res.tau1, res.tau9)
     expect_equal(res.tau1, rowSums(1 - (x / apply(x, 1, max))) / (ncol(x) - 1))
     expect_identical(res.tau1[19:20], c(1, 1))
     ## ... TSI

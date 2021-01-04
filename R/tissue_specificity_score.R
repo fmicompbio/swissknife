@@ -133,30 +133,3 @@ setMethod("specificityScore",
               ## call matrix method
               specificityScore(xx, method, group, thresh, expr_values, na.rm)
           })
-
-
-#' @rdname specificityScore-methods
-#' @aliases specificityScore,SingleCellExperiment-method
-setMethod("specificityScore",
-          c("SingleCellExperiment"),
-          function(x, method = c("tau", "TSI", "counts"), group = NULL,
-                   thresh = 0, expr_values = "logcounts", na.rm = FALSE) {
-              ## check expr_values
-              if (is.numeric(expr_values)) {
-                  stopifnot(exprs = {
-                      length(expr_values) == 1L
-                      expr_values <= length(assays(x))
-                  })
-              } else if (is.character(expr_values)) {
-                  stopifnot(exprs = {
-                      length(expr_values) == 1L
-                      expr_values %in% assayNames(x)
-                  })
-              } else {
-                  stop("'expr_values' is not a valid value for use in assay()")
-              }
-              ## extract expression matrix
-              xx <- as.matrix(assay(x, expr_values))
-              ## call matrix method
-              specificityScore(xx, method, group, thresh, expr_values, na.rm)
-          })

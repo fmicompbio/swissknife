@@ -5,7 +5,6 @@
 \alias{specificityScore}
 \alias{specificityScore,matrix-method}
 \alias{specificityScore,SummarizedExperiment-method}
-\alias{specificityScore,SingleCellExperiment-method}
 \title{Calculate gene-expression specificity scores.}
 \usage{
 specificityScore(
@@ -27,15 +26,6 @@ specificityScore(
 )
 
 \S4method{specificityScore}{SummarizedExperiment}(
-  x,
-  method = c("tau", "TSI", "counts"),
-  group = NULL,
-  thresh = 0,
-  expr_values = "logcounts",
-  na.rm = FALSE
-)
-
-\S4method{specificityScore}{SingleCellExperiment}(
   x,
   method = c("tau", "TSI", "counts"),
   group = NULL,

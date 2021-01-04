@@ -1,3 +1,28 @@
+# swissknife 0.23
+
+* Add specificityScore to calculate (tissue) specificity of gene expression
+
+# swissknife 0.22
+
+* ignore NA values in normGenesetExpression
+
+# swissknife 0.21
+
+* Add labelCells to label cells using sets of marker genes
+* Add normGenesetExpression to calculate normalized expression of a set of genes
+
+# swissknife 0.20
+
+* set seed in unit test for sampleControlElements
+
+# swissknife 0.19
+
+* fix coloring bugin in plotGeneRegion
+
+# swissknife 0.18
+
+* setup github actions and remove travis
+
 # swissknife 0.17
 
 * Add R/selVarGenes.R to select variable genes in a single cell RNA-seq experiment

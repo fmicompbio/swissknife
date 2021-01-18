@@ -21,6 +21,8 @@ RoxygenNote: 7.1.1
 Imports: 
     BiocGenerics,
     BiocParallel,
+    Biostrings,
+    BSgenome,
     dplyr,
     GenomeInfoDb,
     GenomicAlignments,
@@ -44,7 +46,8 @@ Imports:
     stats,
     tidyr,
     utils,
-    wordspace
+    wordspace,
+    XVector
 LinkingTo: 
     Rcpp
 VignetteBuilder: knitr

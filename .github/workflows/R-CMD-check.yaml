@@ -21,7 +21,7 @@ jobs:
           #- {os: macOS-latest, r: '4.0', bioc: '3.12'}
           #- {os: macOS-latest, r: 'devel'}
           #- {os: ubuntu-16.04, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
-          - {os: ubuntu-18.04, r: '4.0', bioc: '3.12', cran: "https://demo.rstudiopm.com/all/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04, r: '4.0', bioc: '3.12', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -70,6 +70,7 @@ jobs:
 
       - name: Install R package dependencies
         run: |
+          if (Sys.getenv("CRAN") != "") options(repos = c(REPO_NAME = Sys.getenv("CRAN")))
           BiocManager::install(c('GenomeInfoDbData', 'GenomicAlignments', 'Gviz', 'Rsamtools', 'rtracklayer'), Ncpu = 2L)
           remotes::install_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories()), Ncpu = 2L)
           remotes::install_cran("rcmdcheck")

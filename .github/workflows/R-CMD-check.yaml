@@ -80,6 +80,12 @@ jobs:
           remotes::install_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories()), Ncpu = 2L)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
+      
+      - name: test package loading
+        run: |
+          library(diffobj)
+          library(BSgenome)
+        shell: Rscript {0}
 
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")

@@ -100,6 +100,13 @@ getMappableRegions <- function(genome,
     } else {
         stop("'genomeIndex' is not a valid bowtie index.")
     }
+    # ... consistency of genome with genomeIndex
+    chrlen1 <- width(chrs)
+    names(chrlen1) <- names(chrs)
+    chrlen2 <- .getChrlenFromBowtieIndex(genomeIndex)
+    if (!identical(chrlen1, chrlen2[names(chrlen1)])) {
+        stop("inconsistent 'genome' and 'genomeIndex' (chromosome names or lengths don't match)")
+    }
     # ... other arguments
     stopifnot(exprs = {
         is.numeric(kmerLength)
@@ -185,4 +192,26 @@ getMappableRegions <- function(genome,
     res <- system2(command = system.file("bowtie", package = "Rbowtie"), args = args,
                    stdout = FALSE, stderr = FALSE)
     return(c(fmax = fmax, fun = fun, fout = fout))
+}
+
+
+# get chromosome lengths from 'index'
+.getChrlenFromBowtieIndex <- function(index) {
+    readfile <- tempfile(fileext = ".fa")
+    writeLines(c(">test", "ACGTACGTCATGCTGACTGACTGACGA"), readfile)
+
+    args <- sprintf("-f -v 0 --sam --quiet %s %s", index, readfile)
+    res <- system2(command = system.file("bowtie", package = "Rbowtie"), args = args,
+                   stdout = TRUE, stderr = FALSE)
+
+    sqlines <- res[grep("^@SQ", res)]
+    chrlen <- numeric(0)
+    
+    if (length(sqlines) > 0) {
+        chrlen <- as.integer(sub("^@SQ.*\tLN:([ -~]+).*$", "\\1", sqlines))
+        names(chrlen) <- sub("^@SQ.*\tSN:([ -~]+).*$", "\\1", sqlines)
+    }
+    
+    unlink(readfile)
+    return(chrlen)
 }

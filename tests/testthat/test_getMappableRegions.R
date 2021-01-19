@@ -3,6 +3,7 @@ context("getMappableRegions")
 # prepare test data
 library(Rbowtie)
 library(Biostrings)
+library(BSgenome)
 genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
 chrs <- readDNAStringSet(genomefile)
 indexdir <- tempfile()
@@ -10,6 +11,10 @@ indexpre <- "index"
 indexname <- file.path(indexdir, indexpre)
 idx <- bowtie_build(genomefile, indexdir)
 
+test_that(".getChrlenFromBowtieIndex works properly", {
+    expect_is(len <- .getChrlenFromBowtieIndex(indexname), "integer")
+    expect_identical(len, structure(width(chrs), names = names(chrs)))
+})
 
 test_that(".writeWindowsToTempFile works properly", {
     chrs1 <- as.character(subseq(chrs[[1]], start = 1, width = 100))
@@ -43,10 +48,14 @@ test_that(".alignWindowsToGenome works properly", {
 })
 
 test_that("getMappableRegions() works properly", {
+    readfile <- tempfile(fileext = ".fa")
+    writeLines(c(">test", "ACGTACGTCATGCTGACTGACTGACGA"), readfile)
+
     expect_error(getMappableRegions("error", indexname, 50))
     expect_error(getMappableRegions(genomefile, file.path(indexname, indexpre), 50))
     expect_error(getMappableRegions(genomefile, file.path(indexdir, "error"), 50))
     expect_error(getMappableRegions(genomefile, FALSE, 50))
+    expect_error(getMappableRegions(readfile, indexname, 50))
     expect_message(gr1 <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE))
     expect_is(gr1, "GRanges")
     expect_length(gr1, 27L)
@@ -93,4 +102,6 @@ test_that("getMappableRegions() works properly", {
                   "GRanges")
         expect_identical(gr1, gr4)
     }
+    
+    unlink(readfile)
 })

@@ -71,7 +71,7 @@ jobs:
       - name: Install R package dependencies
         run: |
           if (Sys.getenv("CRAN") != "") options(repos = c(REPO_NAME = Sys.getenv("CRAN")))
-          BiocManager::install(c('GenomeInfoDbData', 'GenomicAlignments', 'Gviz', 'Rsamtools', 'rtracklayer', 'BSgenome', 'SGSeq'), Ncpu = 2L)
+          BiocManager::install(c('GenomeInfoDbData', 'GenomicAlignments', 'Gviz', 'Rsamtools', 'rtracklayer', 'BSgenome', 'SGSeq', 'diffobj'), Ncpu = 2L)
           remotes::install_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories()), Ncpu = 2L)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}

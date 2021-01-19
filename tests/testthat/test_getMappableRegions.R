@@ -68,8 +68,8 @@ test_that("getMappableRegions() works properly", {
         
         # temporary R library
         rlibdir <- tempfile(pattern = "Rlib")
-        .libPaths(rlibdir)
         dir.create(rlibdir)
+        .libPaths(rlibdir)
         # ... add rlibdir to R_LIBS for "R CMD INSTALL" and cluster nodes to find it
         oldRlibs <- Sys.getenv("R_LIBS")
         Sys.setenv(R_LIBS = paste(tools::file_path_as_absolute(rlibdir), oldRlibs,

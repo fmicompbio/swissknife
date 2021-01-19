@@ -1,9 +1,9 @@
-context("calcMappability")
+context("getMappableRegions")
 
 # prepare test data
 library(Rbowtie)
 library(Biostrings)
-genomefile <- system.file("extdata", "calcMappability", "hg19sub.fa", package = "swissknife")
+genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
 chrs <- readDNAStringSet(genomefile)
 indexdir <- tempfile()
 indexpre <- "index"
@@ -42,12 +42,12 @@ test_that(".alignWindowsToGenome works properly", {
     expect_identical(length(readLines(res2["fmax"])), 158L)
 })
 
-test_that("calcMappability() works properly", {
-    expect_error(calcMappability("error", indexname, 50))
-    expect_error(calcMappability(genomefile, file.path(indexname, indexpre), 50))
-    expect_error(calcMappability(genomefile, file.path(indexdir, "error"), 50))
-    expect_error(calcMappability(genomefile, FALSE, 50))
-    expect_message(gr1 <- calcMappability(genomefile, indexname, 50, quiet = FALSE))
+test_that("getMappableRegions() works properly", {
+    expect_error(getMappableRegions("error", indexname, 50))
+    expect_error(getMappableRegions(genomefile, file.path(indexname, indexpre), 50))
+    expect_error(getMappableRegions(genomefile, file.path(indexdir, "error"), 50))
+    expect_error(getMappableRegions(genomefile, FALSE, 50))
+    expect_message(gr1 <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE))
     expect_is(gr1, "GRanges")
     expect_length(gr1, 27L)
     expect_identical(sum(width(gr1)), 94090L)
@@ -82,14 +82,14 @@ test_that("calcMappability() works properly", {
         genomePkg <- "BSgenome.HSapiens.QuasR.hg19sub"
         proj <- qAlign(samplefile, genomePkg, clObj = clObj, lib.loc = rlibdir)
             
-        # test calcMappability
-        expect_is(gr2 <- calcMappability(genomePkg, indexname, 50),
+        # test getMappableRegions
+        expect_is(gr2 <- getMappableRegions(genomePkg, indexname, 50),
                   "GRanges")
         expect_identical(gr1, gr2)
-        expect_is(gr3 <- calcMappability(genomePkg, paste0(genomePkg, ".Rbowtie"), 50),
+        expect_is(gr3 <- getMappableRegions(genomePkg, paste0(genomePkg, ".Rbowtie"), 50),
                   "GRanges")
         expect_identical(gr1, gr3)
-        expect_is(gr4 <- calcMappability(get(genomePkg), indexname, 50),
+        expect_is(gr4 <- getMappableRegions(get(genomePkg), indexname, 50),
                   "GRanges")
         expect_identical(gr1, gr4)
     }

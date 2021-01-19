@@ -13,8 +13,9 @@
 #'     and prefix to align against, in the form \code{</path/to/index>/<prefix>},
 #'     or the name of an installed \code{Rbowtie} index package created by the
 #'     \pkg{QuasR} package for an installed \code{BSgenome} package.
-#' @param windowWidth \code{numeric} scalar specifying the length of overlapping
-#'     windows in \code{genome}.
+#' @param kmerLength \code{numeric} scalar specifying the k-mer length (width of
+#'     overlapping windows in \code{genome}), usually set to the typical read
+#'     length for which to get the mappable regions.
 #' @param maxHits \code{numeric} scalar specifying the maximum number of hits
 #'     (matches) of a window sequence in \code{genome} to be considered mappable.
 #' @param Ncpu \code{numeric} scalar specifying the number of CPU threads to use
@@ -28,24 +29,24 @@
 #'     \code{maxHits} hits are found, the window is defined mappable.
 #'
 #' @return A \code{\link[GenomicRanges]{GRanges}} object with mappable regions.
-#'     All plus-strand sequences in \code{genome} of length \code{windowWidth}
+#'     All plus-strand sequences in \code{genome} of length \code{kmerLength}
 #'     with their start (leftmost) position overlapping the \code{GRanges} object
 #'     do not generate more than \code{maxHits} hits when aligned to the genome.
 #'
 #' @examples
 #' library(Rbowtie)
 #' 
-#' genomefile <- system.file("extdata", "calcMappability", "hg19sub.fa", package = "swissknife")
+#' genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
 #' indexdir <- tempfile()
 #' indexpre <- "index"
 #' indexname <- file.path(indexdir, indexpre)
 #' idx <- bowtie_build(genomefile, indexdir)
 #' 
-#' mapgr <- calcMappability(genomefile, indexname, 50, quiet = FALSE)
+#' mapgr <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE)
 #' mapgr
 #'
 #' @seealso \code{\link[Rbowtie]{bowtie}} in package \pkg{Rbowtie} used by
-#'     \code{calcMappability} to align reads to the genome;
+#'     \code{getMappableRegions} to align reads to the genome;
 #'     \code{\link[Rbowtie]{bowtie_build}} in package \pkg{Rbowtie} for
 #'     indexing a genome.
 #'
@@ -56,12 +57,12 @@
 #' @importFrom XVector width
 #' 
 #' @export
-calcMappability <- function(genome,
-                            genomeIndex,
-                            windowWidth = 50,
-                            maxHits = 1,
-                            Ncpu = 2,
-                            quiet = TRUE) {
+getMappableRegions <- function(genome,
+                               genomeIndex,
+                               kmerLength = 50,
+                               maxHits = 1,
+                               Ncpu = 2,
+                               quiet = TRUE) {
     # check arguments
     # ... genome
     if(is(genome, "BSgenome")) {
@@ -102,9 +103,9 @@ calcMappability <- function(genome,
     }
     # ... other arguments
     stopifnot(exprs = {
-        is.numeric(windowWidth)
-        length(windowWidth) == 1L
-        windowWidth > 0
+        is.numeric(kmerLength)
+        length(kmerLength) == 1L
+        kmerLength > 0
         is.numeric(maxHits)
         length(maxHits) == 1L
         maxHits > 0
@@ -120,7 +121,7 @@ calcMappability <- function(genome,
             message("    ", names(chrs)[i], "...", appendLF = FALSE)
 
         # write overlapping window sequences to a file
-        readfile <- .writeWindowsToTempFile(as.character(chrs[[i]]), windowWidth)
+        readfile <- .writeWindowsToTempFile(as.character(chrs[[i]]), kmerLength)
 
         # align to the genome
         outfiles <- .alignWindowsToGenome(readfile, genomeIndex, maxHits, Ncpu)
@@ -137,14 +138,14 @@ calcMappability <- function(genome,
         })
         nonmapL[[i]] <- GRanges(names(chrs)[i], IRanges(start = unlist(idL), width = 1),
                                 seqlengths = seqlengths(chrs), strand = "+")
-        ## remark: this will also lead to the last windowWidth-1 bases as mappable
+        ## remark: this will also lead to the last kmerLength-1 bases as mappable
 
         # clean up
         unlink(readfile)
         unlink(outfiles)
         if (!quiet)
             message("done (",
-                    round(length(nonmapL[[i]]) * 100 / (width(chrs)[i] - windowWidth + 1), 1),
+                    round(length(nonmapL[[i]]) * 100 / (width(chrs)[i] - kmerLength + 1), 1),
                     "% non-mappable)")
     }
     
@@ -153,7 +154,7 @@ calcMappability <- function(genome,
     gr <- sort(gr[strand(gr) == "+"])
     if (!quiet)
         message("Total mappability: ",
-                round(sum(width(gr)) * 100 / sum(width(chrs) - windowWidth + 1), 1),
+                round(sum(width(gr)) * 100 / sum(width(chrs) - kmerLength + 1), 1),
                 "% in ", length(gr), " segments")
     return(gr)
 }

@@ -1,6 +1,6 @@
 # swissknife 0.24
 
-* Add getMappableRegions to obtain mappable reagions in a genome
+* Add getMappableRegions to obtain mappable regions in a genome
 
 # swissknife 0.23
 

@@ -1,14 +1,13 @@
-#' @title Calc mappability of a genome.
+#' @title Get mappable regions of a genome.
 #'
-#' @description Given a window width and the maximum number of allowed hits per
-#'     window sequence, calculate the mappability of all overlapping windows in
-#'     that genome.
+#' @description Given a k-mer length and the maximum number of allowed hits per
+#'     k-mer, find all mappable regions in a genome.
 #'
 #' @author Michael Stadler
 #'
 #' @param genome The genome sequence to work on. Either a \code{\link[BSgenome]{BSgenome}}
 #'     object, a \code{character} scalar with the name of an installed \code{\link[BSgenome]{BSgenome}}
-#'     or with a file paht and name pointing to a fasta file with the genome sequence.
+#'     or with a file path and name pointing to a fasta file with the genome sequence.
 #' @param genomeIndex \code{character} scalar with the path to the bowtie index
 #'     and prefix to align against, in the form \code{</path/to/index>/<prefix>},
 #'     or the name of an installed \code{Rbowtie} index package created by the
@@ -17,16 +16,16 @@
 #'     overlapping windows in \code{genome}), usually set to the typical read
 #'     length for which to get the mappable regions.
 #' @param maxHits \code{numeric} scalar specifying the maximum number of hits
-#'     (matches) of a window sequence in \code{genome} to be considered mappable.
+#'     (matches) of a k-mer in the \code{genome} to be considered mappable.
 #' @param Ncpu \code{numeric} scalar specifying the number of CPU threads to use
 #'     for alignments.
 #' @param quiet \code{logical} scalar indicating if progress information should
 #'     be printed on the console.
 #'
 #' @details Sequences of all overlapping windows are extracted from the genome
-#'     and aligned back to that genome using \code{\link[Rbowtie]{bowtie}} with
-#'     parameters \code{--concise -f -v 0 -a -B 1 -m maxHits}. If no more than
-#'     \code{maxHits} hits are found, the window is defined mappable.
+#'     and aligned to the provided genome index using \code{\link[Rbowtie]{bowtie}}
+#'     with parameters \code{-f -v 0 -a -B 1 -m maxHits}. If no more
+#'     than \code{maxHits} hits are found, the window is defined mappable.
 #'
 #' @return A \code{\link[GenomicRanges]{GRanges}} object with mappable regions.
 #'     All plus-strand sequences in \code{genome} of length \code{kmerLength}

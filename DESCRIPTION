@@ -48,6 +48,8 @@ Imports:
     utils,
     wordspace,
     XVector
+Suggests:
+    QuasR
 LinkingTo: 
     Rcpp
 VignetteBuilder: knitr

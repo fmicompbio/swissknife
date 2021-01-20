@@ -88,7 +88,7 @@ test_that("getMappableRegions() works properly", {
     # build Rbowtie index
     samplefile <- file.path(tempdir(), "extdata", "samples_chip_single.txt")
     genomePkg <- "BSgenome.HSapiens.QuasR.hg19sub"
-    loadNamespace("BSgenome")
+    library("BSgenome")
     proj <- QuasR::qAlign(samplefile, genomePkg, clObj = clObj, lib.loc = rlibdir)
         
     # test getMappableRegions

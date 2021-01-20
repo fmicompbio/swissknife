@@ -80,8 +80,10 @@ test_that("getMappableRegions() works properly", {
     
     # install BSgenome.HSapiens.QuasR.hg19sub into temporary library
     bsgPkg <- file.path(tempdir(), "extdata", "BSgenome.HSapiens.QuasR.hg19sub_0.1.0.tar.gz")
-    utils::install.packages(pkgs = bsgPkg, lib = rlibdir, repos = NULL,
-                            type = "source", INSTALL_opts = "--no-test-load")
+    suppressMessages({
+        utils::install.packages(pkgs = bsgPkg, lib = rlibdir, repos = NULL,
+                                type = "source", INSTALL_opts = "--no-test-load")
+    })
     
     # build Rbowtie index
     samplefile <- file.path(tempdir(), "extdata", "samples_chip_single.txt")

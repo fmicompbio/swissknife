@@ -57,7 +57,7 @@ test_that("normGenesetExpression() works properly", {
                                   subset.row = rep(TRUE, 120L))
     
     ## tests
-    expect_type(res1, "numeric")
+    expect_type(res1, "double")
     expect_length(res1, ncol(sce))
     expect_gt(cor(res1, res2), 0.9)
     expect_identical(names(res1), names(res2))

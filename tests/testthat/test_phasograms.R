@@ -21,7 +21,7 @@ test_that("calcPhasogram(), estimateNRL() and calcAndCountDist() work properly",
     unlink(tf)
 
     ## check expected results
-    expect_type(pg1, "numeric")
+    expect_type(pg1, "double")
     expect_length(pg1, 3000L)
     expect_true(all(pg2 > pg1))
     expect_equal(pg1, pg3)

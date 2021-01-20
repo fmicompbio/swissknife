@@ -52,7 +52,7 @@ test_that("specificityScore() works properly", {
     
     ## tests
     ## ... tau
-    expect_type(res.tau1, "numeric")
+    expect_type(res.tau1, "double")
     expect_length(res.tau1, nrow(x))
     expect_true(all(res.tau1 >= 0 & res.tau1 <= 1))
     expect_identical(res.tau1, res.tau2)
@@ -69,14 +69,14 @@ test_that("specificityScore() works properly", {
     expect_equal(res.tau1, rowSums(1 - (x / apply(x, 1, max))) / (ncol(x) - 1))
     expect_identical(res.tau1[19:20], c(1, 1))
     ## ... TSI
-    expect_type(res.TSI1, "numeric")
+    expect_type(res.TSI1, "double")
     expect_length(res.TSI1, nrow(x))
     expect_true(all(res.TSI1 >= 0 & res.TSI1 <= 1))
     expect_identical(res.TSI1, res.TSI2)
     expect_equal(res.TSI1, apply(x, 1, max) / rowSums(x))
     expect_identical(res.TSI1[19:20], c(1, 1))
     ## ... counts
-    expect_type(res.counts1, "numeric")
+    expect_type(res.counts1, "double")
     expect_length(res.counts1, nrow(x))
     expect_true(all(res.counts1 >= 0 & res.counts1 <= ncol(x)))
     expect_true(all(res.counts1 >= res.counts2))

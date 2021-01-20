@@ -1,5 +1,3 @@
-context("plotBitScatter")
-
 test_that("plotBitScatter() runs", {
     
     options(bitmapType = "cairo")

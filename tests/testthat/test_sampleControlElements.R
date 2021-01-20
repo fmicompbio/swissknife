@@ -1,5 +1,3 @@
-context("sampleControlElements")
-
 test_that("sampleControlElements() works properly", {
     ## create synthetic data
     n.control <- 10000
@@ -28,7 +26,7 @@ test_that("sampleControlElements() works properly", {
     s3 <- sampleControlElements(list(x), idxTarget = rep(c(FALSE,TRUE),c(n.control,n.target)), idxControl = i.control)
     set.seed(1)
     s4 <- sampleControlElements(list(x), idxTarget = i.target, idxControl = rep(c(TRUE,FALSE),c(n.control,n.target)))
-    expect_true(is.numeric(s1))
+    expect_type(s1, "integer")
     expect_equal(length(s1), n.target)
     expect_equal(s1, s2)
     expect_equal(s1, s3)
@@ -39,7 +37,7 @@ test_that("sampleControlElements() works properly", {
     ## check expected results (multivariate)
     set.seed(2)
     s5 <- sampleControlElements(list(x, x), idxTarget = i.target, idxControl = i.control, nbins = 20)
-    expect_true(is.numeric(s5))
+    expect_type(s5, "integer")
     expect_equal(length(s5), n.target)
     expect_true(all(s5 %in% i.control))
     expect_equal(quantile(x[s5]), quantile(x[i.target]), tolerance = 0.1)

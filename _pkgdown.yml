@@ -38,6 +38,7 @@ reference:
     - '`sampleControlElements`'
     - '`parsePkgVersions`'
     - '`prepareGTF`'
+    - '`getMappableRegions`'
 - title: General package information
   contents:
     - '`swissknife-package`'

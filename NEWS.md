@@ -1,3 +1,7 @@
+# swissknife 0.24
+
+* Add getMappableRegions to obtain mappable regions in a genome
+
 # swissknife 0.23
 
 * Add specificityScore to calculate (tissue) specificity of gene expression

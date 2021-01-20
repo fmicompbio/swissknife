@@ -49,6 +49,7 @@
 #' 
 #' @importFrom SummarizedExperiment assay assays assayNames
 #' @importFrom matrixStats rowAvgsPerColSet rowSums2 rowMaxs
+#' @importFrom methods .valueClassTest
 #' 
 #' @export
 #' @docType methods

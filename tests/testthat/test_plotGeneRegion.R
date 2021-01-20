@@ -1,12 +1,10 @@
-context("plotGeneRegion")
-
 test_that("prepareGTF fails with incorrect input", {
     gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf",
                            package = "swissknife")
     
     expect_error(prepareGTF())
     expect_error(prepareGTF(""))
-    expect_error(prepareGTF("file.gtf"))
+    expect_error(expect_warning(prepareGTF("file.gtf")))
     expect_error(prepareGTF(gtffile, transcriptIdColumn = "nonexisting"))
     expect_error(prepareGTF(gtffile, geneIdColumn = "nonexisting"))
 })
@@ -109,70 +107,70 @@ test_that("plotGeneRegion works", {
     
     ## GTF file, no bigwig
     a1 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1")
-    expect_is(a1, "list")
+    expect_type(a1, "list")
     
     ## GTF file, no bigwig, region
     a11 <- plotGeneRegion(gtf = gtffile, showgene = "", chr = "chr10",
                           start = 20310000, end = 20340000)
-    expect_is(a11, "list")
+    expect_type(a11, "list")
     
     ## GRanges, no bigwig
     b <- prepareGTF(gtffile)
     a2 <- plotGeneRegion(gtf = "", granges = b, showgene = "Bclaf1")
-    expect_is(a2, "list")
+    expect_type(a2, "list")
     expect_identical(a1, a2)
     
     ## Both GTF and GRanges, no bigwig
     a3 <- plotGeneRegion(gtf = gtffile, granges = b, showgene = "Bclaf1")
-    expect_is(a3, "list")
+    expect_type(a3, "list")
     expect_identical(a1, a3)
     
     ## No annotation, bigwig without grouping
     a4 <- plotGeneRegion(bigwigFiles = bwfile, chr = "chr10", start = 20310000, end = 20340000)
-    expect_is(a4, "list")
+    expect_type(a4, "list")
     
     ## No annotation, bigwig with grouping
     a5 <- plotGeneRegion(bigwigFiles = bwfile, bigwigCond = bwcond, 
                          chr = "chr10", start = 20310000, end = 20340000)
-    expect_is(a5, "list")
+    expect_type(a5, "list")
     
     ## GTF file, bigwig, gene provided
     a6 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1", 
                          bigwigFiles = bwfile, bigwigCond = bwcond)
-    expect_is(a6, "list")
+    expect_type(a6, "list")
     
     ## GTF file, bigwig, gene and coordinates provided
     a7 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1", 
                          bigwigFiles = bwfile, bigwigCond = bwcond, 
                          chr = "chr10", start = 20310000, end = 20340000)
-    expect_is(a7, "list")
+    expect_type(a7, "list")
     expect_equal(a6, a7)
     
     ## GTF file, no bigwig, color
     a8 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1", colorByStrand = TRUE)
-    expect_is(a8, "list")
+    expect_type(a8, "list")
     
     ## GTF file, no bigwig, color, gene with other overlaps
     a9 <- plotGeneRegion(gtf = gtffile, showgene = "Gm48249", colorByStrand = TRUE)
-    expect_is(a9, "list")
+    expect_type(a9, "list")
     
     ## color tracks
     a10 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1",
                           bigwigFiles = structure(bwfile, names = "s1"),
                           bigwigCond = structure("cond1", names = "s1"),
                           condColors = structure("blue", names = "cond1"))
-    expect_is(a10, "list")
+    expect_type(a10, "list")
     
     a11 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1",
                           bigwigFiles = structure(c(bwfile, bwfile), names = c("s1", "s2")),
                           bigwigCond = structure(c("cond1", "cond2"), names = c("s1", "s2")),
                           condColors = structure(c("blue", "green"), names = c("cond1", "cond2")))
-    expect_is(a11, "list")
+    expect_type(a11, "list")
     
     ## scale data tracks
     a12 <- plotGeneRegion(gtf = gtffile, showgene = "Gm48249",
                           bigwigFiles = structure(c(bwfile, bwfile), names = c("bw1", "bw2")),
                           scaleDataTracks = TRUE)
-    expect_is(a12, "list")
+    expect_type(a12, "list")
     
 })

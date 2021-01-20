@@ -1,5 +1,3 @@
-context("valueToColor")
-
 test_that("valueToColor() works properly", {
 
     # arguments
@@ -15,7 +13,7 @@ test_that("valueToColor() works properly", {
     res1 <- valueToColor(x = 1:10)
     res2 <- valueToColor(x = 1:10, rng = 4:5)
     res3 <- valueToColor(x = 1:2, col = c("white","black"), alpha = 128)
-    expect_is(res1, "character")
+    expect_type(res1, "character")
     expect_length(res1, 10L)
     expect_length(res2, 10L)
     expect_length(unique(res2), 2L)

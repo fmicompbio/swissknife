@@ -1,5 +1,3 @@
-context("parsePkgVersions")
-
 test_that("parsePkgVersions() works properly", {
     infiles <- list.files(system.file("extdata", "parsePkgVersions",
                                       package = "swissknife"),
@@ -14,7 +12,7 @@ test_that("parsePkgVersions() works properly", {
     expect_identical(res, list())
 
     ## Trying to read a non-existent file should give a warning and an empty data.frame
-    expect_is(res <- parsePkgVersions(infiles), "list")
+    expect_type(res <- parsePkgVersions(infiles), "list")
     expect_length(res, 2L)
     expect_match(names(res), "^R version [0-9]\\.[0-9]\\.[0-9]")
     expect_identical(unname(lengths(res)), c(2L, 2L))

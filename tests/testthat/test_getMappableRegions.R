@@ -12,20 +12,20 @@ indexname <- file.path(indexdir, indexpre)
 idx <- bowtie_build(genomefile, indexdir)
 
 test_that(".getChrlenFromBowtieIndex works properly", {
-    expect_is(len <- .getChrlenFromBowtieIndex(indexname), "integer")
+    expect_type(len <- .getChrlenFromBowtieIndex(indexname), "integer")
     expect_identical(len, structure(width(chrs), names = names(chrs)))
 })
 
 test_that(".writeWindowsToTempFile works properly", {
     chrs1 <- as.character(subseq(chrs[[1]], start = 1, width = 100))
     tf1 <- tempfile()
-    expect_is(res1 <- .writeWindowsToTempFile(chr = chrs1, w = 10, fname = tf1), "character")
+    expect_type(res1 <- .writeWindowsToTempFile(chr = chrs1, w = 10, fname = tf1), "character")
     expect_identical(tf1, res1)
     expect_identical(length(lns1 <- readLines(tf1)), 182L)
     expect_identical(lns1[c(1,2,181,182)],
                      c(">1", substr(chrs1, 1, 10),
                        ">91", substr(chrs1, 91, 100)))
-    expect_is(res2 <- .writeWindowsToTempFile(chr = chrs1, w = 100), "character")
+    expect_type(res2 <- .writeWindowsToTempFile(chr = chrs1, w = 100), "character")
     expect_identical(length(lns2 <- readLines(res2)), 2L)
     expect_identical(lns2, c(">1", chrs1))
     unlink(c(res1, res2))
@@ -36,11 +36,11 @@ test_that(".alignWindowsToGenome works properly", {
     tf1 <- .writeWindowsToTempFile(chr = chrs1, w = 50)
     
     tfs <- c(tempfile(), tempfile(), tempfile())
-    expect_is(res1 <- .alignWindowsToGenome(tf1, indexname, m = 1, p = 2),
+    expect_type(res1 <- .alignWindowsToGenome(tf1, indexname, m = 1, p = 2),
               "character")
     expect_named(res1, c("fmax", "fun", "fout"))
     expect_identical(length(readLines(res1["fmax"])), 590L)
-    expect_is(res2 <- .alignWindowsToGenome(tf1, indexname, m = 10, p = 2,
+    expect_type(res2 <- .alignWindowsToGenome(tf1, indexname, m = 10, p = 2,
                                             fmax = tfs[1], fun = tfs[2], fout = tfs[3]),
               "character")
     expect_identical(tfs, unname(res2))
@@ -57,7 +57,7 @@ test_that("getMappableRegions() works properly", {
     expect_error(getMappableRegions(genomefile, FALSE, 50))
     expect_error(getMappableRegions(readfile, indexname, 50))
     expect_message(gr1 <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE))
-    expect_is(gr1, "GRanges")
+    expect_s4_class(gr1, "GRanges")
     expect_length(gr1, 27L)
     expect_identical(sum(width(gr1)), 94090L)
 
@@ -92,14 +92,14 @@ test_that("getMappableRegions() works properly", {
         proj <- qAlign(samplefile, genomePkg, clObj = clObj, lib.loc = rlibdir)
             
         # test getMappableRegions
-        expect_is(gr2 <- getMappableRegions(genomePkg, indexname, 50),
-                  "GRanges")
+        expect_s4_class(gr2 <- getMappableRegions(genomePkg, indexname, 50),
+                        "GRanges")
         expect_identical(gr1, gr2)
-        expect_is(gr3 <- getMappableRegions(genomePkg, paste0(genomePkg, ".Rbowtie"), 50),
-                  "GRanges")
+        expect_s4_class(gr3 <- getMappableRegions(genomePkg, paste0(genomePkg, ".Rbowtie"), 50),
+                        "GRanges")
         expect_identical(gr1, gr3)
-        expect_is(gr4 <- getMappableRegions(get(genomePkg), indexname, 50),
-                  "GRanges")
+        expect_s4_class(gr4 <- getMappableRegions(get(genomePkg), indexname, 50),
+                        "GRanges")
         expect_identical(gr1, gr4)
     }
     

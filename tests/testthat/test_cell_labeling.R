@@ -59,7 +59,7 @@ test_that("normGenesetExpression() works properly", {
                                   subset.row = rep(TRUE, 120L))
     
     ## tests
-    expect_is(res1, "numeric")
+    expect_type(res1, "numeric")
     expect_length(res1, ncol(sce))
     expect_gt(cor(res1, res2), 0.9)
     expect_identical(names(res1), names(res2))
@@ -99,7 +99,7 @@ test_that("labelCells() works properly", {
     })
     
     ## tests
-    expect_is(res1, "list")
+    expect_type(res1, "list")
     expect_length(res1, 3L)
     expect_named(res1, c("cells", "refs", "labels"))
     expect_true(all(diag(table(res1$labels$pruned.labels, celltypes)) > 95))

@@ -17,13 +17,13 @@ test_that("calcPhasogram(), estimateNRL() and calcAndCountDist() work properly",
     ## check if the plotting function runs
     tf <- tempfile(fileext = ".pdf")
     pdf(file = tf)
-    expect_is(plotPhasogram(x = pg1), "list")
-    expect_is(plotPhasogram(x = pg1, verbosePlot = TRUE), "list")
+    expect_type(plotPhasogram(x = pg1), "list")
+    expect_type(plotPhasogram(x = pg1, verbosePlot = TRUE), "list")
     dev.off()
     unlink(tf)
 
     ## check expected results
-    expect_is(pg1, "numeric")
+    expect_type(pg1, "numeric")
     expect_length(pg1, 3000L)
     expect_true(all(pg2 > pg1))
     expect_equal(pg1, pg3)
@@ -31,7 +31,7 @@ test_that("calcPhasogram(), estimateNRL() and calcAndCountDist() work properly",
     expect_true(sum(pg5) == 0L)
 
     nrl <- estimateNRL(pg1, usePeaks = 1:4)
-    expect_is(nrl, "list")
+    expect_type(nrl, "list")
     expect_equal(nrl$nrl, 186.0)
     expect_length(nrl$nrl.CI95, 2L)
 

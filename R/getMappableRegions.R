@@ -181,6 +181,7 @@ getMappableRegions <- function(genome,
 # align 'fname' to 'index'
 .alignWindowsToGenome <- function(fname, index, m = 1, p = 1,
                                   fmax = NULL, fun = NULL, fout = NULL) {
+    requireNamespace("Rbowtie")
     if (is.null(fmax))
         fmax <- tempfile()
     if (is.null(fun))
@@ -197,6 +198,7 @@ getMappableRegions <- function(genome,
 
 # get chromosome lengths from 'index'
 .getChrlenFromBowtieIndex <- function(index) {
+    requireNamespace("Rbowtie")
     readfile <- tempfile(fileext = ".fa")
     writeLines(c(">test", "ACGTACGTCATGCTGACTGACTGACGA"), readfile)
 

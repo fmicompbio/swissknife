@@ -26,7 +26,6 @@ Imports:
     matrixStats,
     methods,
     png,
-    Rbowtie,
     Rcpp,
     Rsamtools,
     rtracklayer,
@@ -44,6 +43,7 @@ Suggests:
     knitr,
     rmarkdown,
     BiocStyle,
+    Rbowtie,
     QuasR
 LinkingTo: 
     Rcpp

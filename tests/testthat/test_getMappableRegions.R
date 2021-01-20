@@ -1,5 +1,3 @@
-context("getMappableRegions")
-
 # prepare test data
 library(Rbowtie)
 library(Biostrings)

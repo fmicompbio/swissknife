@@ -1,5 +1,3 @@
-context("cell labeling")
-
 ## create data
 ## ... synthetic SingleCellExperiment
 set.seed(42)

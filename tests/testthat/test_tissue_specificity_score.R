@@ -1,5 +1,3 @@
-context("tissue specificity score")
-
 ## create data
 ## ... synthetic matrix
 set.seed(42)

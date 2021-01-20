@@ -1,5 +1,3 @@
-context("plotGeneRegion")
-
 test_that("prepareGTF fails with incorrect input", {
     gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf",
                            package = "swissknife")

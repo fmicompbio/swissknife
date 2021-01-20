@@ -1,5 +1,3 @@
-context("parsePkgVersions")
-
 test_that("parsePkgVersions() works properly", {
     infiles <- list.files(system.file("extdata", "parsePkgVersions",
                                       package = "swissknife"),

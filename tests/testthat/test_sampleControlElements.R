@@ -1,5 +1,3 @@
-context("sampleControlElements")
-
 test_that("sampleControlElements() works properly", {
     ## create synthetic data
     n.control <- 10000

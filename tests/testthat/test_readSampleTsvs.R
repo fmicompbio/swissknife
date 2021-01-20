@@ -1,5 +1,3 @@
-context("readSampleTsvs")
-
 test_that("readSampleTsvs() works properly", {
     seqdataDir <- system.file("extdata/readSampleTsvs", package = "swissknife")
 

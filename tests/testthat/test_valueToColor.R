@@ -1,5 +1,3 @@
-context("valueToColor")
-
 test_that("valueToColor() works properly", {
 
     # arguments

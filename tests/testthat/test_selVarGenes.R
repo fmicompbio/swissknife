@@ -1,5 +1,3 @@
-context("selVarGenes")
-
 test_that(".getDistMat() works properly", {
     
     ## create data

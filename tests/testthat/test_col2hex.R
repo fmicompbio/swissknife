@@ -1,5 +1,3 @@
-context("col2hex")
-
 test_that("col2hex() works properly", {
  
   # checks

@@ -4,7 +4,7 @@ test_that("prepareGTF fails with incorrect input", {
     
     expect_error(prepareGTF())
     expect_error(prepareGTF(""))
-    expect_error(prepareGTF("file.gtf"))
+    expect_error(expect_warning(prepareGTF("file.gtf")))
     expect_error(prepareGTF(gtffile, transcriptIdColumn = "nonexisting"))
     expect_error(prepareGTF(gtffile, geneIdColumn = "nonexisting"))
 })

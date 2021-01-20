@@ -59,6 +59,9 @@ test_that("getMappableRegions() works properly", {
     expect_identical(sum(width(gr1)), 94090L)
 
     skip_if_not_installed("QuasR")
+    skip_if_not_installed("BSgenome")
+
+    library("BSgenome")
 
     # copy sample data
     file.copy(system.file("extdata", package = "QuasR"), tempdir(), recursive = TRUE)
@@ -77,6 +80,7 @@ test_that("getMappableRegions() works properly", {
     
     # load QuasR on cluster nodes
     parallel::clusterEvalQ(cl = clObj, expr = library(QuasR))
+    parallel::clusterEvalQ(cl = clObj, expr = library(BSgenome))
     
     # install BSgenome.HSapiens.QuasR.hg19sub into temporary library
     bsgPkg <- file.path(tempdir(), "extdata", "BSgenome.HSapiens.QuasR.hg19sub_0.1.0.tar.gz")
@@ -88,7 +92,6 @@ test_that("getMappableRegions() works properly", {
     # build Rbowtie index
     samplefile <- file.path(tempdir(), "extdata", "samples_chip_single.txt")
     genomePkg <- "BSgenome.HSapiens.QuasR.hg19sub"
-    library("BSgenome")
     proj <- QuasR::qAlign(samplefile, genomePkg, clObj = clObj, lib.loc = rlibdir)
         
     # test getMappableRegions

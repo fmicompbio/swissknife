@@ -1,6 +1,6 @@
 # prepare test data
 genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
-chrs <- readDNAStringSet(genomefile)
+chrs <- Biostrings::readDNAStringSet(genomefile)
 indexdir <- tempfile()
 indexpre <- "index"
 indexname <- file.path(indexdir, indexpre)
@@ -12,7 +12,7 @@ test_that(".getChrlenFromBowtieIndex works properly", {
 })
 
 test_that(".writeWindowsToTempFile works properly", {
-    chrs1 <- as.character(subseq(chrs[[1]], start = 1, width = 100))
+    chrs1 <- as.character(XVector::subseq(chrs[[1]], start = 1, width = 100))
     tf1 <- tempfile()
     expect_type(res1 <- .writeWindowsToTempFile(chr = chrs1, w = 10, fname = tf1), "character")
     expect_identical(tf1, res1)
@@ -29,7 +29,7 @@ test_that(".writeWindowsToTempFile works properly", {
 test_that(".alignWindowsToGenome works properly", {
     skip_if_not_installed("Rbowtie")
     
-    chrs1 <- as.character(subseq(chrs[[1]], start = 2600, width = 1000))
+    chrs1 <- as.character(XVector::subseq(chrs[[1]], start = 2600, width = 1000))
     tf1 <- .writeWindowsToTempFile(chr = chrs1, w = 50)
     
     tfs <- c(tempfile(), tempfile(), tempfile())

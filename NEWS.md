@@ -1,3 +1,7 @@
+# swissknife 0.25
+
+* fix getMappableRegions to work for fully mappable chromosomes
+
 # swissknife 0.24
 
 * Add getMappableRegions to obtain mappable regions in a genome

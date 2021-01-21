@@ -21,8 +21,8 @@ jobs:
           #- {os: macOS-latest, r: '4.0', bioc: '3.12'}
           #- {os: macOS-latest, r: 'devel'}
           #- {os: ubuntu-16.04, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
-          - {os: ubuntu-18.04, r: '4.0', bioc: '3.12', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
-          #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12'}
+          #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04, r: '4.0', bioc: '3.12'}
 
     # change this env variable (v...) to manually bust the 
     # cache. Cache busting otherwise occurs with changes in
@@ -30,7 +30,7 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       CRAN: ${{ matrix.config.rspm }}
-      cache-version: v1
+      cache-version: v2
 
     steps:
       - name: checkout branch

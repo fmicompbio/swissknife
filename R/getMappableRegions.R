@@ -142,8 +142,11 @@ getMappableRegions <- function(genome,
             }
             ids
         })
-        nonmapL[[i]] <- GRanges(names(chrs)[i], IRanges(start = unlist(idL), width = 1),
-                                seqlengths = seqlengths(chrs), strand = "+")
+        idflat <- unlist(idL)
+        nid <- length(idflat)
+        nonmapL[[i]] <- GRanges(rep(names(chrs)[i], nid),
+                                IRanges(start = idflat, width = rep(1, nid)),
+                                seqlengths = seqlengths(chrs), strand = rep("+", nid))
         ## remark: this will also lead to the last kmerLength-1 bases as mappable
 
         # clean up

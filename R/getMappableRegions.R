@@ -127,7 +127,8 @@ getMappableRegions <- function(genome,
             message("    ", names(chrs)[i], "...", appendLF = FALSE)
 
         # write overlapping window sequences to a file
-        readfile <- .writeWindowsToTempFile(as.character(chrs[[i]]), kmerLength)
+        readfile <- .writeWindowsToTempFileCPP(as.character(chrs[[i]]), kmerLength,
+                                               tempfile(fileext = ".fa"))
 
         # align to the genome
         outfiles <- .alignWindowsToGenome(readfile, genomeIndex, maxHits, Ncpu)
@@ -169,6 +170,7 @@ getMappableRegions <- function(genome,
 }
 
 # write all sub-strings of length 'w' in 'chr' to 'fname'
+# superseeded by .writeWindowsToTempFileCPP (avoids creating a *long* character vector)
 .writeWindowsToTempFile <- function(chr, w, fname = NULL) {
     if (is.null(fname))
         fname <- tempfile(fileext = ".fa")

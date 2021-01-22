@@ -27,3 +27,7 @@ calcAndCountDist <- function(query, reference, cnt) {
     .Call('_swissknife_calcAndCountDist', PACKAGE = 'swissknife', query, reference, cnt)
 }
 
+.writeWindowsToTempFileCPP <- function(chr, w, fname) {
+    .Call('_swissknife_writeWindowsToTempFileCPP', PACKAGE = 'swissknife', chr, w, fname)
+}
+

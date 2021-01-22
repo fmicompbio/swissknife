@@ -26,6 +26,27 @@ test_that(".writeWindowsToTempFile works properly", {
     unlink(c(res1, res2))
 })
 
+test_that(".writeWindowsToTempFileCPP works properly", {
+    chrs1 <- as.character(XVector::subseq(chrs[[1]], start = 1, width = 100))
+    tf1 <- tempfile()
+    expect_type(res1 <- .writeWindowsToTempFileCPP(chr = chrs1, w = 10, fname = tf1), "character")
+    expect_identical(tf1, res1)
+    expect_identical(length(lns1 <- readLines(tf1)), 182L)
+    expect_identical(lns1[c(1,2,181,182)],
+                     c(">1", substr(chrs1, 1, 10),
+                       ">91", substr(chrs1, 91, 100)))
+    
+    expect_type(res2 <- .writeWindowsToTempFileCPP(chr = chrs1, w = 100, tempfile()), "character")
+    expect_identical(length(lns2 <- readLines(res2)), 2L)
+    expect_identical(lns2, c(">1", chrs1))
+
+    res3 <- .writeWindowsToTempFile(chr = chrs1, w = 10, fname = tempfile())
+    lns3 <- readLines(res3)
+    expect_identical(lns1, lns3)
+
+    unlink(c(res1, res2, res3))
+})
+
 test_that(".alignWindowsToGenome works properly", {
     skip_if_not_installed("Rbowtie")
     

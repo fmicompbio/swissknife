@@ -1,3 +1,7 @@
+# swissknife 0.26
+
+* speed-up getMappableRegions by dumping k-mers in C++
+
 # swissknife 0.25
 
 * fix getMappableRegions to work for fully mappable chromosomes

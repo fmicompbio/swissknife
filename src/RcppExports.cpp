@@ -18,9 +18,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// writeWindowsToTempFileCPP
+CharacterVector writeWindowsToTempFileCPP(std::string chr, size_t w, std::string fname);
+RcppExport SEXP _swissknife_writeWindowsToTempFileCPP(SEXP chrSEXP, SEXP wSEXP, SEXP fnameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type chr(chrSEXP);
+    Rcpp::traits::input_parameter< size_t >::type w(wSEXP);
+    Rcpp::traits::input_parameter< std::string >::type fname(fnameSEXP);
+    rcpp_result_gen = Rcpp::wrap(writeWindowsToTempFileCPP(chr, w, fname));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_swissknife_calcAndCountDist", (DL_FUNC) &_swissknife_calcAndCountDist, 3},
+    {"_swissknife_writeWindowsToTempFileCPP", (DL_FUNC) &_swissknife_writeWindowsToTempFileCPP, 3},
     {NULL, NULL, 0}
 };
 

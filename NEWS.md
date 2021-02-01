@@ -1,3 +1,7 @@
+# swissknife 0.27
+
+* Add getGenomicTiles to obtain annotated regions tiling a given genome
+
 # swissknife 0.26
 
 * speed-up getMappableRegions by dumping k-mers in C++

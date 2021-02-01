@@ -39,6 +39,7 @@ reference:
     - '`parsePkgVersions`'
     - '`prepareGTF`'
     - '`getMappableRegions`'
+    - '`getGenomicTiles`'
 - title: General package information
   contents:
     - '`swissknife-package`'

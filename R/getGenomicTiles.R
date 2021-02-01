@@ -133,7 +133,7 @@ getGenomicTiles <- function(genome,
     ## ... fracOverlap
     for (i in seq_along(fracOverlap)) {
         gr2 <- fracOverlap[[i]]
-        ov <- GenomicRanges::findOverlaps(gr, gr2)
+        ov <- GenomicRanges::findOverlaps(gr, gr2, ignore.strand = TRUE)
         tilesov <- pmin(GenomicRanges::end(gr[S4Vectors::queryHits(ov)]),
                         GenomicRanges::end(gr2[S4Vectors::subjectHits(ov)])) -
             pmax(GenomicRanges::start(gr[S4Vectors::queryHits(ov)]),

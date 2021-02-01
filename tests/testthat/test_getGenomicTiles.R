@@ -20,7 +20,7 @@ test_that("getGenomicTiles() works properly", {
     expect_s4_class(gr2 <- getGenomicTiles(genomefile, 500), "GRanges")
     expect_true(all(GenomicRanges::width(gr1) == 500L))
     expect_length(gr1, 190)
-    expect_identical(ncol(mcols(gr1)), 0L)
+    expect_identical(ncol(S4Vectors::mcols(gr1)), 0L)
     expect_identical(gr1, gr2)
     expect_s4_class(gr3 <- getGenomicTiles(genomechrlen, 500,
                                            hasOverlap = list(CGI1 = cgi),
@@ -28,8 +28,8 @@ test_that("getGenomicTiles() works properly", {
                                            numOverlap = list(TSS1 = tss),
                                            nearest = list(TSS2 = tss)),
                     "GRanges")
-    expect_identical(ncol(mcols(gr3)), 6L)
-    df3 <- mcols(gr3)
+    expect_identical(ncol(S4Vectors::mcols(gr3)), 6L)
+    df3 <- S4Vectors::mcols(gr3)
     expect_identical(colnames(df3),
                      c("CGI1.hasOverlap", "CGI2.fracOverlap", "TSS1.numOverlapWithin", 
                        "TSS1.numOverlapAny", "TSS2.nearestName", "TSS2.nearestDistance"))

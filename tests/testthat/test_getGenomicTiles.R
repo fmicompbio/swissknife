@@ -44,7 +44,7 @@ test_that("getGenomicTiles() works properly", {
     expect_identical(df3[1:5, "TSS2.nearestName"], rep(names(tss), c(3,1,1)))
     expect_identical(df3[1:5, "TSS2.nearestDistance"], c(499L, 0L, 0L, 0L, 0L))
     tss1 <- tss
-    width(tss1) <- 100
+    GenomicRanges::width(tss1) <- 100
     expect_s4_class(gr4 <- getGenomicTiles(genomechrlen, 500,
                                            numOverlap = list(TSS = tss1)),
                     "GRanges")

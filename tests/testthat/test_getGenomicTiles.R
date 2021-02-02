@@ -8,6 +8,8 @@ test_that("getGenomicTiles() works properly", {
                                                   width = 1, names = paste0("t", 1:3)),
                                   strand = c("+", "-", "*"))
     cgi <- GenomicRanges::GRanges("chr2", IRanges(start = c(750, 3750), width = 370))
+    tssL <- as(tss, "GRangesList")
+    cgiL <- as(cgi, "GRangesList")
 
     expect_error(getGenomicTiles("error"))
     expect_error(getGenomicTiles(genomename))
@@ -55,6 +57,13 @@ test_that("getGenomicTiles() works properly", {
     expect_true(all(gr4$TSS.numOverlapWithin <= gr4$TSS.numOverlapAny))
     expect_identical(gr4$TSS.numOverlapWithin[1:5], rep(c(0L, 1L), c(3, 2)))
     expect_identical(gr4$TSS.numOverlapAny[1:5], rep(c(0L, 1L), c(1, 4)))
+    expect_s4_class(gr5 <- getGenomicTiles(genomefile, 500,
+                                           hasOverlap = list(CGI1 = cgiL),
+                                           fracOverlap = list(CGI2 = cgiL),
+                                           numOverlap = list(TSS1 = tssL),
+                                           nearest = list(TSS2 = tssL)),
+                    "GRanges")
+    expect_equal(gr3, gr5)
     
     ## extended test data (also test with a BSgenome)
     skip_if_not_installed("QuasR")
@@ -78,18 +87,18 @@ test_that("getGenomicTiles() works properly", {
     genomeobj <- get(genomename)
     
     expect_error(getGenomicTiles(genomeobj))
-    expect_s4_class(gr5 <- getGenomicTiles(genomename, 500,
+    expect_s4_class(gr6 <- getGenomicTiles(genomename, 500,
                                            hasOverlap = list(CGI1 = cgi),
                                            fracOverlap = list(CGI2 = cgi),
                                            numOverlap = list(TSS1 = tss),
                                            nearest = list(TSS2 = tss)),
                     "GRanges")
-    expect_s4_class(gr6 <- getGenomicTiles(genomeobj, 500,
+    expect_s4_class(gr7 <- getGenomicTiles(genomeobj, 500,
                                            hasOverlap = list(CGI1 = cgi),
                                            fracOverlap = list(CGI2 = cgi),
                                            numOverlap = list(TSS1 = tss),
                                            nearest = list(TSS2 = tss)),
                     "GRanges")
-    expect_equal(gr3, gr5)
-    expect_identical(gr5, gr6)
+    expect_equal(gr3, gr6)
+    expect_equal(gr3, gr7)
 })

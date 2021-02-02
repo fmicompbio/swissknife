@@ -10,22 +10,26 @@
 #'     or with a file path and name pointing to a fasta file with the genome sequence,
 #'     or a named \code{numeric} vector giving the names and lengths of chromosomes.
 #' @param tileWidth \code{numeric} scalar with the tile length.
-#' @param hasOverlap Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
+#' @param hasOverlap Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
+#'     or \code{\link[GenomicRanges]{GRangesList}} object(s).
 #'     For each list element, a logical vector "X.hasOverlap" will be added to the
 #'     \code{mcols} of the result, with \code{TRUE} for each tile that overlaps
 #'     any region in that element. "X" is obtained from \code{names(hasOverlap)}.
-#' @param fracOverlap  Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
+#' @param fracOverlap  Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
+#'     or \code{\link[GenomicRanges]{GRangesList}} object(s).
 #'     For each list element, a numeric vector "X.fracOverlap" will be added to the
 #'     \code{mcols} of the result, with a value between 0 and 1 giving the fraction
 #'     of bases in a tile that overlaps with any region in that element. "X" is
 #'     obtained from \code{names(fracOverlap)}.
-#' @param numOverlap  Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
+#' @param numOverlap  Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
+#'     or \code{\link[GenomicRanges]{GRangesList}} object(s).
 #'     For each list element, two numeric vectors "X.numOverlapWithin" and
 #'     "X.numOverlapAny" will be added to the \code{mcols} of the result, giving
 #'     the number of ranges in that element that are fully contained within
 #'     a tile, or that overlap with a tile in any way, respectively. "X" is
 #'     obtained from \code{names(numOverlap)}.
-#' @param nearest Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
+#' @param nearest Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
+#'     or \code{\link[GenomicRanges]{GRangesList}} object(s).
 #'     For each list element, two numeric vectors "X.nearestName" and
 #'     "X.nearestDistance" will be added to the \code{mcols} of the result, giving
 #'     the name and distance of the nearest range in that element for each tile. "X" is
@@ -70,6 +74,7 @@
 #' @importFrom methods is
 #' @importFrom IRanges overlapsAny
 #' @importFrom S4Vectors queryHits subjectHits
+#' @importFrom BiocGenerics unlist
 #' 
 #' @export
 getGenomicTiles <- function(genome,
@@ -116,19 +121,19 @@ getGenomicTiles <- function(genome,
         # hasOverlap
         is.list(hasOverlap)
         length(hasOverlap) == 0L || !is.null(names(hasOverlap))
-        all(unlist(lapply(hasOverlap, is, "GRanges")))
+        all(unlist(lapply(hasOverlap, is, "GRanges"))) || all(unlist(lapply(hasOverlap, is, "GRangesList")))
         # fracOverlap
         is.list(fracOverlap)
         length(fracOverlap) == 0L || !is.null(names(fracOverlap))
-        all(unlist(lapply(fracOverlap, is, "GRanges")))
+        all(unlist(lapply(fracOverlap, is, "GRanges"))) || all(unlist(lapply(fracOverlap, is, "GRangesList")))
         # numOverlap
         is.list(numOverlap)
         length(numOverlap) == 0L || !is.null(names(numOverlap))
-        all(unlist(lapply(numOverlap, is, "GRanges")))
+        all(unlist(lapply(numOverlap, is, "GRanges"))) || all(unlist(lapply(numOverlap, is, "GRangesList")))
         # nearest
         is.list(nearest)
         length(nearest) == 0L || !is.null(names(nearest))
-        all(unlist(lapply(nearest, is, "GRanges")))
+        all(unlist(lapply(nearest, is, "GRanges"))) || all(unlist(lapply(nearest, is, "GRangesList")))
         all(unlist(lapply(nearest, function(x) !is.null(names(x)))))
     })
     
@@ -163,6 +168,9 @@ getGenomicTiles <- function(genome,
     ## ... fracOverlap
     for (i in seq_along(fracOverlap)) {
         gr2 <- fracOverlap[[i]]
+        if (is(gr2, "GRangesList")) {
+            gr2 <- BiocGenerics::unlist(gr2)
+        }
         ov <- GenomicRanges::findOverlaps(query = gr, subject = gr2,
                                           ignore.strand = TRUE)
         tilesov <- pmin(GenomicRanges::end(gr[S4Vectors::queryHits(ov)]),
@@ -197,6 +205,9 @@ getGenomicTiles <- function(genome,
     ## ... nearest
     for (i in seq_along(nearest)) {
         gr2 <- nearest[[i]]
+        if (is(gr2, "GRangesList")) {
+            gr2 <- BiocGenerics::unlist(gr2)
+        }
         nm1 <- paste0(names(nearest)[i], ".nearestName")
         nm2 <- paste0(names(nearest)[i], ".nearestDistance")
         j <- GenomicRanges::nearest(x = gr, subject = gr2, select = "arbitrary",

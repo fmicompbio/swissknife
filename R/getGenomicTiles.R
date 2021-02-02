@@ -31,6 +31,11 @@
 #'     the name and distance of the nearest range in that element for each tile. "X" is
 #'     obtained from \code{names(nearest)}, and the values of "X.nearestName" from
 #'     \code{names(nearest$X)}.
+#' @param addSeqComp \code{logical} scalar. If \code{TRUE} and primary sequence
+#'     can be obtained from \code{genome}, also add sequence composition features
+#'     for each tile to the annotations. Currently, the following features are
+#'     included: percent of G+C bases ("percGC"), CpG observed-over-expected ratio
+#'     ("CpGoe").
 #'
 #' @details The last tile in each chromosome is dropped if it would be shorter
 #'     than \code{tileWidth}. Generated tiles are unstranded (\code{*}) and
@@ -59,9 +64,9 @@
 #'     \code{getGenomicTiles} internally.
 #'
 #' @importFrom GenomicRanges GRanges tileGenome width findOverlaps nearest distance
-#' @importFrom BSgenome seqinfo
+#' @importFrom BSgenome seqinfo getSeq
 #' @importFrom GenomeInfoDb seqlengths
-#' @importFrom Biostrings fasta.seqlengths
+#' @importFrom Biostrings fasta.seqlengths readDNAStringSet oligonucleotideFrequency
 #' @importFrom methods is
 #' @importFrom IRanges overlapsAny
 #' @importFrom S4Vectors queryHits subjectHits
@@ -72,22 +77,33 @@ getGenomicTiles <- function(genome,
                             hasOverlap = list(),
                             fracOverlap = list(),
                             numOverlap = list(),
-                            nearest = list()) {
+                            nearest = list(),
+                            addSeqComp = TRUE) {
     ## check arguments
-    ## ... genome
+    ## ... genome and addSeqComp
+    stopifnot(exprs = {
+        is.logical(addSeqComp)
+        length(addSeqComp) == 1L
+    })
     if(is(genome, "BSgenome")) {
         chrlens <- GenomeInfoDb::seqlengths(BSgenome::seqinfo(genome))
+        genomeobj <- genome
     } else if (is.character(genome) && length(genome) == 1L) {
         if (suppressWarnings(require(genome, character.only = TRUE, quietly = TRUE))) {
-            genome <- get(genome)
-            chrlens <- GenomeInfoDb::seqlengths(BSgenome::seqinfo(genome))
+            genomeobj <- get(genome)
+            chrlens <- GenomeInfoDb::seqlengths(BSgenome::seqinfo(genomeobj))
         } else if (file.exists(genome)) {
             chrlens <- Biostrings::fasta.seqlengths(genome)
+            genomeobj <- Biostrings::readDNAStringSet(genome)
         } else {
             stop("'genome' is neither a valid file nor a BSgenome object.")
         }
     } else if (is.numeric(genome) && !is.null(names(genome))) {
         chrlens <- genome
+        if (addSeqComp) {
+            warning("ignoring 'addSeqComp' (sequence not available from 'genome')")
+            addSeqComp <- FALSE
+        }
     } else {
         stop("'genome' is not a valid argument for getGenomicTiles()")
     }
@@ -123,6 +139,19 @@ getGenomicTiles <- function(genome,
     
     ## annotate tiles
     df <- S4Vectors::mcols(gr)
+    
+    ## ... addSeqComp
+    if (addSeqComp) {
+        grSeq <- BSgenome::getSeq(x = genomeobj, names = gr)
+        grF1 <- Biostrings::oligonucleotideFrequency(x = grSeq, width = 1L,
+                                                     as.prob = TRUE,
+                                                     simplify.as = "matrix")
+        grF2 <- Biostrings::oligonucleotideFrequency(x = grSeq, width = 2L,
+                                                     as.prob = TRUE,
+                                                     simplify.as = "matrix")
+        df[["percGC"]] <- rowSums(grF1[,c("C","G")]) * 100
+        df[["CpGoe"]] <- grF2[, "CG"] / (grF1[, "C"] * grF1[, "G"])
+    }
     
     ## ... hasOverlap
     for (i in seq_along(hasOverlap)) {

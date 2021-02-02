@@ -12,27 +12,30 @@ test_that("getGenomicTiles() works properly", {
     expect_error(getGenomicTiles("error"))
     expect_error(getGenomicTiles(genomename))
     expect_error(getGenomicTiles(100000))
-    expect_error(getGenomicTiles(genomechrlen))
+    expect_error(getGenomicTiles(genomechrlen, addSeqComp = FALSE))
     
-    expect_s4_class(gr0 <- getGenomicTiles(c("chr1" = 1999), 500), "GRanges")
+    expect_s4_class(gr0 <- getGenomicTiles(c("chr1" = 1999), 500, addSeqComp = FALSE), "GRanges")
     expect_length(gr0, 3L)
-    expect_s4_class(gr1 <- getGenomicTiles(genomechrlen, 500), "GRanges")
-    expect_s4_class(gr2 <- getGenomicTiles(genomefile, 500), "GRanges")
+    expect_s4_class(gr1 <- getGenomicTiles(genomechrlen, 500, addSeqComp = FALSE), "GRanges")
+    expect_s4_class(gr2 <- getGenomicTiles(genomefile, 500, addSeqComp = FALSE), "GRanges")
     expect_true(all(GenomicRanges::width(gr1) == 500L))
     expect_length(gr1, 190)
     expect_identical(ncol(S4Vectors::mcols(gr1)), 0L)
     expect_identical(gr1, gr2)
-    expect_s4_class(gr3 <- getGenomicTiles(genomechrlen, 500,
+    expect_s4_class(gr3 <- getGenomicTiles(genomefile, 500,
                                            hasOverlap = list(CGI1 = cgi),
                                            fracOverlap = list(CGI2 = cgi),
                                            numOverlap = list(TSS1 = tss),
                                            nearest = list(TSS2 = tss)),
                     "GRanges")
-    expect_identical(ncol(S4Vectors::mcols(gr3)), 6L)
+    expect_identical(ncol(S4Vectors::mcols(gr3)), 8L)
     df3 <- S4Vectors::mcols(gr3)
     expect_identical(colnames(df3),
-                     c("CGI1.hasOverlap", "CGI2.fracOverlap", "TSS1.numOverlapWithin", 
-                       "TSS1.numOverlapAny", "TSS2.nearestName", "TSS2.nearestDistance"))
+                     c("percGC", "CpGoe", "CGI1.hasOverlap", "CGI2.fracOverlap",
+                       "TSS1.numOverlapWithin", "TSS1.numOverlapAny",
+                       "TSS2.nearestName", "TSS2.nearestDistance"))
+    expect_true(all(df3$percGC >= 0 && df3$percGC <= 100))
+    expect_true(all(df3$CpGoe > 0 && df3$CpGoe < 2))
     expect_identical(sum(df3$CGI1.hasOverlap), 4L)
     expect_true(all(df3$CGI1.hasOverlap == (df3$CGI2.fracOverlap > 0)))
     expect_identical(df3$CGI2.fracOverlap[df3$CGI1.hasOverlap],
@@ -46,7 +49,8 @@ test_that("getGenomicTiles() works properly", {
     tss1 <- tss
     GenomicRanges::width(tss1) <- 100
     expect_s4_class(gr4 <- getGenomicTiles(genomechrlen, 500,
-                                           numOverlap = list(TSS = tss1)),
+                                           numOverlap = list(TSS = tss1),
+                                           addSeqComp = FALSE),
                     "GRanges")
     expect_true(all(gr4$TSS.numOverlapWithin <= gr4$TSS.numOverlapAny))
     expect_identical(gr4$TSS.numOverlapWithin[1:5], rep(c(0L, 1L), c(3, 2)))
@@ -86,6 +90,6 @@ test_that("getGenomicTiles() works properly", {
                                            numOverlap = list(TSS1 = tss),
                                            nearest = list(TSS2 = tss)),
                     "GRanges")
-    expect_identical(gr3, gr5)
-    expect_identical(gr3, gr6)
+    expect_equal(gr3, gr5)
+    expect_identical(gr5, gr6)
 })

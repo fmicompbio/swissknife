@@ -10,7 +10,8 @@ getGenomicTiles(
   hasOverlap = list(),
   fracOverlap = list(),
   numOverlap = list(),
-  nearest = list()
+  nearest = list(),
+  addSeqComp = TRUE
 )
 }
 \arguments{
@@ -35,16 +36,22 @@ obtained from \code{names(fracOverlap)}.}
 \item{numOverlap}{Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
 For each list element, two numeric vectors "X.numOverlapWithin" and
 "X.numOverlapAny" will be added to the \code{mcols} of the result, giving
-then number of ranges in that element that are fully contained within
+the number of ranges in that element that are fully contained within
 a tile, or that overlap with a tile in any way, respectively. "X" is
 obtained from \code{names(numOverlap)}.}
 
 \item{nearest}{Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
 For each list element, two numeric vectors "X.nearestName" and
 "X.nearestDistance" will be added to the \code{mcols} of the result, giving
-the name and distance of nearest ranges in that element for each tile. "X" is
+the name and distance of the nearest range in that element for each tile. "X" is
 obtained from \code{names(nearest)}, and the values of "X.nearestName" from
 \code{names(nearest$X)}.}
+
+\item{addSeqComp}{\code{logical} scalar. If \code{TRUE} and primary sequence
+can be obtained from \code{genome}, also add sequence composition features
+for each tile to the annotations. Currently, the following features are
+included: percent of G+C bases ("percGC"), CpG observed-over-expected ratio
+("CpGoe").}
 }
 \value{
 A \code{\link[GenomicRanges]{GRanges}} object with genome tiling regions.

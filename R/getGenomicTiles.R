@@ -22,13 +22,13 @@
 #' @param numOverlap  Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
 #'     For each list element, two numeric vectors "X.numOverlapWithin" and
 #'     "X.numOverlapAny" will be added to the \code{mcols} of the result, giving
-#'     then number of ranges in that element that are fully contained within
+#'     the number of ranges in that element that are fully contained within
 #'     a tile, or that overlap with a tile in any way, respectively. "X" is
 #'     obtained from \code{names(numOverlap)}.
 #' @param nearest Named \code{list} with \code{\link[GenomicRanges]{GRanges}} object(s).
 #'     For each list element, two numeric vectors "X.nearestName" and
 #'     "X.nearestDistance" will be added to the \code{mcols} of the result, giving
-#'     the name and distance of nearest ranges in that element for each tile. "X" is
+#'     the name and distance of the nearest range in that element for each tile. "X" is
 #'     obtained from \code{names(nearest)}, and the values of "X.nearestName" from
 #'     \code{names(nearest$X)}.
 #'
@@ -127,13 +127,15 @@ getGenomicTiles <- function(genome,
     ## ... hasOverlap
     for (i in seq_along(hasOverlap)) {
         nm <- paste0(names(hasOverlap)[i], ".hasOverlap")
-        df[[nm]] <- IRanges::overlapsAny(gr, hasOverlap[[i]], ignore.strand = TRUE)
+        df[[nm]] <- IRanges::overlapsAny(query = gr, subject = hasOverlap[[i]],
+                                         ignore.strand = TRUE)
     }
 
     ## ... fracOverlap
     for (i in seq_along(fracOverlap)) {
         gr2 <- fracOverlap[[i]]
-        ov <- GenomicRanges::findOverlaps(gr, gr2, ignore.strand = TRUE)
+        ov <- GenomicRanges::findOverlaps(query = gr, subject = gr2,
+                                          ignore.strand = TRUE)
         tilesov <- pmin(GenomicRanges::end(gr[S4Vectors::queryHits(ov)]),
                         GenomicRanges::end(gr2[S4Vectors::subjectHits(ov)])) -
             pmax(GenomicRanges::start(gr[S4Vectors::queryHits(ov)]),
@@ -150,13 +152,16 @@ getGenomicTiles <- function(genome,
         gr2 <- numOverlap[[i]]
         nm1 <- paste0(names(numOverlap)[i], ".numOverlapWithin")
         nm2 <- paste0(names(numOverlap)[i], ".numOverlapAny")
-        ov1 <- GenomicRanges::findOverlaps(gr2, gr, type = "within",
+        # remark: findOverlaps(..., type = "within") refers to the query
+        ov1 <- GenomicRanges::findOverlaps(query = gr2, subject = gr,
+                                           type = "within",
                                            ignore.strand = TRUE)
         ov1perGr <- table(S4Vectors::subjectHits(ov1))
         nwithin <- rep(0L, length(gr))
         nwithin[as.numeric(names(ov1perGr))] <- as.integer(ov1perGr)
         df[[nm1]] <- nwithin
-        df[[nm2]] <- GenomicRanges::countOverlaps(gr, gr2, type = "any",
+        df[[nm2]] <- GenomicRanges::countOverlaps(query = gr, subject = gr2,
+                                                  type = "any",
                                                   ignore.strand = TRUE)
     }
 
@@ -165,12 +170,13 @@ getGenomicTiles <- function(genome,
         gr2 <- nearest[[i]]
         nm1 <- paste0(names(nearest)[i], ".nearestName")
         nm2 <- paste0(names(nearest)[i], ".nearestDistance")
-        j <- GenomicRanges::nearest(gr, gr2, select = "arbitrary",
+        j <- GenomicRanges::nearest(x = gr, subject = gr2, select = "arbitrary",
                                     ignore.strand = TRUE)
         df[[nm1]] <- names(gr2)[j]
         dists <- rep(NA_integer_, length(gr))
-        dists[!is.na(j)] <- GenomicRanges::distance(gr[!is.na(j)], gr2[j[!is.na(j)]],
-                                                    ignore.strand = TRUE)
+        ok <- !is.na(j)
+        dists[ok] <- GenomicRanges::distance(x = gr[ok], y = gr2[j[ok]],
+                                             ignore.strand = TRUE)
         df[[nm2]] <- dists
     }
 

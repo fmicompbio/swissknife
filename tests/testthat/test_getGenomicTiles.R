@@ -15,6 +15,7 @@ test_that("getGenomicTiles() works properly", {
     expect_error(getGenomicTiles(genomename))
     expect_error(getGenomicTiles(100000))
     expect_error(getGenomicTiles(genomechrlen, addSeqComp = FALSE))
+    expect_warning(getGenomicTiles(genomechrlen, 1000, addSeqComp = TRUE))
     
     expect_s4_class(gr0 <- getGenomicTiles(c("chr1" = 1999), 500, addSeqComp = FALSE), "GRanges")
     expect_length(gr0, 3L)

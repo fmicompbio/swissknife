@@ -76,6 +76,7 @@ getMappableRegions <- function(genome,
                                      start = 1, end = seqlengths(chrinfo))
         } else if (file.exists(genome)) {
             chrs <- Biostrings::readDNAStringSet(genome)
+            names(chrs) <- sub(" .+$", "", names(chrs))
         } else {
             stop("'genome' is neither a valid file nor a BSgenome object.")
         }

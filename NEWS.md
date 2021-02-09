@@ -1,3 +1,7 @@
+# swissknife 0.28
+
+* Truncate chromosome names after first whitespace in getGenomicTiles when checking consistency
+
 # swissknife 0.27
 
 * Add getGenomicTiles to obtain annotated regions tiling a given genome

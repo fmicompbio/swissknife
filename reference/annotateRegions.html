@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get regions tiling a genome. — getGenomicTiles • swissknife</title>
+<title>Annotate regions. — annotateRegions • swissknife</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Get regions tiling a genome. — getGenomicTiles" />
-<meta property="og:description" content="Get sequential, potentially annotated regions of a fixed lengths
-   (tiles) along chromosomes of a genome." />
+<meta property="og:title" content="Annotate regions. — annotateRegions" />
+<meta property="og:description" content="Annotate a GRanges object with
+    sets of reference GRanges or
+    GRangesList objects, with
+    respect to overlaps and nearest neighbors." />
 
 
 
@@ -114,110 +116,137 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get regions tiling a genome.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/fmicompbio/swissknife/blob/master/R/getGenomicTiles.R'><code>R/getGenomicTiles.R</code></a></small>
-    <div class="hidden name"><code>getGenomicTiles.Rd</code></div>
+    <h1>Annotate regions.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/fmicompbio/swissknife/blob/master/R/annotateRegions.R'><code>R/annotateRegions.R</code></a></small>
+    <div class="hidden name"><code>annotateRegions.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get sequential, potentially annotated regions of a fixed lengths
-   (tiles) along chromosomes of a genome.</p>
+    <p>Annotate a <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code> object with
+    sets of reference <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code> or
+    <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html'>GRangesList</a></code> objects, with
+    respect to overlaps and nearest neighbors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getGenomicTiles</span><span class='op'>(</span>
-  <span class='va'>genome</span>,
-  <span class='va'>tileWidth</span>,
+    <pre class="usage"><span class='fu'>annotateRegions</span><span class='op'>(</span>
+  <span class='va'>x</span>,
   hasOverlap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   fracOverlap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   numOverlap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   nearest <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
-  addSeqComp <span class='op'>=</span> <span class='cn'>TRUE</span>
+  ignore.strand <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>genome</th>
-      <td><p>The genome to work on. Either a <code><a href='https://rdrr.io/pkg/BSgenome/man/BSgenome-class.html'>BSgenome</a></code>
-object, a <code>character</code> scalar with the name of an installed <code><a href='https://rdrr.io/pkg/BSgenome/man/BSgenome-class.html'>BSgenome</a></code>
-or with a file path and name pointing to a fasta file with the genome sequence,
-or a named <code>numeric</code> vector giving the names and lengths of chromosomes.</p></td>
+      <th>x</th>
+      <td><p>The <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code> object to annotate.</p></td>
     </tr>
     <tr>
-      <th>tileWidth</th>
-      <td><p><code>numeric</code> scalar with the tile length.</p></td>
+      <th>hasOverlap</th>
+      <td><p>Named <code>list</code> with <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code>
+or <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html'>GRangesList</a></code> object(s).
+For each list element, a logical vector "X.hasOverlap" will be added to the
+<code>mcols</code> of the result, with <code>TRUE</code> for each tile that overlaps
+any region in that element. "X" is obtained from <code><a href='https://rdrr.io/r/base/names.html'>names(hasOverlap)</a></code>.</p></td>
     </tr>
     <tr>
-      <th>hasOverlap, fracOverlap, numOverlap, nearest</th>
-      <td><p>Named <code>list</code>s with
-<code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code> or <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html'>GRangesList</a></code>
-object(s) used to annotate genomic tiles. See <code><a href='annotateRegions.html'>annotateRegions</a></code>
-for details.</p></td>
+      <th>fracOverlap</th>
+      <td><p>Named <code>list</code> with <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code>
+or <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html'>GRangesList</a></code> object(s).
+For each list element, a numeric vector "X.fracOverlap" will be added to the
+<code>mcols</code> of the result, with a value between 0 and 1 giving the fraction
+of bases in a tile that overlaps with any region in that element. "X" is
+obtained from <code><a href='https://rdrr.io/r/base/names.html'>names(fracOverlap)</a></code>.</p></td>
     </tr>
     <tr>
-      <th>addSeqComp</th>
-      <td><p><code>logical</code> scalar. If <code>TRUE</code> and primary sequence
-can be obtained from <code>genome</code>, also add sequence composition features
-for each tile to the annotations. Currently, the following features are
-included: percent of G+C bases ("percGC"), CpG observed-over-expected ratio
-("CpGoe").</p></td>
+      <th>numOverlap</th>
+      <td><p>Named <code>list</code> with <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code>
+or <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html'>GRangesList</a></code> object(s).
+For each list element, two numeric vectors "X.numOverlapWithin" and
+"X.numOverlapAny" will be added to the <code>mcols</code> of the result, giving
+the number of ranges in that element that are fully contained within
+a tile, or that overlap with a tile in any way, respectively. "X" is
+obtained from <code><a href='https://rdrr.io/r/base/names.html'>names(numOverlap)</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>nearest</th>
+      <td><p>Named <code>list</code> with <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code>
+or <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRangesList-class.html'>GRangesList</a></code> object(s).
+For each list element, two numeric vectors "X.nearestName" and
+"X.nearestDistance" will be added to the <code>mcols</code> of the result, giving
+the name and distance of the nearest range in that element for each tile. "X" is
+obtained from <code><a href='https://rdrr.io/r/base/names.html'>names(nearest)</a></code>, and the values of "X.nearestName" from
+<code><a href='https://rdrr.io/r/base/names.html'>names(nearest$X)</a></code>. If multiple nearest ranges are at the same
+distance from a tile, an arbitrary one is reported in "X.nearestName".</p></td>
+    </tr>
+    <tr>
+      <th>ignore.strand</th>
+      <td><p>Logical scalar passed to
+<code><a href='https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html'>findOverlaps</a></code> when searching for overlaps
+between <code>x</code> and reference regions.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code> object with genome tiling regions.
-    Optional tile annotations are contained in its metadata columns (<code>mcols</code>).</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The last tile in each chromosome is dropped if it would be shorter
-    than <code>tileWidth</code>. Generated tiles are unstranded (<code><a href='https://rdrr.io/r/base/Arithmetic.html'>*</a></code>) and
-    therefore overlaps or searching for nearest neighbors are ignoring
-    strands of annotations (<code>ignore.strand=TRUE</code>).</p>
+    <p>A <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></code> similar to <code>x</code>, with
+    annotations added to its metadata columns (<code>mcols</code>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/GenomicRanges/man/tileGenome.html'>tileGenome</a></code> and <code><a href='annotateRegions.html'>annotateRegions</a></code>
-    used by <code>getGenomicTiles</code> internally.</p></div>
+    <div class='dont-index'><p><code><a href='getGenomicTiles.html'>getGenomicTiles</a></code> that uses this function,
+    <code><a href='https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html'>findOverlaps</a></code> and
+    <code><a href='https://rdrr.io/pkg/GenomicRanges/man/nearest-methods.html'>nearest</a></code> in package <span class="pkg">GenomicRanges</span> used
+    internally.</p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Michael Stadler</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://bioconductor.org/packages/GenomicRanges'>GenomicRanges</a></span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: stats4</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: BiocGenerics</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: parallel</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'BiocGenerics'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:parallel':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,</span>
+#&gt; <span class='message'>    clusterExport, clusterMap, parApply, parCapply, parLapply,</span>
+#&gt; <span class='message'>    parLapplyLB, parRapply, parSapply, parSapplyLB</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:stats':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    IQR, mad, sd, var, xtabs</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:base':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    anyDuplicated, append, as.data.frame, basename, cbind, colnames,</span>
+#&gt; <span class='message'>    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,</span>
+#&gt; <span class='message'>    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,</span>
+#&gt; <span class='message'>    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span>
+#&gt; <span class='message'>    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,</span>
+#&gt; <span class='message'>    union, unique, unsplit, which.max, which.min</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: S4Vectors</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'S4Vectors'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:base':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    expand.grid</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: IRanges</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: GenomeInfoDb</span></div><div class='input'>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></span><span class='op'>(</span><span class='st'>"chr1"</span>, <span class='fu'>IRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>12</span><span class='op'>)</span>, width <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>tss</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></span><span class='op'>(</span><span class='st'>"chr1"</span>, <span class='fu'>IRanges</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>30</span><span class='op'>)</span>, width <span class='op'>=</span> <span class='fl'>1</span>,
                                names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"t"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>blacklist</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html'>GRanges</a></span><span class='op'>(</span><span class='st'>"chr1"</span>, <span class='fu'>IRanges</span><span class='op'>(</span><span class='fl'>20</span>, width <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>getGenomicTiles</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>chr1 <span class='op'>=</span> <span class='fl'>45</span>, chr2 <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>, tileWidth <span class='op'>=</span> <span class='fl'>10</span>,
-                hasOverlap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>Blacklist <span class='op'>=</span> <span class='va'>blacklist</span><span class='op'>)</span>,
+<span class='fu'>annotateRegions</span><span class='op'>(</span><span class='va'>x</span>, hasOverlap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>Blacklist <span class='op'>=</span> <span class='va'>blacklist</span><span class='op'>)</span>,
                 fracOverlap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>Blacklist <span class='op'>=</span> <span class='va'>blacklist</span><span class='op'>)</span>,
                 numOverlap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>TSS <span class='op'>=</span> <span class='va'>tss</span><span class='op'>)</span>,
                 nearest <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>TSS <span class='op'>=</span> <span class='va'>tss</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: ignoring 'addSeqComp' (sequence not available from 'genome')</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 6 metadata columns:
+</div><div class='output co'>#&gt; GRanges object with 2 ranges and 6 metadata columns:
 #&gt;       seqnames    ranges strand | Blacklist.hasOverlap Blacklist.fracOverlap
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;logical&gt;             &lt;numeric&gt;
 #&gt;   [1]     chr1      1-10      * |                FALSE                   0.0
-#&gt;   [2]     chr1     11-20      * |                 TRUE                   0.1
-#&gt;   [3]     chr1     21-30      * |                 TRUE                   0.4
-#&gt;   [4]     chr1     31-40      * |                FALSE                   0.0
-#&gt;   [5]     chr2      1-10      * |                FALSE                   0.0
+#&gt;   [2]     chr1     12-21      * |                 TRUE                   0.2
 #&gt;       TSS.numOverlapWithin TSS.numOverlapAny TSS.nearestName
 #&gt;                  &lt;integer&gt;         &lt;integer&gt;     &lt;character&gt;
-#&gt;   [1]                    2                 2              t1
+#&gt;   [1]                    2                 2              t2
 #&gt;   [2]                    0                 0              t2
-#&gt;   [3]                    1                 1              t3
-#&gt;   [4]                    0                 0              t3
-#&gt;   [5]                    0                 0            &lt;NA&gt;
 #&gt;       TSS.nearestDistance
 #&gt;                 &lt;integer&gt;
 #&gt;   [1]                   0
-#&gt;   [2]                   0
-#&gt;   [3]                   0
-#&gt;   [4]                   0
-#&gt;   [5]                &lt;NA&gt;
+#&gt;   [2]                   1
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome</div><div class='input'>
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

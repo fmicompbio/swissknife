@@ -22,34 +22,10 @@ or a named \code{numeric} vector giving the names and lengths of chromosomes.}
 
 \item{tileWidth}{\code{numeric} scalar with the tile length.}
 
-\item{hasOverlap}{Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
-or \code{\link[GenomicRanges]{GRangesList}} object(s).
-For each list element, a logical vector "X.hasOverlap" will be added to the
-\code{mcols} of the result, with \code{TRUE} for each tile that overlaps
-any region in that element. "X" is obtained from \code{names(hasOverlap)}.}
-
-\item{fracOverlap}{Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
-or \code{\link[GenomicRanges]{GRangesList}} object(s).
-For each list element, a numeric vector "X.fracOverlap" will be added to the
-\code{mcols} of the result, with a value between 0 and 1 giving the fraction
-of bases in a tile that overlaps with any region in that element. "X" is
-obtained from \code{names(fracOverlap)}.}
-
-\item{numOverlap}{Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
-or \code{\link[GenomicRanges]{GRangesList}} object(s).
-For each list element, two numeric vectors "X.numOverlapWithin" and
-"X.numOverlapAny" will be added to the \code{mcols} of the result, giving
-the number of ranges in that element that are fully contained within
-a tile, or that overlap with a tile in any way, respectively. "X" is
-obtained from \code{names(numOverlap)}.}
-
-\item{nearest}{Named \code{list} with \code{\link[GenomicRanges]{GRanges}}
-or \code{\link[GenomicRanges]{GRangesList}} object(s).
-For each list element, two numeric vectors "X.nearestName" and
-"X.nearestDistance" will be added to the \code{mcols} of the result, giving
-the name and distance of the nearest range in that element for each tile. "X" is
-obtained from \code{names(nearest)}, and the values of "X.nearestName" from
-\code{names(nearest$X)}.}
+\item{hasOverlap, fracOverlap, numOverlap, nearest}{Named \code{list}s with
+\code{\link[GenomicRanges]{GRanges}} or \code{\link[GenomicRanges]{GRangesList}}
+object(s) used to annotate genomic tiles. See \code{\link{annotateRegions}}
+for details.}
 
 \item{addSeqComp}{\code{logical} scalar. If \code{TRUE} and primary sequence
 can be obtained from \code{genome}, also add sequence composition features
@@ -69,9 +45,7 @@ Get sequential, potentially annotated regions of a fixed lengths
 The last tile in each chromosome is dropped if it would be shorter
     than \code{tileWidth}. Generated tiles are unstranded (\code{*}) and
     therefore overlaps or searching for nearest neighbors are ignoring
-    strands of annotations (\code{ignore.strand=TRUE}). If multiple nearest
-    ranges are at the same distance from a tile, an arbitrary one is
-    reported in "X.nearestName".
+    strands of annotations (\code{ignore.strand=TRUE}).
 }
 \examples{
 library(GenomicRanges)
@@ -87,9 +61,8 @@ getGenomicTiles(c(chr1 = 45, chr2 = 12), tileWidth = 10,
 
 }
 \seealso{
-\code{\link[GenomicRanges]{tileGenome}}, \code{\link[GenomicRanges]{findOverlaps}}
-    and \code{\link[GenomicRanges]{nearest}} in package \pkg{GenomicRanges} used by
-    \code{getGenomicTiles} internally.
+\code{\link[GenomicRanges]{tileGenome}} and \code{\link{annotateRegions}}
+    used by \code{getGenomicTiles} internally.
 }
 \author{
 Michael Stadler

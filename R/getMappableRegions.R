@@ -64,7 +64,7 @@ getMappableRegions <- function(genome,
                                quiet = TRUE) {
     # check arguments
     # ... genome
-    if(is(genome, "BSgenome")) {
+    if (is(genome, "BSgenome")) {
         chrinfo <- BSgenome::seqinfo(genome)
         chrs <- BSgenome::getSeq(genome, names = seqnames(chrinfo),
                                  start = 1, end = seqlengths(chrinfo))

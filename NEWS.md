@@ -1,3 +1,7 @@
+# swissknife 0.29
+
+* Refactor getGenomicTiles, adding a new annotateRegions that accepts any GRanges as input
+
 # swissknife 0.28
 
 * Truncate chromosome names after first whitespace in getGenomicTiles when checking consistency

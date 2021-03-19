@@ -38,6 +38,7 @@ reference:
     - '`sampleControlElements`'
     - '`parsePkgVersions`'
     - '`prepareGTF`'
+    - '`annotateRegions`'
     - '`getMappableRegions`'
     - '`getGenomicTiles`'
 - title: General package information

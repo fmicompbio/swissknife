@@ -72,7 +72,6 @@ annotateRegions <- function(x,
                             nearest = list(),
                             ignore.strand = TRUE) {
     ## check arguments
-    ## ... genome and addSeqComp
     stopifnot(exprs = {
         # x
         is(x, "GRanges")

@@ -33,7 +33,8 @@ Calculate the frequencies of same strand alignment distances,
   for efficiency.
 }
 \examples{
-if (requireNamespace("GenomicAlignments", quietly = TRUE)) {
+if (requireNamespace("GenomicAlignments", quietly = TRUE) &&
+    requireNamespace("Rsamtools", quietly = TRUE)) {
     bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
                         package = "swissknife")
     pg <- calcPhasogram(bamf)

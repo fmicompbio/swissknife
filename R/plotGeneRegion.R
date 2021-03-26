@@ -29,12 +29,7 @@
 #'                                     
 prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id", 
                        geneIdColumn = "gene_id", geneSymbolColumn = "gene_name") {
-    ## Check if rtracklayer is available
-    if (!requireNamespace("rtracklayer", quietly = TRUE)) {
-        stop("The 'rtracklayer' package is required for prepareGTF(), but not ",
-             "installed. Install it using ", 
-             paste0("BiocManager::install(\"rtracklayer\")"), call. = FALSE)
-    }
+    .assertPackagesAvailable("rtracklayer")
     gtf <- rtracklayer::import(gtf)
     
     if (!(transcriptIdColumn %in% colnames(S4Vectors::mcols(gtf)))) {
@@ -174,12 +169,7 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     ## ---------------------------------------------------------------------- ##
     ## Pre-flight checks
     ## ---------------------------------------------------------------------- ##
-    ## Check if Gviz is available
-    if (!requireNamespace("Gviz", quietly = TRUE)) {
-        stop("The 'Gviz' package is required for plotGeneRegion(), but not ",
-             "installed. Install it using ", 
-             paste0("BiocManager::install(\"Gviz\")"), call. = FALSE)
-    }
+    .assertPackagesAvailable("Gviz")
     ## Check that input classes are correct
     if (!methods::is(gtf, "character") || length(gtf) != 1) {
         stop("'gtf' must be a character scalar")

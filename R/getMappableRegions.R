@@ -62,14 +62,7 @@ getMappableRegions <- function(genome,
                                Ncpu = 2,
                                quiet = TRUE) {
     # check arguments
-    # ... Rbowtie and BSgenome available?
-    for (pkg in c("Rbowtie", "BSgenome")) {
-        if (!requireNamespace(pkg, quietly = TRUE)) {
-            stop("The '", pkg, "' package is required for getMappableRegions(), ",
-                 "but not installed. Install it using ", 
-                 paste0("BiocManager::install(\"", pkg, "\")"), call. = FALSE)
-        }
-    }
+    .assertPackagesAvailable(c("Rbowtie", "BSgenome"))
     # ... genome
     if (is(genome, "BSgenome")) {
         chrinfo <- BSgenome::seqinfo(genome)
@@ -194,7 +187,7 @@ getMappableRegions <- function(genome,
 # align 'fname' to 'index'
 .alignWindowsToGenome <- function(fname, index, m = 1, p = 1,
                                   fmax = NULL, fun = NULL, fout = NULL) {
-    requireNamespace("Rbowtie")
+    loadNamespace("Rbowtie")
     if (is.null(fmax))
         fmax <- tempfile()
     if (is.null(fun))
@@ -211,7 +204,7 @@ getMappableRegions <- function(genome,
 
 # get chromosome lengths from 'index'
 .getChrlenFromBowtieIndex <- function(index) {
-    requireNamespace("Rbowtie")
+    loadNamespace("Rbowtie")
     readfile <- tempfile(fileext = ".fa")
     writeLines(c(">test", "ACGTACGTCATGCTGACTGACTGACGA"), readfile)
 

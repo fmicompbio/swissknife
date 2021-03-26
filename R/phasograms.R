@@ -53,13 +53,8 @@
 #'
 #' @export
 calcPhasogram <- function(fname, regions=NULL, rmdup=TRUE, dmax=3000L) {
-    ## Check if GenomicAlignments is available
-    if (!requireNamespace("GenomicAlignments", quietly = TRUE)) {
-        stop("The 'GenomicAlignments' package is required for calcPhasogram(), but not ",
-             "installed. Install it using ", 
-             paste0("BiocManager::install(\"GenomicAlignments\")"), call. = FALSE)
-    }
-    
+    .assertPackagesAvailable("GenomicAlignments")
+
     cnt <- numeric(dmax)
     names(cnt) <- as.character(seq.int(dmax))
 

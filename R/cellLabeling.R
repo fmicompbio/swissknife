@@ -222,12 +222,7 @@ labelCells <- function(sce,
                        SingleRParams = list(),
                        BPPARAM = SerialParam()) {
     ## pre-flight checks
-    ## SingleR available?
-    if (!requireNamespace("SingleR", quietly = TRUE)) {
-        stop("The 'SingleR' package is required for labelCells(), but not ",
-             "installed. Install it using ", 
-             paste0("BiocManager::install(\"SingleR\")"), call. = FALSE)
-    }
+    .assertPackagesAvailable("SingleR")
     stopifnot(exprs = {
         # sce
         is(sce, "SingleCellExperiment")

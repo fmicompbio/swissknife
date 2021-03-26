@@ -39,13 +39,7 @@ readSampleTsvs <- function(seqdataDir = "/tungstenfs/groups/gbioinfo/seqdata",
                            sampleIds, keepMulti = TRUE, ...) {
     
     ## Check if dplyr and tidyr are available
-    for (pkg in c("dplyr", "tidyr")) {
-        if (!requireNamespace(pkg, quietly = TRUE)) {
-            stop("The '", pkg, "' package is required for readSampleTsvs(), ",
-                 "but not installed. Install it using ", 
-                 paste0("install.packages(\"", pkg, "\")"), call. = FALSE)
-        }
-    }
+    .assertPackagesAvailable(c("dplyr", "tidyr"), bioc = FALSE)
     
     ## List all tsv files in seqdataDir matching any of the sample IDs
     matchingFiles <- list.files(path = seqdataDir, 

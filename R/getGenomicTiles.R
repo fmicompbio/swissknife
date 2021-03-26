@@ -60,12 +60,7 @@ getGenomicTiles <- function(genome,
                             nearest = list(),
                             addSeqComp = TRUE) {
     ## check arguments
-    ## ... BSgenome available?
-    if (!requireNamespace("BSgenome", quietly = TRUE)) {
-        stop("The 'BSgenome' package is required for getGenomicTiles(), but not ",
-             "installed. Install it using ", 
-             paste0("BiocManager::install(\"BSgenome\")"), call. = FALSE)
-    }
+    .assertPackagesAvailable("BSgenome")
     ## ... genome and addSeqComp
     stopifnot(exprs = {
         is.logical(addSeqComp)

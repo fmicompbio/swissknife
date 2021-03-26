@@ -173,12 +173,7 @@ selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3
                         control=stats::loess.control(surface = "direct"), nBins = 100, 
                         nBinsDense = ceiling(nrow(data)/4), ...){
     
-    ## Check if wordspace is available (used in .getDistMat)
-    if (!requireNamespace("wordspace", quietly = TRUE)) {
-        stop("The 'wordspace' package is required for selVarGenes(), but not ",
-             "installed. Install it using ", 
-             paste0("install.packages(\"wordspace\")"), call. = FALSE)
-    }
+    .assertPackagesAvailable("wordspace", bioc = FALSE) # (used in .getDistMat)
     ## Additional checks
     if (is.null(data)) {stop("'data' is empty")}
     if (!is(data, "SingleCellExperiment") && !is(data, "matrix")) {stop("data must be a SingleCellExperiment object or a count matrix")}

@@ -20,7 +20,6 @@
 #' 
 #' @export
 #' 
-#' @importFrom rtracklayer import
 #' @importFrom S4Vectors mcols
 #' @importFrom BiocGenerics subset
 #' 
@@ -30,6 +29,12 @@
 #'                                     
 prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id", 
                        geneIdColumn = "gene_id", geneSymbolColumn = "gene_name") {
+    ## Check if rtracklayer is available
+    if (!requireNamespace("rtracklayer", quietly = TRUE)) {
+        stop("The 'rtracklayer' package is required for prepareGTF(), but not ",
+             "installed. Install it using ", 
+             paste0("BiocManager::install(\"rtracklayer\")"), call. = FALSE)
+    }
     gtf <- rtracklayer::import(gtf)
     
     if (!(transcriptIdColumn %in% colnames(S4Vectors::mcols(gtf)))) {

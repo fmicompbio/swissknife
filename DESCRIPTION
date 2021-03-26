@@ -24,6 +24,7 @@ Imports:
     Rcpp,
     S4Vectors,
     stats,
+    SummarizedExperiment,
     utils,
     XVector
 Suggests: 
@@ -41,7 +42,6 @@ Suggests:
     rtracklayer,
     SingleCellExperiment,
     SingleR,
-    SummarizedExperiment,
     testthat,
     tidyr,
     wordspace

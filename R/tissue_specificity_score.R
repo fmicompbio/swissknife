@@ -49,6 +49,7 @@
 #' 
 #' @importFrom matrixStats rowAvgsPerColSet rowSums2 rowMaxs
 #' @importFrom methods .valueClassTest
+#' @importFrom SummarizedExperiment SummarizedExperiment
 #' 
 #' @export
 #' @docType methods
@@ -114,7 +115,6 @@ setMethod("specificityScore",
           c("SummarizedExperiment"),
           function(x, method = c("tau", "TSI", "counts"), group = NULL,
                    thresh = 0, expr_values = "logcounts", na.rm = FALSE) {
-              .assertPackagesAvailable("SummarizedExperiment")
               ## check expr_values
               if (is.numeric(expr_values)) {
                   stopifnot(exprs = {

@@ -30,7 +30,6 @@ Imports:
     rtracklayer,
     S4Vectors,
     SingleCellExperiment,
-    SingleR,
     SummarizedExperiment,
     stats,
     tidyr,
@@ -43,9 +42,9 @@ Suggests:
     rmarkdown,
     BiocStyle,
     Rbowtie,
-    QuasR
     QuasR,
     Gviz,
+    SingleR
 LinkingTo: 
     Rcpp
 License: GPL-3

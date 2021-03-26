@@ -44,7 +44,6 @@
 #'     used by \code{getGenomicTiles} internally.
 #'
 #' @importFrom GenomicRanges GRanges tileGenome width findOverlaps nearest distance
-#' @importFrom BSgenome seqinfo getSeq
 #' @importFrom GenomeInfoDb seqlengths
 #' @importFrom Biostrings fasta.seqlengths readDNAStringSet oligonucleotideFrequency
 #' @importFrom methods is
@@ -61,6 +60,12 @@ getGenomicTiles <- function(genome,
                             nearest = list(),
                             addSeqComp = TRUE) {
     ## check arguments
+    ## ... BSgenome available?
+    if (!requireNamespace("BSgenome", quietly = TRUE)) {
+        stop("The 'BSgenome' package is required for getGenomicTiles(), but not ",
+             "installed. Install it using ", 
+             paste0("BiocManager::install(\"BSgenome\")"), call. = FALSE)
+    }
     ## ... genome and addSeqComp
     stopifnot(exprs = {
         is.logical(addSeqComp)

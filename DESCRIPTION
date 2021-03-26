@@ -13,7 +13,6 @@ Imports:
     BiocGenerics,
     BiocParallel,
     Biostrings,
-    BSgenome,
     GenomeInfoDb,
     GenomicRanges,
     graphics,
@@ -34,6 +33,7 @@ Imports:
     XVector
 Suggests: 
     BiocStyle,
+    BSgenome,
     dplyr,
     GenomicAlignments,
     Gviz,

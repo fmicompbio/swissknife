@@ -51,7 +51,6 @@
 #'
 #' @importFrom GenomicRanges GRanges gaps sort
 #' @importFrom Biostrings readDNAStringSet
-#' @importFrom BSgenome seqinfo getSeq
 #' @importFrom GenomeInfoDb seqnames seqlengths
 #' @importFrom XVector width
 #' 
@@ -63,11 +62,13 @@ getMappableRegions <- function(genome,
                                Ncpu = 2,
                                quiet = TRUE) {
     # check arguments
-    # ... Rbowtie available
-    if (!requireNamespace("Rbowtie", quietly = TRUE)) {
-        stop("The 'Rbowtie' package is required for getMappableRegions(), but not ",
-             "installed. Install it using ", 
-             paste0("BiocManager::install(\"Rbowtie\")"), call. = FALSE)
+    # ... Rbowtie and BSgenome available?
+    for (pkg in c("Rbowtie", "BSgenome")) {
+        if (!requireNamespace(pkg, quietly = TRUE)) {
+            stop("The '", pkg, "' package is required for getMappableRegions(), ",
+                 "but not installed. Install it using ", 
+                 paste0("BiocManager::install(\"", pkg, "\")"), call. = FALSE)
+        }
     }
     # ... genome
     if (is(genome, "BSgenome")) {

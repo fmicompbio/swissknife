@@ -37,21 +37,29 @@
 #'   phasogram, \code{\link{calcAndCountDist}} for low-level distance counting.
 #'
 #' @examples
-#' bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
-#'                     package = "swissknife")
-#' pg <- calcPhasogram(bamf)
-#' estimateNRL(pg, usePeaks = 1:4)[1:2]
-#' plotPhasogram(pg, usePeaks = 1:4, xlim = c(0,1000))
+#' if (requireNamespace("GenomicAlignments", quietly = TRUE)) {
+#'     bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
+#'                         package = "swissknife")
+#'     pg <- calcPhasogram(bamf)
+#'     estimateNRL(pg, usePeaks = 1:4)[1:2]
+#'     plotPhasogram(pg, usePeaks = 1:4, xlim = c(0,1000))
+#' }
 #'
 #' @useDynLib swissknife
 #' @importFrom Rcpp sourceCpp
 #' @importFrom Rsamtools scanBam scanBamHeader ScanBamParam scanBamFlag
 #' @importFrom IRanges IRanges overlapsAny
 #' @importFrom GenomicRanges GRanges seqnames ranges
-#' @importFrom GenomicAlignments cigarWidthAlongReferenceSpace
 #'
 #' @export
 calcPhasogram <- function(fname, regions=NULL, rmdup=TRUE, dmax=3000L) {
+    ## Check if GenomicAlignments is available
+    if (!requireNamespace("GenomicAlignments", quietly = TRUE)) {
+        stop("The 'GenomicAlignments' package is required for calcPhasogram(), but not ",
+             "installed. Install it using ", 
+             paste0("BiocManager::install(\"GenomicAlignments\")"), call. = FALSE)
+    }
+    
     cnt <- numeric(dmax)
     names(cnt) <- as.character(seq.int(dmax))
 

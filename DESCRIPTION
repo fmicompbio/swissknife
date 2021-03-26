@@ -15,7 +15,6 @@ Imports:
     Biostrings,
     BSgenome,
     GenomeInfoDb,
-    GenomicAlignments,
     GenomicRanges,
     graphics,
     grDevices,
@@ -36,6 +35,7 @@ Imports:
 Suggests: 
     BiocStyle,
     dplyr,
+    GenomicAlignments,
     Gviz,
     knitr,
     QuasR,

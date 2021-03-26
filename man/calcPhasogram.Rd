@@ -38,7 +38,7 @@ if (requireNamespace("GenomicAlignments", quietly = TRUE) &&
     bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
                         package = "swissknife")
     pg <- calcPhasogram(bamf)
-    estimateNRL(pg, usePeaks = 1:4)[1:2]
+    print(estimateNRL(pg, usePeaks = 1:4)[1:2])
     plotPhasogram(pg, usePeaks = 1:4, xlim = c(0,1000))
 }
 

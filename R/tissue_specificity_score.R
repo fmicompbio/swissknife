@@ -47,7 +47,6 @@
 #' specificityScore(x, method = "TSI")
 #' specificityScore(x, method = "counts", thresh = 0.5)
 #' 
-#' @importFrom SummarizedExperiment assay assays assayNames
 #' @importFrom matrixStats rowAvgsPerColSet rowSums2 rowMaxs
 #' @importFrom methods .valueClassTest
 #' 
@@ -115,22 +114,23 @@ setMethod("specificityScore",
           c("SummarizedExperiment"),
           function(x, method = c("tau", "TSI", "counts"), group = NULL,
                    thresh = 0, expr_values = "logcounts", na.rm = FALSE) {
+              .assertPackagesAvailable("SummarizedExperiment")
               ## check expr_values
               if (is.numeric(expr_values)) {
                   stopifnot(exprs = {
                       length(expr_values) == 1L
-                      expr_values <= length(assays(x))
+                      expr_values <= length(SummarizedExperiment::assays(x))
                   })
               } else if (is.character(expr_values)) {
                   stopifnot(exprs = {
                       length(expr_values) == 1L
-                      expr_values %in% assayNames(x)
+                      expr_values %in% SummarizedExperiment::assayNames(x)
                   })
               } else {
                   stop("'expr_values' is not a valid value for use in assay()")
               }
               ## extract expression matrix
-              xx <- as.matrix(assay(x, expr_values))
+              xx <- as.matrix(SummarizedExperiment::assay(x, expr_values))
               ## call matrix method
               specificityScore(xx, method, group, thresh, expr_values, na.rm)
           })

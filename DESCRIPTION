@@ -25,8 +25,6 @@ Imports:
     Rcpp,
     Rsamtools,
     S4Vectors,
-    SingleCellExperiment,
-    SummarizedExperiment,
     stats,
     utils,
     XVector
@@ -41,7 +39,9 @@ Suggests:
     Rbowtie,
     rmarkdown,
     rtracklayer,
+    SingleCellExperiment,
     SingleR,
+    SummarizedExperiment,
     testthat,
     tidyr,
     wordspace

@@ -61,7 +61,9 @@ Given marker gene sets for cell types, identify cells with
   for specific T cell subtypes.
 }
 \examples{
-if (requireNamespace("SingleR", quietly = TRUE)) {
+if (requireNamespace("SingleR", quietly = TRUE) &&
+    requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+    
     # create SingleCellExperiment with cell-type specific genes
     library(SingleCellExperiment)
     n_types <- 3

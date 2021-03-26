@@ -134,7 +134,8 @@
 #'   }
 #'   
 #' @examples 
-#' if (requireNamespace("wordspace", quietly = TRUE)) {
+#' if (requireNamespace("wordspace", quietly = TRUE) &&
+#'     requireNamespace("SingleCellExperiment", quietly = TRUE)) {
 #'     # packages
 #'     library(SingleCellExperiment)
 #'    
@@ -149,11 +150,11 @@
 #'     counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
 #'    
 #'     # create SCE 
-#'     sce <- SingleCellExperiment(list(counts=counts))
+#'     sce <- SingleCellExperiment(list(counts = counts))
 #'    
 #'     # calculate sizeFactors
 #'     libsizes <- colSums(counts)
-#'     sizeFactors(sce) <- libsizes/mean(libsizes)
+#'     sizeFactors(sce) <- libsizes / mean(libsizes)
 #'  
 #'     # select variable genes
 #'     varGenes <- selVarGenes(sce, assay.type="counts")
@@ -164,16 +165,17 @@
 #' }
 #'
 #' @importFrom stats loess loess.control predict mad median quantile sd
-#' @importFrom SingleCellExperiment sizeFactors counts logcounts
-#' @importFrom SummarizedExperiment assays
 #' 
 #' @export
 #' 
-selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3, minCells = 5, minExpr = 1, exclTopExprFrac = 0.01, span = 0.2, 
-                        control=stats::loess.control(surface = "direct"), nBins = 100, 
-                        nBinsDense = ceiling(nrow(data)/4), ...){
+selVarGenes <- function(data = NULL, assay.type = "counts", logPseudo = 1,
+                        Nmads = 3, minCells = 5, minExpr = 1,
+                        exclTopExprFrac = 0.01, span = 0.2, 
+                        control = stats::loess.control(surface = "direct"),
+                        nBins = 100,  nBinsDense = ceiling(nrow(data)/4), ...) {
     
     .assertPackagesAvailable("wordspace", bioc = FALSE) # (used in .getDistMat)
+    .assertPackagesAvailable(c("SummarizedExperiment", "SingleCellExperiment"))
     ## Additional checks
     if (is.null(data)) {stop("'data' is empty")}
     if (!is(data, "SingleCellExperiment") && !is(data, "matrix")) {stop("data must be a SingleCellExperiment object or a count matrix")}
@@ -223,7 +225,7 @@ selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3
     
     ## log2(mean expression) and log2(coefficient of variation)
     logMean <- log2(rowMeans(normCounts))
-    logCV <- log2(apply(normCounts, 1, stats::sd)/rowMeans(normCounts))
+    logCV <- log2(apply(normCounts, 1, stats::sd) / rowMeans(normCounts))
     datfr <- data.frame(logMean = logMean, logCV = logCV)
     
     ## loess fit, excluding the top exclTopExprFrac
@@ -300,32 +302,34 @@ selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3
 #' @return plot
 #'
 #' @examples 
-#'    # packages
-#'    library(SingleCellExperiment)
+#' if (requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+#'     # packages
+#'     library(SingleCellExperiment)
 #'    
-#'    # create example count matrix
-#'    # ... poisson distr per gene
-#'    mu <- ceiling(runif(n = 2000, min = 0, max = 100))
-#'    counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
-#'    counts <- counts + 1
-#'    # ... add signal to subset of genes (rows) and cells (columns)
-#'    i <- sample(x = 1:nrow(counts), size = 500)
-#'    j <- sample(x = 1:ncol(counts), size = 500)
-#'    counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
-#'    
-#'    # create SCE
-#'    sce <- SingleCellExperiment(list(counts=counts))
-#'    
-#'    # calculate sizeFactors
-#'    libsizes <- colSums(counts)
-#'    sizeFactors(sce) <- libsizes/mean(libsizes)
+#'     # create example count matrix
+#'     # ... poisson distr per gene
+#'     mu <- ceiling(runif(n = 2000, min = 0, max = 100))
+#'     counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
+#'     counts <- counts + 1
+#'     # ... add signal to subset of genes (rows) and cells (columns)
+#'     i <- sample(x = 1:nrow(counts), size = 500)
+#'     j <- sample(x = 1:ncol(counts), size = 500)
+#'     counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
 #'  
-#'    # select variable genes
-#'    varGenes <- selVarGenes(sce)
+#'     # create SCE
+#'     sce <- SingleCellExperiment(list(counts = counts))
+#' 
+#'     # calculate sizeFactors
+#'     libsizes <- colSums(counts)
+#'     sizeFactors(sce) <- libsizes / mean(libsizes)
+#'
+#'     # select variable genes
+#'     varGenes <- selVarGenes(sce)
 #'    
-#'    # plot
-#'    plotSelVarGenes(varGenes)
-#'    plotSelVarGenes(varGenes, colByBin=TRUE)
+#'     # plot
+#'     plotSelVarGenes(varGenes)
+#'     plotSelVarGenes(varGenes, colByBin=TRUE)
+#' }
 #' 
 #' @importFrom grDevices colors
 #' 

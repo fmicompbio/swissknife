@@ -91,7 +91,8 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
   are \code{Nmads} MADs away from the median are selected.
 }
 \examples{
-if (requireNamespace("wordspace", quietly = TRUE)) {
+if (requireNamespace("wordspace", quietly = TRUE) &&
+    requireNamespace("SingleCellExperiment", quietly = TRUE)) {
     # packages
     library(SingleCellExperiment)
    
@@ -106,11 +107,11 @@ if (requireNamespace("wordspace", quietly = TRUE)) {
     counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
    
     # create SCE 
-    sce <- SingleCellExperiment(list(counts=counts))
+    sce <- SingleCellExperiment(list(counts = counts))
    
     # calculate sizeFactors
     libsizes <- colSums(counts)
-    sizeFactors(sce) <- libsizes/mean(libsizes)
+    sizeFactors(sce) <- libsizes / mean(libsizes)
  
     # select variable genes
     varGenes <- selVarGenes(sce, assay.type="counts")

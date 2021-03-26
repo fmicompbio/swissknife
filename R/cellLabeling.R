@@ -43,7 +43,6 @@
 #' }
 #' 
 #' @importFrom BiocParallel SerialParam bplapply
-#' @importFrom SummarizedExperiment assay assayNames
 #' @importFrom matrixStats rowMeans2 rowSds
 #' 
 #' @export
@@ -54,6 +53,7 @@ normGenesetExpression <- function(sce,
                                   R = 200,
                                   BPPARAM = SerialParam()) {
     # pre-flight checks
+    .assertPackagesAvailable("SummarizedExperiment")
     stopifnot(exprs = {
         is(sce, "SingleCellExperiment")
         is.character(genes)
@@ -68,19 +68,19 @@ normGenesetExpression <- function(sce,
     if (is.numeric(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values <= length(assays(sce))
+            expr_values <= length(SummarizedExperiment::assays(sce))
         })
     } else if (is.character(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values %in% assayNames(sce)
+            expr_values %in% SummarizedExperiment::assayNames(sce)
         })
     } else {
         stop("'expr_values' is not a valid value for use in assay()")
     }
 
     # exclude genes if subset.row is given
-    expr <- as.matrix(assay(sce, expr_values))
+    expr <- as.matrix(SummarizedExperiment::assay(sce, expr_values))
     i <- match(genes, rownames(sce))
     if (!is.null(subset.row)) {
         if (is.logical(subset.row) && length(subset.row) == nrow(sce)) {
@@ -163,7 +163,9 @@ normGenesetExpression <- function(sce,
 #'    labels to cells.
 #' 
 #' @examples 
-#' if (requireNamespace("SingleR", quietly = TRUE)) {
+#' if (requireNamespace("SingleR", quietly = TRUE) &&
+#'     requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+#'     
 #'     # create SingleCellExperiment with cell-type specific genes
 #'     library(SingleCellExperiment)
 #'     n_types <- 3
@@ -222,7 +224,7 @@ labelCells <- function(sce,
                        SingleRParams = list(),
                        BPPARAM = SerialParam()) {
     ## pre-flight checks
-    .assertPackagesAvailable("SingleR")
+    .assertPackagesAvailable(c("SingleR","SummarizedExperiment"))
     stopifnot(exprs = {
         # sce
         is(sce, "SingleCellExperiment")
@@ -250,12 +252,12 @@ labelCells <- function(sce,
     if (is.numeric(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values <= length(assays(sce))
+            expr_values <= length(SummarizedExperiment::assays(sce))
         })
     } else if (is.character(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values %in% assayNames(sce)
+            expr_values %in% SummarizedExperiment::assayNames(sce)
         })
     } else {
         stop("'expr_values' is not a valid value for use in assay()")

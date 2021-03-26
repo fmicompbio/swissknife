@@ -37,10 +37,12 @@ The function searches the provided \code{seqdataDir} for tsv
   \code{data.frame} containing the metadata for all these samples.
 }
 \examples{
-readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
-                                        package = "swissknife"), 
-               sampleIds = c("readSampleTsvsEx1", "readSampleTsvsEx2",
-                             "readSampleTsvsEx3"))
+if (requireNamespace("dplyr") && requireNamespace("tidyr")) {
+    readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
+                                            package = "swissknife"), 
+                   sampleIds = c("readSampleTsvsEx1", "readSampleTsvsEx2",
+                                 "readSampleTsvsEx3"))
+}
 
 }
 \author{

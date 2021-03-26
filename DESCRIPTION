@@ -14,7 +14,6 @@ Imports:
     BiocParallel,
     Biostrings,
     BSgenome,
-    dplyr,
     GenomeInfoDb,
     GenomicAlignments,
     GenomicRanges,
@@ -32,19 +31,20 @@ Imports:
     SingleCellExperiment,
     SummarizedExperiment,
     stats,
-    tidyr,
     utils,
-    wordspace,
     XVector
 Suggests: 
-    testthat,
-    knitr,
-    rmarkdown,
     BiocStyle,
-    Rbowtie,
-    QuasR,
+    dplyr,
     Gviz,
-    SingleR
+    knitr,
+    QuasR,
+    Rbowtie,
+    rmarkdown,
+    SingleR,
+    testthat,
+    tidyr,
+    wordspace
 LinkingTo: 
     Rcpp
 License: GPL-3

@@ -119,7 +119,6 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #' @importFrom BiocGenerics subset start end strand
 #' @importFrom GenomeInfoDb seqnames
 #' @importFrom IRanges overlapsAny IRanges subsetByOverlaps
-#' @importFrom rtracklayer import
 #' @importFrom GenomicRanges GRanges
 #' @importFrom S4Vectors %in%
 #' @importFrom methods is
@@ -169,7 +168,7 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     ## ---------------------------------------------------------------------- ##
     ## Pre-flight checks
     ## ---------------------------------------------------------------------- ##
-    .assertPackagesAvailable("Gviz")
+    .assertPackagesAvailable(c("Gviz", "rtracklayer"))
     ## Check that input classes are correct
     if (!methods::is(gtf, "character") || length(gtf) != 1) {
         stop("'gtf' must be a character scalar")

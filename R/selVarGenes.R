@@ -177,7 +177,7 @@ selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3
     if (!requireNamespace("wordspace", quietly = TRUE)) {
         stop("The 'wordspace' package is required for selVarGenes(), but not ",
              "installed. Install it using ", 
-             paste0("BiocManager::install(\"wordspace\")"), call. = FALSE)
+             paste0("install.packages(\"wordspace\")"), call. = FALSE)
     }
     ## Additional checks
     if (is.null(data)) {stop("'data' is empty")}

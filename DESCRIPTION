@@ -20,7 +20,6 @@ Imports:
     GenomicRanges,
     graphics,
     grDevices,
-    Gviz,
     IRanges,
     KernSmooth,
     matrixStats,
@@ -45,6 +44,8 @@ Suggests:
     BiocStyle,
     Rbowtie,
     QuasR
+    QuasR,
+    Gviz,
 LinkingTo: 
     Rcpp
 License: GPL-3

@@ -121,32 +121,32 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #' @importFrom IRanges overlapsAny IRanges subsetByOverlaps
 #' @importFrom rtracklayer import
 #' @importFrom GenomicRanges GRanges
-#' @importFrom Gviz GeneRegionTrack DataTrack GenomeAxisTrack plotTracks 
-#'   feature
 #' @importFrom S4Vectors %in%
 #' @importFrom methods is
 #'   
 #' @examples 
-#' gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf", 
+#' if (requireNamespace("Gviz", quietly = TRUE)) {
+#'     gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf", 
+#'                            package = "swissknife")
+#'     plotGeneRegion(gtf = gtffile, 
+#'                    showgene = "Tnfaip3")
+#'                
+#'     bwf <- system.file("extdata/plotGeneRegion/mnase_mm10.bw", 
 #'                        package = "swissknife")
-#' plotGeneRegion(gtf = gtffile, 
-#'                showgene = "Tnfaip3")
+#'     names(bwf) <- "bwf1"
+#'     plotGeneRegion(gtf = gtffile, 
+#'                    bigwigFiles = bwf,
+#'                    chr = "chr10", start = 20000000, end = 20005000)
+#'     plotGeneRegion(bigwigFiles = bwf,
+#'                    chr = "chr10", start = 20000000, end = 20005000)
 #'                
-#' bwf <- system.file("extdata/plotGeneRegion/mnase_mm10.bw", 
-#'                    package = "swissknife")
-#' names(bwf) <- "bwf1"
-#' plotGeneRegion(gtf = gtffile, 
-#'                bigwigFiles = bwf,
-#'                chr = "chr10", start = 20000000, end = 20005000)
-#' plotGeneRegion(bigwigFiles = bwf,
-#'                chr = "chr10", start = 20000000, end = 20005000)
-#'                
-#' bwf2 <- c(bwf, bwf)
-#' names(bwf2) <- c("bwf1", "bwf2")
-#' bwc2 <- c("c1", "c2")
-#' names(bwc2) <- names(bwf2)
-#' plotGeneRegion(gtf = gtffile, bigwigFiles = bwf2, bigwigCond = bwc2, 
-#'                showgene = "Map3k5")
+#'     bwf2 <- c(bwf, bwf)
+#'     names(bwf2) <- c("bwf1", "bwf2")
+#'     bwc2 <- c("c1", "c2")
+#'     names(bwc2) <- names(bwf2)
+#'     plotGeneRegion(gtf = gtffile, bigwigFiles = bwf2, bigwigCond = bwc2, 
+#'                    showgene = "Map3k5")
+#' }
 #' 
 plotGeneRegion <- function(gtf = "", granges = NULL, chr = "", 
                            start = NA_real_, end = NA_real_, showgene = "", 
@@ -169,6 +169,12 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     ## ---------------------------------------------------------------------- ##
     ## Pre-flight checks
     ## ---------------------------------------------------------------------- ##
+    ## Check if Gviz is available
+    if (!requireNamespace("Gviz", quietly = TRUE)) {
+        stop("The 'Gviz' package is required for plotGeneRegion(), but not ",
+             "installed. Install it using ", 
+             paste0("BiocManager::install(\"Gviz\")"), call. = FALSE)
+    }
     ## Check that input classes are correct
     if (!methods::is(gtf, "character") || length(gtf) != 1) {
         stop("'gtf' must be a character scalar")

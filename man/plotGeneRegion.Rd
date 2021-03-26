@@ -93,26 +93,28 @@ specifying a gene (ID or symbol) or by specifying a viewing range
 (chromosome, start and end positions).
 }
 \examples{
-gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf", 
+if (requireNamespace("Gviz", quietly = TRUE)) {
+    gtffile <- system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf", 
+                           package = "swissknife")
+    plotGeneRegion(gtf = gtffile, 
+                   showgene = "Tnfaip3")
+               
+    bwf <- system.file("extdata/plotGeneRegion/mnase_mm10.bw", 
                        package = "swissknife")
-plotGeneRegion(gtf = gtffile, 
-               showgene = "Tnfaip3")
+    names(bwf) <- "bwf1"
+    plotGeneRegion(gtf = gtffile, 
+                   bigwigFiles = bwf,
+                   chr = "chr10", start = 20000000, end = 20005000)
+    plotGeneRegion(bigwigFiles = bwf,
+                   chr = "chr10", start = 20000000, end = 20005000)
                
-bwf <- system.file("extdata/plotGeneRegion/mnase_mm10.bw", 
-                   package = "swissknife")
-names(bwf) <- "bwf1"
-plotGeneRegion(gtf = gtffile, 
-               bigwigFiles = bwf,
-               chr = "chr10", start = 20000000, end = 20005000)
-plotGeneRegion(bigwigFiles = bwf,
-               chr = "chr10", start = 20000000, end = 20005000)
-               
-bwf2 <- c(bwf, bwf)
-names(bwf2) <- c("bwf1", "bwf2")
-bwc2 <- c("c1", "c2")
-names(bwc2) <- names(bwf2)
-plotGeneRegion(gtf = gtffile, bigwigFiles = bwf2, bigwigCond = bwc2, 
-               showgene = "Map3k5")
+    bwf2 <- c(bwf, bwf)
+    names(bwf2) <- c("bwf1", "bwf2")
+    bwc2 <- c("c1", "c2")
+    names(bwc2) <- names(bwf2)
+    plotGeneRegion(gtf = gtffile, bigwigFiles = bwf2, bigwigCond = bwc2, 
+                   showgene = "Map3k5")
+}
 
 }
 \author{

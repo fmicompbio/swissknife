@@ -25,10 +25,11 @@ utils::globalVariables(c("V1","V2","SAMPLE_ID")) # prevent R CMD check from comp
 #' 
 #' @examples
 #' if (requireNamespace("dplyr") && requireNamespace("tidyr")) {
-#'     readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
-#'                                             package = "swissknife"), 
-#'                    sampleIds = c("readSampleTsvsEx1", "readSampleTsvsEx2",
-#'                                  "readSampleTsvsEx3"))
+#'     print(readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
+#'                                                   package = "swissknife"), 
+#'                          sampleIds = c("readSampleTsvsEx1",
+#'                                        "readSampleTsvsEx2",
+#'                                        "readSampleTsvsEx3")))
 #' }
 #' 
 #' @importFrom utils read.delim

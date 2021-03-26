@@ -38,10 +38,11 @@ The function searches the provided \code{seqdataDir} for tsv
 }
 \examples{
 if (requireNamespace("dplyr") && requireNamespace("tidyr")) {
-    readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
-                                            package = "swissknife"), 
-                   sampleIds = c("readSampleTsvsEx1", "readSampleTsvsEx2",
-                                 "readSampleTsvsEx3"))
+    print(readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
+                                                  package = "swissknife"), 
+                         sampleIds = c("readSampleTsvsEx1",
+                                       "readSampleTsvsEx2",
+                                       "readSampleTsvsEx3")))
 }
 
 }

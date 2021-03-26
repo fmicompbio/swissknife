@@ -33,16 +33,18 @@
 #'     do not generate more than \code{maxHits} hits when aligned to the genome.
 #'
 #' @examples
-#' library(Rbowtie)
+#' if (requireNamespace("Rbowtie", quietly = TRUE)) {
+#'     library(Rbowtie)
 #' 
-#' genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
-#' indexdir <- tempfile()
-#' indexpre <- "index"
-#' indexname <- file.path(indexdir, indexpre)
-#' idx <- bowtie_build(genomefile, indexdir)
+#'     genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
+#'     indexdir <- tempfile()
+#'     indexpre <- "index"
+#'     indexname <- file.path(indexdir, indexpre)
+#'     idx <- bowtie_build(genomefile, indexdir)
 #' 
-#' mapgr <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE)
-#' mapgr
+#'     mapgr <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE)
+#'     print(mapgr)
+#' }
 #'
 #' @seealso \code{\link[Rbowtie]{bowtie}} in package \pkg{Rbowtie} used by
 #'     \code{getMappableRegions} to align reads to the genome;

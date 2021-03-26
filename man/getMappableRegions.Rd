@@ -53,16 +53,18 @@ Sequences of all overlapping windows are extracted from the genome
     than \code{maxHits} hits are found, the window is defined mappable.
 }
 \examples{
-library(Rbowtie)
+if (requireNamespace("Rbowtie", quietly = TRUE)) {
+    library(Rbowtie)
 
-genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
-indexdir <- tempfile()
-indexpre <- "index"
-indexname <- file.path(indexdir, indexpre)
-idx <- bowtie_build(genomefile, indexdir)
+    genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
+    indexdir <- tempfile()
+    indexpre <- "index"
+    indexname <- file.path(indexdir, indexpre)
+    idx <- bowtie_build(genomefile, indexdir)
 
-mapgr <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE)
-mapgr
+    mapgr <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE)
+    print(mapgr)
+}
 
 }
 \seealso{

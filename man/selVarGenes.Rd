@@ -91,32 +91,34 @@ The function takes in a \code{SingleCellExperiment} object and calculates the no
   are \code{Nmads} MADs away from the median are selected.
 }
 \examples{
-   # packages
-   library(SingleCellExperiment)
+if (requireNamespace("wordspace", quietly = TRUE)) {
+    # packages
+    library(SingleCellExperiment)
    
-   # create example count matrix
-   # ... poisson distr per gene
-   mu <- ceiling(runif(n = 2000, min = 0, max = 100))
-   counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
-   counts <- counts + 1
-   # ... add signal to subset of genes (rows) and cells (columns)
-   i <- sample(x = 1:nrow(counts), size = 500)
-   j <- sample(x = 1:ncol(counts), size = 500)
-   counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
+    # create example count matrix
+    # ... poisson distr per gene
+    mu <- ceiling(runif(n = 2000, min = 0, max = 100))
+    counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
+    counts <- counts + 1
+    # ... add signal to subset of genes (rows) and cells (columns)
+    i <- sample(x = 1:nrow(counts), size = 500)
+    j <- sample(x = 1:ncol(counts), size = 500)
+    counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
    
-   # create SCE 
-   sce <- SingleCellExperiment(list(counts=counts))
+    # create SCE 
+    sce <- SingleCellExperiment(list(counts=counts))
    
-   # calculate sizeFactors
-   libsizes <- colSums(counts)
-   sizeFactors(sce) <- libsizes/mean(libsizes)
+    # calculate sizeFactors
+    libsizes <- colSums(counts)
+    sizeFactors(sce) <- libsizes/mean(libsizes)
  
-   # select variable genes
-   varGenes <- selVarGenes(sce, assay.type="counts")
+    # select variable genes
+    varGenes <- selVarGenes(sce, assay.type="counts")
    
-   # plot
-   plotSelVarGenes(varGenes, colByBin=TRUE)
-   plotSelVarGenes(varGenes)
+    # plot
+    plotSelVarGenes(varGenes, colByBin=TRUE)
+    plotSelVarGenes(varGenes)
+}
 
 }
 \author{

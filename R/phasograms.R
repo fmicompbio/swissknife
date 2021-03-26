@@ -49,10 +49,10 @@
 #' @useDynLib swissknife
 #' @importFrom IRanges IRanges overlapsAny
 #' @importFrom GenomicRanges GRanges seqnames ranges
+#' @import Rcpp
 #'
 #' @export
 calcPhasogram <- function(fname, regions=NULL, rmdup=TRUE, dmax=3000L) {
-    .assertPackagesAvailable("Rcpp", bioc = FALSE)
     .assertPackagesAvailable(c("GenomicAlignments", "Rsamtools"))
 
     cnt <- numeric(dmax)

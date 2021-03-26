@@ -50,7 +50,6 @@
 #'     indexing a genome.
 #'
 #' @importFrom GenomicRanges GRanges gaps sort
-#' @importFrom Biostrings readDNAStringSet
 #' @importFrom GenomeInfoDb seqnames seqlengths
 #' @importFrom XVector width
 #' 
@@ -62,7 +61,7 @@ getMappableRegions <- function(genome,
                                Ncpu = 2,
                                quiet = TRUE) {
     # check arguments
-    .assertPackagesAvailable(c("Rbowtie", "BSgenome"))
+    .assertPackagesAvailable(c("Rbowtie", "BSgenome", "Biostrings"))
     # ... genome
     if (is(genome, "BSgenome")) {
         chrinfo <- BSgenome::seqinfo(genome)

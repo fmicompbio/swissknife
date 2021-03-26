@@ -45,7 +45,6 @@
 #'
 #' @importFrom GenomicRanges GRanges tileGenome width findOverlaps nearest distance
 #' @importFrom GenomeInfoDb seqlengths
-#' @importFrom Biostrings fasta.seqlengths readDNAStringSet oligonucleotideFrequency
 #' @importFrom methods is
 #' @importFrom IRanges overlapsAny
 #' @importFrom S4Vectors queryHits subjectHits
@@ -60,7 +59,7 @@ getGenomicTiles <- function(genome,
                             nearest = list(),
                             addSeqComp = TRUE) {
     ## check arguments
-    .assertPackagesAvailable("BSgenome")
+    .assertPackagesAvailable(c("BSgenome", "Biostrings"))
     ## ... genome and addSeqComp
     stopifnot(exprs = {
         is.logical(addSeqComp)

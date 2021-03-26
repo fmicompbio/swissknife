@@ -12,7 +12,6 @@ Depends: R (>= 3.5.0)
 Imports: 
     BiocGenerics,
     BiocParallel,
-    Biostrings,
     GenomeInfoDb,
     GenomicRanges,
     graphics,
@@ -28,6 +27,7 @@ Imports:
     utils,
     XVector
 Suggests: 
+    Biostrings,
     BiocStyle,
     BSgenome,
     dplyr,

@@ -77,7 +77,7 @@ jobs:
         run: |
           if (Sys.getenv("CRAN") != "") options(repos = c(REPO_NAME = Sys.getenv("CRAN")))
           local_deps <- remotes::local_package_deps(dependencies = TRUE)
-          deps <- remotes::dev_package_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories()), Ncpu = 2L)
+          deps <- remotes::dev_package_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories()))
           BiocManager::install(local_deps[local_deps %in% deps$package[deps$diff != 0]], Ncpu = 2L)
           remotes::install_cran('rcmdcheck', Ncpu = 2L)
         shell: Rscript {0}

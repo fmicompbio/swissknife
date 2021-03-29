@@ -1,4 +1,4 @@
-# swissknife 0.30
+# swissknife 0.30 / 0.31
 
 * Speed-up package load time by moving rarely used Depends to Suggests
 

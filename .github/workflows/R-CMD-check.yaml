@@ -97,7 +97,7 @@ jobs:
 
       - name: Check
         env:
-          R_CHECK_SUGGESTS_ONLY: 1
+          R_CHECK_SUGGESTS_ONLY: true
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 

@@ -88,14 +88,16 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           # manual checks
-          checkPkg <- function(...) swissknife:::.assertPackagesAvailable(...)
+          #checkPkg <- function(...) swissknife:::.assertPackagesAvailable(...)
           # ... imports
-          checkPkg(c("BiocGenerics","BiocParallel","GenomeInfoDb","GenomicRanges","graphics","grDevices","IRanges","KernSmooth","matrixStats","methods","png","Rcpp","S4Vectors","stats","SummarizedExperiment","utils","XVector"))
+          #checkPkg(c("BiocGenerics","BiocParallel","GenomeInfoDb","GenomicRanges","graphics","grDevices","IRanges","KernSmooth","matrixStats","methods","png","Rcpp","S4Vectors","stats","SummarizedExperiment","utils","XVector"))
           # ... suggests
-          checkPkg(c("Biostrings","BiocStyle","BSgenome","dplyr","GenomicAlignments","Gviz","knitr","QuasR","Rbowtie","rmarkdown","Rsamtools","rtracklayer","SingleCellExperiment","SingleR","testthat","tidyr","wordspace"))
+          #checkPkg(c("Biostrings","BiocStyle","BSgenome","dplyr","GenomicAlignments","Gviz","knitr","QuasR","Rbowtie","rmarkdown","Rsamtools","rtracklayer","SingleCellExperiment","SingleR","testthat","tidyr","wordspace"))
         shell: Rscript {0}
 
       - name: Check
+        env:
+          R_CHECK_SUGGESTS_ONLY: 1
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 

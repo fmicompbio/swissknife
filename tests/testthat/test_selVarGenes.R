@@ -1,6 +1,5 @@
 test_that(".getDistMat() works properly", {
-    print(requireNamespace("wordspace"))
-    
+
     ## create data
     x <- 1:1000
     x2 <- x

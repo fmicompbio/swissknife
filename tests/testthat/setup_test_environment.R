@@ -1,8 +1,3 @@
-print(requireNamespace("wordspace"))
-print(requireNamespace("tidyr"))
-print(requireNamespace("Gviz"))
-print(requireNamespace("SingleR"))
-
-install.packages("sessioninfo", repos = "http://cran.us.r-project.org")
-pkgs <- installed.packages()[, "Package"]
-print(sessioninfo::session_info(pkgs, include_base = TRUE))
+## For some reason, some of the packages in Suggests are not found while 
+## running the unit tests during R CMD check. This seems to help.
+requireNamespace(c("wordspace", "tidyr", "Gviz"))

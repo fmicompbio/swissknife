@@ -27,7 +27,9 @@ test_that(".writeWindowsToTempFile works properly", {
 })
 
 test_that(".writeWindowsToTempFileCPP works properly", {
+    
     chrs1 <- as.character(XVector::subseq(chrs[[1]], start = 1, width = 100))
+    expect_error(.writeWindowsToTempFileCPP(chr = chrs1, w = 10, fname = file.path(tempdir(), "error", "error.fa")))
     tf1 <- tempfile()
     expect_type(res1 <- .writeWindowsToTempFileCPP(chr = chrs1, w = 10, fname = tf1), "character")
     expect_identical(tf1, res1)

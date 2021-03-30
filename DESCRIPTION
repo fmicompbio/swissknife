@@ -1,6 +1,6 @@
 Package: swissknife
 Title: Handy code shared in the FMI CompBio group
-Version: 0.28
+Version: 0.30
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
@@ -12,39 +12,39 @@ Depends: R (>= 3.5.0)
 Imports: 
     BiocGenerics,
     BiocParallel,
-    Biostrings,
-    BSgenome,
-    dplyr,
     GenomeInfoDb,
-    GenomicAlignments,
     GenomicRanges,
     graphics,
     grDevices,
-    Gviz,
     IRanges,
     KernSmooth,
     matrixStats,
     methods,
     png,
     Rcpp,
-    Rsamtools,
-    rtracklayer,
     S4Vectors,
-    SingleCellExperiment,
-    SingleR,
-    SummarizedExperiment,
     stats,
-    tidyr,
+    SummarizedExperiment,
     utils,
-    wordspace,
     XVector
 Suggests: 
-    testthat,
-    knitr,
-    rmarkdown,
+    Biostrings,
     BiocStyle,
+    BSgenome,
+    dplyr,
+    GenomicAlignments,
+    Gviz,
+    knitr,
+    QuasR,
     Rbowtie,
-    QuasR
+    rmarkdown,
+    Rsamtools,
+    rtracklayer,
+    SingleCellExperiment,
+    SingleR,
+    testthat,
+    tidyr,
+    wordspace
 LinkingTo: 
     Rcpp
 License: GPL-3

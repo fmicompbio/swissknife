@@ -120,6 +120,13 @@ test_that("plotGeneRegion works", {
     expect_type(a2, "list")
     expect_identical(a1, a2)
     
+    ## GRanges, no bigwig, multiple gene IDs with same name
+    bred <- b
+    bred$gene_name[bred$gene_name == "Ahi1"] <- "Bclaf1"
+    expect_warning(a21 <- plotGeneRegion(gtf = "", granges = bred, showgene = "Bclaf1"))
+    expect_type(a21, "list")
+    expect_identical(a1, a21)
+    
     ## Both GTF and GRanges, no bigwig
     a3 <- plotGeneRegion(gtf = gtffile, granges = b, showgene = "Bclaf1")
     expect_type(a3, "list")

@@ -33,16 +33,18 @@
 #'     do not generate more than \code{maxHits} hits when aligned to the genome.
 #'
 #' @examples
-#' library(Rbowtie)
+#' if (requireNamespace("Rbowtie", quietly = TRUE)) {
+#'     library(Rbowtie)
 #' 
-#' genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
-#' indexdir <- tempfile()
-#' indexpre <- "index"
-#' indexname <- file.path(indexdir, indexpre)
-#' idx <- bowtie_build(genomefile, indexdir)
+#'     genomefile <- system.file("extdata", "getMappableRegions", "hg19sub.fa", package = "swissknife")
+#'     indexdir <- tempfile()
+#'     indexpre <- "index"
+#'     indexname <- file.path(indexdir, indexpre)
+#'     idx <- bowtie_build(genomefile, indexdir)
 #' 
-#' mapgr <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE)
-#' mapgr
+#'     mapgr <- getMappableRegions(genomefile, indexname, 50, quiet = FALSE)
+#'     print(mapgr)
+#' }
 #'
 #' @seealso \code{\link[Rbowtie]{bowtie}} in package \pkg{Rbowtie} used by
 #'     \code{getMappableRegions} to align reads to the genome;
@@ -50,8 +52,6 @@
 #'     indexing a genome.
 #'
 #' @importFrom GenomicRanges GRanges gaps sort
-#' @importFrom Biostrings readDNAStringSet
-#' @importFrom BSgenome seqinfo getSeq
 #' @importFrom GenomeInfoDb seqnames seqlengths
 #' @importFrom XVector width
 #' 
@@ -63,6 +63,7 @@ getMappableRegions <- function(genome,
                                Ncpu = 2,
                                quiet = TRUE) {
     # check arguments
+    .assertPackagesAvailable(c("Rbowtie", "BSgenome", "Biostrings"))
     # ... genome
     if (is(genome, "BSgenome")) {
         chrinfo <- BSgenome::seqinfo(genome)
@@ -187,7 +188,7 @@ getMappableRegions <- function(genome,
 # align 'fname' to 'index'
 .alignWindowsToGenome <- function(fname, index, m = 1, p = 1,
                                   fmax = NULL, fun = NULL, fout = NULL) {
-    requireNamespace("Rbowtie")
+    loadNamespace("Rbowtie")
     if (is.null(fmax))
         fmax <- tempfile()
     if (is.null(fun))
@@ -204,7 +205,7 @@ getMappableRegions <- function(genome,
 
 # get chromosome lengths from 'index'
 .getChrlenFromBowtieIndex <- function(index) {
-    requireNamespace("Rbowtie")
+    loadNamespace("Rbowtie")
     readfile <- tempfile(fileext = ".fa")
     writeLines(c(">test", "ACGTACGTCATGCTGACTGACTGACGA"), readfile)
 

@@ -37,21 +37,24 @@
 #'   phasogram, \code{\link{calcAndCountDist}} for low-level distance counting.
 #'
 #' @examples
-#' bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
-#'                     package = "swissknife")
-#' pg <- calcPhasogram(bamf)
-#' estimateNRL(pg, usePeaks = 1:4)[1:2]
-#' plotPhasogram(pg, usePeaks = 1:4, xlim = c(0,1000))
+#' if (requireNamespace("GenomicAlignments", quietly = TRUE) &&
+#'     requireNamespace("Rsamtools", quietly = TRUE)) {
+#'     bamf <- system.file("extdata", "phasograms", "mnase_mm10.bam",
+#'                         package = "swissknife")
+#'     pg <- calcPhasogram(bamf)
+#'     print(estimateNRL(pg, usePeaks = 1:4)[1:2])
+#'     plotPhasogram(pg, usePeaks = 1:4, xlim = c(0,1000))
+#' }
 #'
 #' @useDynLib swissknife
-#' @importFrom Rcpp sourceCpp
-#' @importFrom Rsamtools scanBam scanBamHeader ScanBamParam scanBamFlag
 #' @importFrom IRanges IRanges overlapsAny
 #' @importFrom GenomicRanges GRanges seqnames ranges
-#' @importFrom GenomicAlignments cigarWidthAlongReferenceSpace
+#' @import Rcpp
 #'
 #' @export
 calcPhasogram <- function(fname, regions=NULL, rmdup=TRUE, dmax=3000L) {
+    .assertPackagesAvailable(c("GenomicAlignments", "Rsamtools"))
+
     cnt <- numeric(dmax)
     names(cnt) <- as.character(seq.int(dmax))
 

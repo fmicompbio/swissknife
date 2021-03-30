@@ -43,7 +43,6 @@
 #' }
 #' 
 #' @importFrom BiocParallel SerialParam bplapply
-#' @importFrom SummarizedExperiment assay assayNames
 #' @importFrom matrixStats rowMeans2 rowSds
 #' 
 #' @export
@@ -54,6 +53,7 @@ normGenesetExpression <- function(sce,
                                   R = 200,
                                   BPPARAM = SerialParam()) {
     # pre-flight checks
+    .assertPackagesAvailable("SummarizedExperiment")
     stopifnot(exprs = {
         is(sce, "SingleCellExperiment")
         is.character(genes)
@@ -68,19 +68,19 @@ normGenesetExpression <- function(sce,
     if (is.numeric(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values <= length(assays(sce))
+            expr_values <= length(SummarizedExperiment::assays(sce))
         })
     } else if (is.character(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values %in% assayNames(sce)
+            expr_values %in% SummarizedExperiment::assayNames(sce)
         })
     } else {
         stop("'expr_values' is not a valid value for use in assay()")
     }
 
     # exclude genes if subset.row is given
-    expr <- as.matrix(assay(sce, expr_values))
+    expr <- as.matrix(SummarizedExperiment::assay(sce, expr_values))
     i <- match(genes, rownames(sce))
     if (!is.null(subset.row)) {
         if (is.logical(subset.row) && length(subset.row) == nrow(sce)) {
@@ -163,52 +163,55 @@ normGenesetExpression <- function(sce,
 #'    labels to cells.
 #' 
 #' @examples 
-#' # create SingleCellExperiment with cell-type specific genes
-#' library(SingleCellExperiment)
-#' n_types <- 3
-#' n_per_type <- 30
-#' n_cells <- n_types * n_per_type
-#' n_genes <- 500
-#' fraction_specific <- 0.1
-#' n_specific <- round(n_genes * fraction_specific)
+#' if (requireNamespace("SingleR", quietly = TRUE) &&
+#'     requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+#'     
+#'     # create SingleCellExperiment with cell-type specific genes
+#'     library(SingleCellExperiment)
+#'     n_types <- 3
+#'     n_per_type <- 30
+#'     n_cells <- n_types * n_per_type
+#'     n_genes <- 500
+#'     fraction_specific <- 0.1
+#'     n_specific <- round(n_genes * fraction_specific)
 #' 
-#' set.seed(42)
-#' mu <- ceiling(runif(n = n_genes, min = 0, max = 30))
-#' u <- do.call(rbind, lapply(mu, function(x) rpois(n_cells, lambda = x)))
-#' rownames(u) <- paste0("g", seq.int(nrow(u)))
-#' celltype.labels <- rep(paste0("t", seq.int(n_types)), each = n_per_type)
-#' celltype.genes <- split(sample(rownames(u), size = n_types * n_specific),
-#'                         rep(paste0("t", seq.int(n_types)), each = n_specific))
-#' for (i in seq_along(celltype.genes)) {
-#'     j <- celltype.genes[[i]]
-#'     k <- celltype.labels == paste0("t", i)
-#'     u[j, k] <- 2 * u[j, k]
-#' }
-#' v <- log2(u + 1)
-#' sce <- SingleCellExperiment(assays=list(counts=u, logcounts=v))
+#'     set.seed(42)
+#'     mu <- ceiling(runif(n = n_genes, min = 0, max = 30))
+#'     u <- do.call(rbind, lapply(mu, function(x) rpois(n_cells, lambda = x)))
+#'     rownames(u) <- paste0("g", seq.int(nrow(u)))
+#'     celltype.labels <- rep(paste0("t", seq.int(n_types)), each = n_per_type)
+#'     celltype.genes <- split(sample(rownames(u), size = n_types * n_specific),
+#'                             rep(paste0("t", seq.int(n_types)), each = n_specific))
+#'     for (i in seq_along(celltype.genes)) {
+#'         j <- celltype.genes[[i]]
+#'         k <- celltype.labels == paste0("t", i)
+#'         u[j, k] <- 2 * u[j, k]
+#'     }
+#'     v <- log2(u + 1)
+#'     sce <- SingleCellExperiment(assays=list(counts=u, logcounts=v))
 #'
-#' # define marker genes (subset of true cell-type-specific genes)
-#' marker.genes <- lapply(celltype.genes, "[", 1:5)
-#' marker.genes
+#'     # define marker genes (subset of true cell-type-specific genes)
+#'     marker.genes <- lapply(celltype.genes, "[", 1:5)
+#'     marker.genes
 #' 
-#' # predict cell types
-#' res <- labelCells(sce, marker.genes,
-#'                   fraction_topscoring = 0.1,
-#'                   normGenesetExpressionParams = list(R = 50))
+#'     # predict cell types
+#'     res <- labelCells(sce, marker.genes,
+#'                       fraction_topscoring = 0.1,
+#'                       normGenesetExpressionParams = list(R = 50))
 #' 
-#' # high-scoring cells used as references for each celltype
-#' res$cells
+#'     # high-scoring cells used as references for each celltype
+#'     res$cells
 #' 
-#' # ... from these, pseudo-bulks were created:
-#' res$refs
+#'     # ... from these, pseudo-bulks were created:
+#'     res$refs
 #' 
-#' # ... and used to predict labels for all cells
-#' res$labels$pruned.labels
+#'     # ... and used to predict labels for all cells
+#'     res$labels$pruned.labels
 #' 
-#' # compare predicted to true cell types
-#' table(true = celltype.labels, predicted = res$labels$pruned.labels)
+#'     # compare predicted to true cell types
+#'     table(true = celltype.labels, predicted = res$labels$pruned.labels)
+#' }
 #'       
-#' @importFrom SingleR SingleR aggregateReference
 #' @importFrom BiocParallel SerialParam bplapply
 #' 
 #' @export
@@ -221,6 +224,7 @@ labelCells <- function(sce,
                        SingleRParams = list(),
                        BPPARAM = SerialParam()) {
     ## pre-flight checks
+    .assertPackagesAvailable(c("SingleR","SummarizedExperiment"))
     stopifnot(exprs = {
         # sce
         is(sce, "SingleCellExperiment")
@@ -248,12 +252,12 @@ labelCells <- function(sce,
     if (is.numeric(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values <= length(assays(sce))
+            expr_values <= length(SummarizedExperiment::assays(sce))
         })
     } else if (is.character(expr_values)) {
         stopifnot(exprs = {
             length(expr_values) == 1L
-            expr_values %in% assayNames(sce)
+            expr_values %in% SummarizedExperiment::assayNames(sce)
         })
     } else {
         stop("'expr_values' is not a valid value for use in assay()")
@@ -296,7 +300,7 @@ labelCells <- function(sce,
                 paste(todrop, collapse = ", "))
         aggregateReferenceParams[todrop] <- NULL
     }
-    refs <- do.call(aggregateReference,
+    refs <- do.call(SingleR::aggregateReference,
                     c(list(ref = sce[, topcells],
                            labels = topcelltypes,
                            BPPARAM = BPPARAM),
@@ -311,7 +315,7 @@ labelCells <- function(sce,
                 paste(todrop, collapse = ", "))
         SingleRParams[todrop] <- NULL
     }
-    df <- do.call(SingleR,
+    df <- do.call(SingleR::SingleR,
                   c(list(test = sce,
                          ref = refs,
                          labels = refs$label,

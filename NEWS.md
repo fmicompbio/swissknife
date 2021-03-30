@@ -1,3 +1,7 @@
+# swissknife 0.30
+
+* Speed-up package load time by moving rarely used Depends to Suggests
+
 # swissknife 0.29
 
 * Refactor getGenomicTiles, adding a new annotateRegions that accepts any GRanges as input

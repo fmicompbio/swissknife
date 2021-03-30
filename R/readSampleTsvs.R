@@ -24,19 +24,25 @@ utils::globalVariables(c("V1","V2","SAMPLE_ID")) # prevent R CMD check from comp
 #' @return A \code{data.frame} with metadata for the provided \code{sampleIds}.
 #' 
 #' @examples
-#' readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
-#'                                         package = "swissknife"), 
-#'                sampleIds = c("readSampleTsvsEx1", "readSampleTsvsEx2",
-#'                              "readSampleTsvsEx3"))
+#' if (requireNamespace("dplyr") && requireNamespace("tidyr")) {
+#'     print(readSampleTsvs(seqdataDir = system.file("extdata/readSampleTsvs", 
+#'                                                   package = "swissknife"), 
+#'                          sampleIds = c("readSampleTsvsEx1",
+#'                                        "readSampleTsvsEx2",
+#'                                        "readSampleTsvsEx3")))
+#' }
 #' 
-#' @importFrom dplyr bind_rows %>% mutate select everything
-#' @importFrom tidyr spread
 #' @importFrom utils read.delim
 #' 
 #' @export
 #' 
 readSampleTsvs <- function(seqdataDir = "/tungstenfs/groups/gbioinfo/seqdata", 
                            sampleIds, keepMulti = TRUE, ...) {
+    
+    ## Check if dplyr and tidyr are available
+    .assertPackagesAvailable(c("dplyr", "tidyr"), bioc = FALSE)
+    ## create a copy of dplyr::%>% (specifying the namespace does not work)
+    `%>%` <- dplyr::`%>%`
     
     ## List all tsv files in seqdataDir matching any of the sample IDs
     matchingFiles <- list.files(path = seqdataDir, 

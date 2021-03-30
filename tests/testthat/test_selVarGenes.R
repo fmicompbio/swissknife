@@ -1,5 +1,5 @@
 test_that(".getDistMat() works properly", {
-    
+
     ## create data
     x <- 1:1000
     x2 <- x

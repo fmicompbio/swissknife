@@ -33,7 +33,6 @@
 #'   euclMat <- swissknife:::.getDistMat(loessModel = lo, x = x, y = y, x_curve = x_curve)
 #'   euclMat[1:6, 1:6]
 #'
-#' @importFrom wordspace dist.matrix
 #' @importFrom stats predict
 #' 
 #' @keywords internal
@@ -41,20 +40,25 @@
 .getDistMat <- function(loessModel = NULL, x = NULL, y = NULL, x_curve = NULL, method = "euclidean", ...){
     
     ## checks
-    stopifnot(!is.null(x_curve))
-    stopifnot(!is.null(x))
-    stopifnot(!is.null(y))
-    stopifnot(!is.null(loessModel))
-    stopifnot(length(x) == length(y))
-    stopifnot(is.numeric(x_curve))
-    stopifnot(is.numeric(x))
-    stopifnot(is.numeric(y))
+    stopifnot(exprs = {
+        requireNamespace("wordspace")
+        !is.null(x_curve)
+        !is.null(x)
+        !is.null(y)
+        !is.null(loessModel)
+        length(x) == length(y)
+        is.numeric(x_curve)
+        is.numeric(x)
+        is.numeric(y)
+    })
     
     ## predict y_curve for x_curve using loessModel
     y_curve <- stats::predict(loessModel, newdata = x_curve)
     
     ## get distances
-    distMat <- wordspace::dist.matrix(M = cbind(x, y), M2 = cbind(x_curve, y_curve), method = method, ... )
+    distMat <- wordspace::dist.matrix(M = cbind(x, y),
+                                      M2 = cbind(x_curve, y_curve),
+                                      method = method, ... )
     colnames(distMat) <- paste0("pointOnCurve", seq_len(length(y_curve)))
     if (!is.null(names(x))) {
         rownames(distMat) <- names(x)
@@ -130,62 +134,67 @@
 #'   }
 #'   
 #' @examples 
-#'    # packages
-#'    library(SingleCellExperiment)
+#' if (requireNamespace("wordspace", quietly = TRUE) &&
+#'     requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+#'     # packages
+#'     library(SingleCellExperiment)
 #'    
-#'    # create example count matrix
-#'    # ... poisson distr per gene
-#'    mu <- ceiling(runif(n = 2000, min = 0, max = 100))
-#'    counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
-#'    counts <- counts + 1
-#'    # ... add signal to subset of genes (rows) and cells (columns)
-#'    i <- sample(x = 1:nrow(counts), size = 500)
-#'    j <- sample(x = 1:ncol(counts), size = 500)
-#'    counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
+#'     # create example count matrix
+#'     # ... poisson distr per gene
+#'     mu <- ceiling(runif(n = 2000, min = 0, max = 100))
+#'     counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
+#'     counts <- counts + 1
+#'     # ... add signal to subset of genes (rows) and cells (columns)
+#'     i <- sample(x = 1:nrow(counts), size = 500)
+#'     j <- sample(x = 1:ncol(counts), size = 500)
+#'     counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
 #'    
-#'    # create SCE 
-#'    sce <- SingleCellExperiment(list(counts=counts))
+#'     # create SCE 
+#'     sce <- SingleCellExperiment(list(counts = counts))
 #'    
-#'    # calculate sizeFactors
-#'    libsizes <- colSums(counts)
-#'    sizeFactors(sce) <- libsizes/mean(libsizes)
+#'     # calculate sizeFactors
+#'     libsizes <- colSums(counts)
+#'     sizeFactors(sce) <- libsizes / mean(libsizes)
 #'  
-#'    # select variable genes
-#'    varGenes <- selVarGenes(sce, assay.type="counts")
+#'     # select variable genes
+#'     varGenes <- selVarGenes(sce, assay.type="counts")
 #'    
-#'    # plot
-#'    plotSelVarGenes(varGenes, colByBin=TRUE)
-#'    plotSelVarGenes(varGenes)
+#'     # plot
+#'     plotSelVarGenes(varGenes, colByBin=TRUE)
+#'     plotSelVarGenes(varGenes)
+#' }
 #'
 #' @importFrom stats loess loess.control predict mad median quantile sd
-#' @importFrom SingleCellExperiment sizeFactors counts logcounts
-#' @importFrom SummarizedExperiment assays
 #' 
 #' @export
 #' 
-selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3, minCells = 5, minExpr = 1, exclTopExprFrac = 0.01, span = 0.2, 
-                        control=stats::loess.control(surface = "direct"), nBins = 100, 
-                        nBinsDense = ceiling(nrow(data)/4), ...){
+selVarGenes <- function(data = NULL, assay.type = "counts", logPseudo = 1,
+                        Nmads = 3, minCells = 5, minExpr = 1,
+                        exclTopExprFrac = 0.01, span = 0.2, 
+                        control = stats::loess.control(surface = "direct"),
+                        nBins = 100,  nBinsDense = ceiling(nrow(data)/4), ...) {
     
-    ## checks
+    .assertPackagesAvailable("wordspace", bioc = FALSE) # (used in .getDistMat)
+    .assertPackagesAvailable(c("SummarizedExperiment", "SingleCellExperiment"))
+    ## Additional checks
     if (is.null(data)) {stop("'data' is empty")}
-    if (!is(data, "SingleCellExperiment") & !is(data, "matrix")) {stop("data must be a SingleCellExperiment object or a count matrix")}
-    if (is(data, "SingleCellExperiment") & !any(assay.type%in%c("counts", "logcounts"))) {stop("assay.type must be either counts or logcounts")}
-    if (is(data, "SingleCellExperiment") & assay.type=="counts") {
-        if(!any(names(SummarizedExperiment::assays(data)) %in% "counts")) {stop("counts assay is missing from SCE object")}
+    if (!is(data, "SingleCellExperiment") && !is(data, "matrix")) {stop("data must be a SingleCellExperiment object or a count matrix")}
+    if (is(data, "SingleCellExperiment") && !any(assay.type %in% c("counts", "logcounts"))) {stop("assay.type must be either counts or logcounts")}
+    if (is(data, "SingleCellExperiment") && assay.type == "counts") {
+        if (!any(names(SummarizedExperiment::assays(data)) %in% "counts")) {stop("counts assay is missing from SCE object")}
     }
-    if (is(data, "SingleCellExperiment") & assay.type=="logcounts") {
-        if(!any(names(SummarizedExperiment::assays(data)) %in% "logcounts")) {stop("logcounts assay is missing from SCE object")}
+    if (is(data, "SingleCellExperiment") && assay.type == "logcounts") {
+        if (!any(names(SummarizedExperiment::assays(data)) %in% "logcounts")) {stop("logcounts assay is missing from SCE object")}
     }
-    if (is(data, "SingleCellExperiment") & assay.type=="counts") {
-        if(is.null(SingleCellExperiment::sizeFactors(data))) {stop("missing sizeFactors to normalize counts")}
+    if (is(data, "SingleCellExperiment") && assay.type == "counts") {
+        if (is.null(SingleCellExperiment::sizeFactors(data))) {stop("missing sizeFactors to normalize counts")}
     }
     
     ## when data is SCE
-    if(is(data, "SingleCellExperiment")) {
-        if(assay.type=="logcounts"){
+    if (is(data, "SingleCellExperiment")) {
+        if (assay.type == "logcounts") {
             message("using logcounts(data), assuming those counts are in the log2(raw norm counts + 1) space ...")
-            normCounts <- 2^SingleCellExperiment::logcounts(data)-logPseudo
+            normCounts <- 2^SingleCellExperiment::logcounts(data) - logPseudo
         } else {
             normCounts <- sweep(as.matrix(SingleCellExperiment::counts(data)), 2, SingleCellExperiment::sizeFactors(data), "/")  
         }
@@ -193,8 +202,10 @@ selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3
     } 
     
     ## when data is count matrix
-    if(is(data, "matrix")){
-        message("assuming that data is a normalized count matrix with genes as rows and cells as columns, if that's not the case make sure it is ... ")
+    if (is(data, "matrix")) {
+        message("assuming that data is a normalized count matrix with genes ",
+                "as rows and cells as columns, if that's not the case make ",
+                "sure it is ... ")
         normCounts <- data
     }
     
@@ -214,7 +225,7 @@ selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3
     
     ## log2(mean expression) and log2(coefficient of variation)
     logMean <- log2(rowMeans(normCounts))
-    logCV <- log2(apply(normCounts, 1, stats::sd)/rowMeans(normCounts))
+    logCV <- log2(apply(normCounts, 1, stats::sd) / rowMeans(normCounts))
     datfr <- data.frame(logMean = logMean, logCV = logCV)
     
     ## loess fit, excluding the top exclTopExprFrac
@@ -291,32 +302,34 @@ selVarGenes <- function(data=NULL, assay.type="counts", logPseudo = 1, Nmads = 3
 #' @return plot
 #'
 #' @examples 
-#'    # packages
-#'    library(SingleCellExperiment)
+#' if (requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+#'     # packages
+#'     library(SingleCellExperiment)
 #'    
-#'    # create example count matrix
-#'    # ... poisson distr per gene
-#'    mu <- ceiling(runif(n = 2000, min = 0, max = 100))
-#'    counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
-#'    counts <- counts + 1
-#'    # ... add signal to subset of genes (rows) and cells (columns)
-#'    i <- sample(x = 1:nrow(counts), size = 500)
-#'    j <- sample(x = 1:ncol(counts), size = 500)
-#'    counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
-#'    
-#'    # create SCE
-#'    sce <- SingleCellExperiment(list(counts=counts))
-#'    
-#'    # calculate sizeFactors
-#'    libsizes <- colSums(counts)
-#'    sizeFactors(sce) <- libsizes/mean(libsizes)
+#'     # create example count matrix
+#'     # ... poisson distr per gene
+#'     mu <- ceiling(runif(n = 2000, min = 0, max = 100))
+#'     counts <- do.call(rbind, lapply(mu, function(x){rpois(1000, lambda = x)}))
+#'     counts <- counts + 1
+#'     # ... add signal to subset of genes (rows) and cells (columns)
+#'     i <- sample(x = 1:nrow(counts), size = 500)
+#'     j <- sample(x = 1:ncol(counts), size = 500)
+#'     counts[i, j] <- counts[i, j] + sample(5:10, length(i), replace = TRUE)
 #'  
-#'    # select variable genes
-#'    varGenes <- selVarGenes(sce)
+#'     # create SCE
+#'     sce <- SingleCellExperiment(list(counts = counts))
+#' 
+#'     # calculate sizeFactors
+#'     libsizes <- colSums(counts)
+#'     sizeFactors(sce) <- libsizes / mean(libsizes)
+#'
+#'     # select variable genes
+#'     varGenes <- selVarGenes(sce)
 #'    
-#'    # plot
-#'    plotSelVarGenes(varGenes)
-#'    plotSelVarGenes(varGenes, colByBin=TRUE)
+#'     # plot
+#'     plotSelVarGenes(varGenes)
+#'     plotSelVarGenes(varGenes, colByBin=TRUE)
+#' }
 #' 
 #' @importFrom grDevices colors
 #' 
@@ -340,7 +353,7 @@ plotSelVarGenes <- function(selVarGenes_list = NULL, xlab = "logMean",
     }
     
     ## plot
-    if(colByBin) {
+    if (colByBin) {
         
         ## prepare for plot
         colors <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = TRUE)]

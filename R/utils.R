@@ -10,6 +10,7 @@
 #' 
 #' @author Michael Stadler
 #' 
+#' @noRd
 .assertPackagesAvailable <- function(pkgs, bioc = TRUE) {
     stopifnot(exprs = {
         is.character(pkgs)

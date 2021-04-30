@@ -6,6 +6,13 @@ test_that("readSampleTsvs() works properly", {
                                         sampleIds = "readSampleTsvsEx4"))
     expect_equal(nrow(df), 0)
     expect_equal(ncol(df), 0)
+    
+    ## Trying to read a file that doesn't match the pattern from the start 
+    ## should give a warning and an empty data.frame
+    expect_warning(df <- readSampleTsvs(seqdataDir = seqdataDir,
+                                        sampleIds = "eadSampleTsvsEx1"))
+    expect_equal(nrow(df), 0)
+    expect_equal(ncol(df), 0)
 
     ## Check that the output is as expected for an existing file
     expect_equal(readSampleTsvs(seqdataDir = seqdataDir,

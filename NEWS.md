@@ -1,3 +1,7 @@
+# swissknife 0.31
+
+* Fix readSampleTsvs so that provided patterns must match from the beginning of the filename
+
 # swissknife 0.30
 
 * Speed-up package load time by moving rarely used Depends to Suggests

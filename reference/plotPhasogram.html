@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.31</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@ the NRL estimate (<code>mind</code> parameter from <code><a href='estimateNRL.ht
     </tr>
     <tr>
       <th>xlim</th>
-      <td><p><code><a href='https://rdrr.io/r/base/numeric.html'>numeric(2)</a></code> with the x-axis (phase) limits in the first two
+      <td><p><code>numeric(2)</code> with the x-axis (phase) limits in the first two
 plots (see Details). if <code>NULL</code> (the default), the full range defined
 by <code>x</code> and <code>hide</code> will be used.</p></td>
     </tr>
@@ -169,7 +169,7 @@ control NRL estimation.</p></td>
     <p>The function will visualize an annotated phasogram. For
   <code>verbosePlot=FALSE</code> (the default), it will create a single annotated
   plot. For <code>verbosePlot=TRUE</code>, it will create three plots (using
-  <code><a href='https://rdrr.io/r/graphics/par.html'>par(mfrow=c(1,3))</a></code>):</p><ol>
+  <code>par(mfrow=c(1,3))</code>):</p><ol>
 <li><p>raw phase counts with
   de-trending and de-noising loess fits</p></li>
 <li><p>residual phase counts with

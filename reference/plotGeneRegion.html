@@ -85,7 +85,7 @@ file(s)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.31</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@ file(s).</p>
   lowerPadding <span class='op'>=</span> <span class='fl'>0.15</span>,
   upperPadding <span class='op'>=</span> <span class='fl'>0.05</span>,
   colorByStrand <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  featureColors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>plusmain <span class='op'>=</span> <span class='st'>"#0E14D0"</span>, minusmain <span class='op'>=</span> <span class='st'>"#D0350E"</span>, plusother <span class='op'>=</span> <span class='st'>"#9E9BEB"</span>,
+  featureColors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span>plusmain <span class='op'>=</span> <span class='st'>"#0E14D0"</span>, minusmain <span class='op'>=</span> <span class='st'>"#D0350E"</span>, plusother <span class='op'>=</span> <span class='st'>"#9E9BEB"</span>,
     minusother <span class='op'>=</span> <span class='st'>"#DA907E"</span><span class='op'>)</span>,
   condColors <span class='op'>=</span> <span class='cn'>NULL</span>,
   scaleDataTracks <span class='op'>=</span> <span class='cn'>FALSE</span>
@@ -268,9 +268,9 @@ specifying a gene (ID or symbol) or by specifying a viewing range
     <span class='fu'>plotGeneRegion</span><span class='op'>(</span>bigwigFiles <span class='op'>=</span> <span class='va'>bwf</span>,
                    chr <span class='op'>=</span> <span class='st'>"chr10"</span>, start <span class='op'>=</span> <span class='fl'>20000000</span>, end <span class='op'>=</span> <span class='fl'>20005000</span><span class='op'>)</span>
                
-    <span class='va'>bwf2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>bwf</span>, <span class='va'>bwf</span><span class='op'>)</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwf2</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"bwf1"</span>, <span class='st'>"bwf2"</span><span class='op'>)</span>
-    <span class='va'>bwc2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>, <span class='st'>"c2"</span><span class='op'>)</span>
+    <span class='va'>bwf2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='va'>bwf</span>, <span class='va'>bwf</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwf2</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='st'>"bwf1"</span>, <span class='st'>"bwf2"</span><span class='op'>)</span>
+    <span class='va'>bwc2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='st'>"c1"</span>, <span class='st'>"c2"</span><span class='op'>)</span>
     <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwc2</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>bwf2</span><span class='op'>)</span>
     <span class='fu'>plotGeneRegion</span><span class='op'>(</span>gtf <span class='op'>=</span> <span class='va'>gtffile</span>, bigwigFiles <span class='op'>=</span> <span class='va'>bwf2</span>, bigwigCond <span class='op'>=</span> <span class='va'>bwc2</span>, 
                    showgene <span class='op'>=</span> <span class='st'>"Map3k5"</span><span class='op'>)</span>

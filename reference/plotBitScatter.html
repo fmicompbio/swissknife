@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.31</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
   y <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>,
   densCols <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  colpal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#00007F"</span>, <span class='st'>"blue"</span>, <span class='st'>"#007FFF"</span>, <span class='st'>"cyan"</span>, <span class='st'>"#7FFF7F"</span>, <span class='st'>"yellow"</span>, <span class='st'>"#FF7F00"</span>,
+  colpal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='st'>"#00007F"</span>, <span class='st'>"blue"</span>, <span class='st'>"#007FFF"</span>, <span class='st'>"cyan"</span>, <span class='st'>"#7FFF7F"</span>, <span class='st'>"yellow"</span>, <span class='st'>"#FF7F00"</span>,
     <span class='st'>"red"</span>, <span class='st'>"#7F0000"</span><span class='op'>)</span>,
   xpixels <span class='op'>=</span> <span class='fl'>1000</span>,
   ypixels <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -162,7 +162,7 @@ Can be <code>NULL</code>, in which case <code>x</code> must be a two-column matr
     </tr>
     <tr>
       <th>densCols</th>
-      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>. If <code>TRUE</code> and <code>col</code> is not given
+      <td><p><code>logical(1)</code>. If <code>TRUE</code> and <code>col</code> is not given
 as an additional argument, then the local density of points will be used
 as colors, using the palette spanned by the colors in <code>colpal</code>.</p></td>
     </tr>
@@ -181,7 +181,7 @@ the plotting area.</p></td>
 plotting area. If <code>NULL</code> (the default), will be calculated automatically
 as <code>xpixels * par('pin')[2] / par('pin')[1]</code>, such that the aspect ratio of
 the current plotting region is observed. This may not work (e.g. when using
-<code><a href='https://rdrr.io/r/graphics/layout.html'>layout()</a></code>), as this may result in negative values returned by <code><a href='https://rdrr.io/r/graphics/par.html'>par('pin')</a></code>.
+<code><a href='https://rdrr.io/r/graphics/layout.html'>layout()</a></code>), as this may result in negative values returned by <code>par('pin')</code>.
 In that case, <code>ypixels</code> should be set manually using this argument.</p></td>
     </tr>
     <tr>
@@ -190,7 +190,7 @@ In that case, <code>ypixels</code> should be set manually using this argument.</
 If <code>NULL</code> (the default), will be calculated automatically as
 <code>12 / graphics::grconvertX(par("pin")[1], from = "inches", to = "device") * xpixels</code>.
 This may not work (e.g. when using <code><a href='https://rdrr.io/r/graphics/layout.html'>layout()</a></code>), as this may result in
-negative values returned by <code><a href='https://rdrr.io/r/graphics/par.html'>par('pin')</a></code>. In that case, <code>pointsize</code>
+negative values returned by <code>par('pin')</code>. In that case, <code>pointsize</code>
 should be set manually using this argument.</p></td>
     </tr>
     </table>
@@ -213,7 +213,7 @@ should be set manually using this argument.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
 <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>plotBitScatter</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, main <span class='op'>=</span> <span class='st'>"bitmap"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, main <span class='op'>=</span> <span class='st'>"default"</span><span class='op'>)</span>
 </div><div class='img'><img src='plotBitScatter-1.png' alt='' width='700' height='433' /></div><div class='input'>

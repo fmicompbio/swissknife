@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.31</span>
       </span>
     </div>
 
@@ -176,11 +176,11 @@ e.g. to make the search case-insensitive or search recursively.</p></td>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"dplyr"</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"tidyr"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
     <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>readSampleTsvs</span><span class='op'>(</span>seqdataDir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/readSampleTsvs"</span>, 
                                                   package <span class='op'>=</span> <span class='st'>"swissknife"</span><span class='op'>)</span>, 
-                         sampleIds <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"readSampleTsvsEx1"</span>,
+                         sampleIds <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>c</a></span><span class='op'>(</span><span class='st'>"readSampleTsvsEx1"</span>,
                                        <span class='st'>"readSampleTsvsEx2"</span>,
                                        <span class='st'>"readSampleTsvsEx3"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: tidyr</span></div><div class='output co'>#&gt;           SAMPLE_ID FIELD1 FIELD2              TSV_FILE
+</div><div class='co'>#&gt; Loading required namespace: tidyr</div><div class='co'>#&gt;           SAMPLE_ID FIELD1 FIELD2              TSV_FILE
 #&gt; 1 readSampleTsvsEx1 value1 value2 readSampleTsvsEx1.tsv
 #&gt; 2 readSampleTsvsEx2 value3 value4 readSampleTsvsEx2.tsv
 #&gt; 3 readSampleTsvsEx3 value5 value6 readSampleTsvsEx3.tsv</div><div class='input'>

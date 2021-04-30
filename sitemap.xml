@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://fmicompbio.github.io/swissknife/404.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/authors.html</loc>
+  </url>
+  <url>
     <loc>http://fmicompbio.github.io/swissknife/index.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/news/index.html</loc>
   </url>
   <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/annotateRegions.html</loc>
@@ -29,6 +38,9 @@
   </url>
   <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/getMappableRegions.html</loc>
+  </url>
+  <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/index.html</loc>
   </url>
   <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/labelCells.html</loc>

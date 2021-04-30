@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.31</span>
       </span>
     </div>
 
@@ -159,7 +159,7 @@
       <th>markergenes</th>
       <td><p>Named <code>list</code> of <code>character</code> vectors with the
 marker genes for each cell types. The marker genes must be a subset of
-<code><a href='https://rdrr.io/r/base/colnames.html'>rownames(sce)</a></code>.</p></td>
+<code>rownames(sce)</code>.</p></td>
     </tr>
     <tr>
       <th>fraction_topscoring</th>
@@ -229,11 +229,11 @@ instance determining the parallel back-end to be used during evaluation.</p></td
 
     <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span>
     <span class='va'>mu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n_genes</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>
-    <span class='va'>u</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>, <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>mu</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span><span class='op'>(</span><span class='va'>n_cells</span>, lambda <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"g"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-    <span class='va'>celltype.labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"t"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span><span class='op'>(</span><span class='va'>n_types</span><span class='op'>)</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n_per_type</span><span class='op'>)</span>
-    <span class='va'>celltype.genes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='va'>n_types</span> <span class='op'>*</span> <span class='va'>n_specific</span><span class='op'>)</span>,
-                            <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"t"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span><span class='op'>(</span><span class='va'>n_types</span><span class='op'>)</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n_specific</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='va'>u</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BiocGenerics/man/do.call.html'>do.call</a></span><span class='op'>(</span><span class='va'>rbind</span>, <span class='fu'><a href='https://rdrr.io/pkg/BiocGenerics/man/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>mu</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span><span class='op'>(</span><span class='va'>n_cells</span>, lambda <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"g"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/BiocGenerics/man/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='va'>celltype.labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"t"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span><span class='op'>(</span><span class='va'>n_types</span><span class='op'>)</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n_per_type</span><span class='op'>)</span>
+    <span class='va'>celltype.genes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/splitAsList.html'>split</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='va'>n_types</span> <span class='op'>*</span> <span class='va'>n_specific</span><span class='op'>)</span>,
+                            <span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Vector-class.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"t"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span><span class='op'>(</span><span class='va'>n_types</span><span class='op'>)</span><span class='op'>)</span>, each <span class='op'>=</span> <span class='va'>n_specific</span><span class='op'>)</span><span class='op'>)</span>
     <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>celltype.genes</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
         <span class='va'>j</span> <span class='op'>&lt;-</span> <span class='va'>celltype.genes</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>
         <span class='va'>k</span> <span class='op'>&lt;-</span> <span class='va'>celltype.labels</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"t"</span>, <span class='va'>i</span><span class='op'>)</span>
@@ -243,7 +243,7 @@ instance determining the parallel back-end to be used during evaluation.</p></td
     <span class='va'>sce</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html'>SingleCellExperiment</a></span><span class='op'>(</span>assays<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>counts<span class='op'>=</span><span class='va'>u</span>, logcounts<span class='op'>=</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span>
 
     <span class='co'># define marker genes (subset of true cell-type-specific genes)</span>
-    <span class='va'>marker.genes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>celltype.genes</span>, <span class='st'>"["</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
+    <span class='va'>marker.genes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BiocGenerics/man/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>celltype.genes</span>, <span class='st'>"["</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>
     <span class='va'>marker.genes</span>
 
     <span class='co'># predict cell types</span>
@@ -261,35 +261,35 @@ instance determining the parallel back-end to be used during evaluation.</p></td
     <span class='va'>res</span><span class='op'>$</span><span class='va'>labels</span><span class='op'>$</span><span class='va'>pruned.labels</span>
 
     <span class='co'># compare predicted to true cell types</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span>true <span class='op'>=</span> <span class='va'>celltype.labels</span>, predicted <span class='op'>=</span> <span class='va'>res</span><span class='op'>$</span><span class='va'>labels</span><span class='op'>$</span><span class='va'>pruned.labels</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/BiocGenerics/man/table.html'>table</a></span><span class='op'>(</span>true <span class='op'>=</span> <span class='va'>celltype.labels</span>, predicted <span class='op'>=</span> <span class='va'>res</span><span class='op'>$</span><span class='va'>labels</span><span class='op'>$</span><span class='va'>pruned.labels</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: SummarizedExperiment</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: MatrixGenerics</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: matrixStats</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘MatrixGenerics’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:matrixStats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,</span>
-#&gt; <span class='message'>    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,</span>
-#&gt; <span class='message'>    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,</span>
-#&gt; <span class='message'>    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,</span>
-#&gt; <span class='message'>    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,</span>
-#&gt; <span class='message'>    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,</span>
-#&gt; <span class='message'>    colWeightedMeans, colWeightedMedians, colWeightedSds,</span>
-#&gt; <span class='message'>    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,</span>
-#&gt; <span class='message'>    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,</span>
-#&gt; <span class='message'>    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,</span>
-#&gt; <span class='message'>    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,</span>
-#&gt; <span class='message'>    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,</span>
-#&gt; <span class='message'>    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,</span>
-#&gt; <span class='message'>    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,</span>
-#&gt; <span class='message'>    rowWeightedSds, rowWeightedVars</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Biobase</span></div><div class='output co'>#&gt; <span class='message'>Welcome to Bioconductor</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    Vignettes contain introductory material; view with</span>
-#&gt; <span class='message'>    'browseVignettes()'. To cite Bioconductor, see</span>
-#&gt; <span class='message'>    'citation("Biobase")', and for packages 'citation("pkgname")'.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘Biobase’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:MatrixGenerics’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    rowMedians</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:matrixStats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    anyMissing, rowMedians</span></div><div class='output co'>#&gt;     predicted
+</div><div class='co'>#&gt; Loading required package: SummarizedExperiment</div><div class='co'>#&gt; Loading required package: MatrixGenerics</div><div class='co'>#&gt; Loading required package: matrixStats</div><div class='co'>#&gt; 
+#&gt; Attaching package: ‘MatrixGenerics’</div><div class='co'>#&gt; The following objects are masked from ‘package:matrixStats’:
+#&gt; 
+#&gt;     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+#&gt;     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+#&gt;     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+#&gt;     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+#&gt;     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+#&gt;     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+#&gt;     colWeightedMeans, colWeightedMedians, colWeightedSds,
+#&gt;     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+#&gt;     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+#&gt;     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+#&gt;     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+#&gt;     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+#&gt;     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+#&gt;     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+#&gt;     rowWeightedSds, rowWeightedVars</div><div class='co'>#&gt; Loading required package: Biobase</div><div class='co'>#&gt; Welcome to Bioconductor
+#&gt; 
+#&gt;     Vignettes contain introductory material; view with
+#&gt;     'browseVignettes()'. To cite Bioconductor, see
+#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</div><div class='co'>#&gt; 
+#&gt; Attaching package: ‘Biobase’</div><div class='co'>#&gt; The following object is masked from ‘package:MatrixGenerics’:
+#&gt; 
+#&gt;     rowMedians</div><div class='co'>#&gt; The following objects are masked from ‘package:matrixStats’:
+#&gt; 
+#&gt;     anyMissing, rowMedians</div><div class='co'>#&gt;     predicted
 #&gt; true t1 t2 t3
 #&gt;   t1 30  0  0
 #&gt;   t2  0 30  0

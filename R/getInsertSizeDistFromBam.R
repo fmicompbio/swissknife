@@ -43,6 +43,15 @@ getInsertSizeDistFromBam <- function(fname,
                                      nmax = NA_integer_,
                                      isizemax = 800) {
     .assertPackagesAvailable(c("Rsamtools"))
+    if (!is.null(regions) && !inherits(regions, "GRanges")) {
+        stop("'regions' must be either NULL or a GRanges object.")
+    }
+    if (!is.na(nmax) && (!is.numeric(nmax) || length(nmax) != 1L || nmax <= 0)) {
+        stop("'nmax' must be either NA or a numeric scalar greater than zero.")
+    }
+    if (!is.numeric(isizemax) || length(isizemax) != 1L || isizemax <= 0) {
+        stop("'isizemax' must be a numeric scalar greater than zero.")
+    }
     
     # set scanning parameters
     if (is.null(regions)) {

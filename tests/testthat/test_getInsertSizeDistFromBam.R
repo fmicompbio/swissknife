@@ -21,7 +21,7 @@ test_that("getInsertSizeDistFromBam() works properly", {
     expect_is(res2 <- getInsertSizeDistFromBam(c(bamf, bamf)), "integer")
     expect_is(res3 <- getInsertSizeDistFromBam(bamf, regions = chrsReg), "integer")
     expect_is(res4 <- getInsertSizeDistFromBam(bamf, nmax = 10000), "integer")
-    expect_is(expect_warning(res5 <- getInsertSizeDistFromBam(bamf, isizemax = 400)), "integer")
+    expect_is(expect_message(res5 <- getInsertSizeDistFromBam(bamf, isizemax = 400)), "integer")
 
     expect_identical(sum(res1), 25031L)
 

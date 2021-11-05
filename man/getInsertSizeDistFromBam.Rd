@@ -25,7 +25,8 @@ read. If \code{NA} (the default), the alignments in \code{regions} (if
 \code{regions} are not \code{NULL}) or in the bam file will be used.}
 
 \item{isizemax}{\code{numeric(1)} specifying the maximal insert size to
-report. Larger insert sizes will be set to \code{isizemax} with a warning.}
+report. Larger insert sizes will be set to \code{isizemax} with on their
+number will be reported.}
 }
 \value{
 \code{integer} vector with the number of insert sizes. The element at

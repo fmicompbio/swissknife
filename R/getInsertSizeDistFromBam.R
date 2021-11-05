@@ -18,7 +18,8 @@
 #'   read. If \code{NA} (the default), the alignments in \code{regions} (if
 #'   \code{regions} are not \code{NULL}) or in the bam file will be used.
 #' @param isizemax \code{numeric(1)} specifying the maximal insert size to
-#'   report. Larger insert sizes will be set to \code{isizemax} with a warning.
+#'   report. Larger insert sizes will be set to \code{isizemax} with on their
+#'   number will be reported.
 #'
 #' @return \code{integer} vector with the number of insert sizes. The element at
 #'   position \code{i} gives the observed number of alignment pairs with an
@@ -99,7 +100,7 @@ getInsertSizeDistFromBam <- function(fname,
 
     # report on capping
     if (ncapped > 0) {
-        warning(ncapped, " long insert sizes were capped at isizemax=", isizemax)
+        message(ncapped, " long insert sizes were capped at isizemax=", isizemax)
     }
     
     # combine and return results

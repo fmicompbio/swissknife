@@ -46,14 +46,14 @@ readSampleTsvs <- function(seqdataDir = "/tungstenfs/groups/gbioinfo/seqdata",
     
     ## List all tsv files in seqdataDir matching any of the sample IDs
     matchingFiles <- list.files(path = seqdataDir, 
-                                pattern = paste(paste0(sampleIds, ".*\\.tsv"),
+                                pattern = paste(paste0("^", sampleIds, ".*\\.tsv"),
                                                 collapse = "|"),
                                 full.names = TRUE, ...)
     
     ## Go through provided sample IDs
     do.call(dplyr::bind_rows, lapply(sampleIds, function(s) {
         ## Get the matching file(s) for sample s
-        f <- grep(paste0(s, ".*\\.tsv"), matchingFiles,
+        f <- grep(paste0("/", s, ".*\\.tsv"), matchingFiles,
                   value = TRUE)
 
         if (length(f) == 0) {

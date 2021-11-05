@@ -1,3 +1,7 @@
+# swissknife 0.31
+
+* Add getInsertSizeDistFromBam to tabulate insert sizes from paired-end alignments in bam files
+
 # swissknife 0.30
 
 * Speed-up package load time by moving rarely used Depends to Suggests

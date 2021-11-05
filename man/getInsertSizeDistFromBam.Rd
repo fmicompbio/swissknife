@@ -30,7 +30,9 @@ report. Larger insert sizes will be set to \code{isizemax} with a warning.}
 \value{
 \code{integer} vector with the number of insert sizes. The element at
   position \code{i} gives the observed number of alignment pairs with an
-  insert size of \code{i}.
+  insert size of \code{i}. The number of insert sizes greater than
+  \code{isizemax} that were set to \code{isizemax} are reported in the
+  attribute \code{"ncapped"}.
 }
 \description{
 Read and tabulate the insert sizes from paired-end alignments
@@ -44,6 +46,7 @@ if (requireNamespace("Rsamtools", quietly = TRUE)) {
     bamf <- system.file("extdata", "getInsertSizeDistFromBam", "atac_mm10.bam",
                         package = "swissknife")
     isize <- getInsertSizeDistFromBam(bamf)
+    attr(isize, "ncapped")
     plot(isize, type = "l",
          xlab = "Insert size (bp)", ylab = "Number of fragments")
 }

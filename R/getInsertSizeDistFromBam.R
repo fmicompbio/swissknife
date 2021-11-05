@@ -22,7 +22,9 @@
 #'
 #' @return \code{integer} vector with the number of insert sizes. The element at
 #'   position \code{i} gives the observed number of alignment pairs with an
-#'   insert size of \code{i}.
+#'   insert size of \code{i}. The number of insert sizes greater than
+#'   \code{isizemax} that were set to \code{isizemax} are reported in the
+#'   attribute \code{"ncapped"}.
 #'
 #' @seealso \code{\link[Rsamtools]{scanBam}} used to read alignments.
 #'
@@ -31,6 +33,7 @@
 #'     bamf <- system.file("extdata", "getInsertSizeDistFromBam", "atac_mm10.bam",
 #'                         package = "swissknife")
 #'     isize <- getInsertSizeDistFromBam(bamf)
+#'     attr(isize, "ncapped")
 #'     plot(isize, type = "l",
 #'          xlab = "Insert size (bp)", ylab = "Number of fragments")
 #' }
@@ -77,7 +80,13 @@ getInsertSizeDistFromBam <- function(fname,
     bfl <- open(bfl)
     isizeL <- lapply(bfl, function(x) {
         itab <- integer(isizemax)
+        attr(itab, "ncapped") <- 0
         while (length(i1 <- unlist(Rsamtools::scanBam(x, param = params), use.names = FALSE)) > 0) {
+            icap <- i1 > isizemax
+            if (sum(icap) > 0) {
+                attr(itab, "ncapped") <- attr(itab, "ncapped") + sum(icap)
+                i1[icap] <- isizemax
+            }
             itab <- itab + tabulate(abs(i1), isizemax)
             if (!is.na(nmax) && sum(itab) >= nmax) {
                 break
@@ -86,7 +95,12 @@ getInsertSizeDistFromBam <- function(fname,
         itab
     })
     bfl <- close(bfl)
-    
+    ncapped <- sum(unlist(lapply(isizeL, attr, "ncapped")))
+
+    # report on capping
+    if (ncapped > 0) {
+        warning(ncapped, " long insert sizes were capped at isizemax=", isizemax)
+    }
     
     # combine and return results
     isize <- Reduce(f = "+", x = isizeL, init = integer(isizemax))

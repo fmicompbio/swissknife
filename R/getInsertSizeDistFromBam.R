@@ -79,6 +79,9 @@ getInsertSizeDistFromBam <- function(fname,
         itab <- integer(isizemax)
         while (length(i1 <- unlist(Rsamtools::scanBam(x, param = params), use.names = FALSE)) > 0) {
             itab <- itab + tabulate(abs(i1), isizemax)
+            if (!is.na(nmax) && sum(itab) >= nmax) {
+                break
+            }
         }
         itab
     })

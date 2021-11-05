@@ -12,8 +12,8 @@ getInsertSizeDistFromBam(
 )
 }
 \arguments{
-\item{fname}{\code{character} vector with one or several bam files. If
-multiple files are given, insert sizes from all will be pooled and
+\item{fname}{\code{character} vector with paths to one or several bam files.
+If multiple files are given, insert sizes from all will be pooled and
 tabulated together.}
 
 \item{regions}{\code{GRanges} object. Only alignments falling into these
@@ -39,8 +39,8 @@ number will be reported.}
 Read and tabulate the insert sizes from paired-end alignments
   contained in one or several bam files. By default, all properly aligned
   read pairs are included. Optionally, alignments can be restricted to
-  those in a specific genomic region region (\code{regions} argument) or
-  the number of alignments read can be limited (\code{nmax} argument).
+  those in a specific genomic region (\code{regions} argument) or the number
+  of alignments read can be limited (\code{nmax} argument).
 }
 \examples{
 if (requireNamespace("Rsamtools", quietly = TRUE)) {

@@ -8,7 +8,8 @@ getInsertSizeDistFromBam(
   fname,
   regions = NULL,
   nmax = NA_integer_,
-  isizemax = 800
+  isizemax = 800,
+  exclude = c("chrM", "chrY", "chrX")
 )
 }
 \arguments{
@@ -27,6 +28,10 @@ read. If \code{NA} (the default), the alignments in \code{regions} (if
 \item{isizemax}{\code{numeric(1)} specifying the maximal insert size to
 report. Larger insert sizes will be set to \code{isizemax} with on their
 number will be reported.}
+
+\item{exclude}{\code{character} vector with chromosome names to be excluded.
+Alignments on these chromosomes will be excluded. \code{exclude} will
+be ignored if \code{regions} is not \code{NULL}.}
 }
 \value{
 \code{integer} vector with the number of insert sizes. The element at

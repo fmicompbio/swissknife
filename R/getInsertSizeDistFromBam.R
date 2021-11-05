@@ -20,6 +20,9 @@
 #' @param isizemax \code{numeric(1)} specifying the maximal insert size to
 #'   report. Larger insert sizes will be set to \code{isizemax} with on their
 #'   number will be reported.
+#' @param exclude \code{character} vector with chromosome names to be excluded.
+#'   Alignments on these chromosomes will be excluded. \code{exclude} will
+#'   be ignored if \code{regions} is not \code{NULL}.
 #'
 #' @return \code{integer} vector with the number of insert sizes. The element at
 #'   position \code{i} gives the observed number of alignment pairs with an
@@ -45,7 +48,8 @@
 getInsertSizeDistFromBam <- function(fname,
                                      regions = NULL,
                                      nmax = NA_integer_,
-                                     isizemax = 800) {
+                                     isizemax = 800,
+                                     exclude = c("chrM", "chrY", "chrX")) {
     .assertPackagesAvailable(c("Rsamtools"))
     if (!is.null(regions) && !inherits(regions, "GRanges")) {
         stop("'regions' must be either NULL or a GRanges object.")
@@ -56,10 +60,28 @@ getInsertSizeDistFromBam <- function(fname,
     if (!is.numeric(isizemax) || length(isizemax) != 1L || isizemax <= 0) {
         stop("'isizemax' must be a numeric scalar greater than zero.")
     }
+    if (!is.character(exclude)) {
+        stop("'exclude' must be a character vector with chromosome names or",
+             " an empty string ('').")
+    }
     
     # set scanning parameters
     if (is.null(regions)) {
-        regions <- IRanges::IRangesList()
+        if (!identical(exclude, "")) {
+            bh <- Rsamtools::scanBamHeader(fname[1])[[1]]$targets
+            bh <- bh[setdiff(names(bh), exclude)]
+            regions <- GenomicRanges::GRanges(
+                seqnames = names(bh),
+                ranges = IRanges::IRanges(start = 1L, width = bh,
+                                          names = names(bh))
+            )
+            
+        } else {
+            regions <- IRanges::IRangesList()
+        }
+
+    } else if (!identical(exclude, "")) {
+        message("Using alignments from 'regions' and ignoring 'exclude'.")
     }
     params <- Rsamtools::ScanBamParam(
         flag = Rsamtools::scanBamFlag(isPaired = TRUE,

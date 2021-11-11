@@ -39,6 +39,7 @@ reference:
     - '`parsePkgVersions`'
     - '`prepareGTF`'
     - '`annotateRegions`'
+    - '`getInsertSizeDistFromBam`'
     - '`getMappableRegions`'
     - '`getGenomicTiles`'
 - title: General package information

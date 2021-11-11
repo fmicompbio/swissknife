@@ -1,3 +1,7 @@
+# swissknife 0.32
+
+* Add getInsertSizeDistFromBam to tabulate insert sizes from paired-end alignments in bam files
+
 # swissknife 0.31
 
 * Fix readSampleTsvs so that provided patterns must match from the beginning of the filename

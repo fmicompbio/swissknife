@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // calcAndCountDist
 NumericVector calcAndCountDist(std::vector<int> query, std::vector<int> reference, NumericVector cnt);
 RcppExport SEXP _swissknife_calcAndCountDist(SEXP querySEXP, SEXP referenceSEXP, SEXP cntSEXP) {

@@ -23,7 +23,7 @@ jobs:
           #- {os: ubuntu-16.04, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
           #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
           #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12'}
-          - {os: ubuntu-latest, r: '4.1', bioc: '3.14'}
+          - {os: ubuntu-latest, r: '4.1', bioc: '3.14', covr = 'yes', pkgdown = 'yes'}
 
     # change this env variable (v...) to manually bust the 
     # cache. Cache busting otherwise occurs with changes in
@@ -111,14 +111,14 @@ jobs:
           path: check
 
       - name: Test coverage
-        if: matrix.config.os == 'ubuntu-18.04' && matrix.config.r == '4.0'
+        if: matrix.config.covr == 'yes'
         run: |
           install.packages("covr")
           covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")
         shell: Rscript {0}
 
       - name: Deploy
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.config.os == 'ubuntu-18.04' && matrix.config.r == '4.0'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && matrix.config.pkgdown == 'yes'
         run: |
           git config --global user.name "mbstadler"
           R CMD INSTALL .

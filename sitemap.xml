@@ -37,6 +37,9 @@
     <loc>http://fmicompbio.github.io/swissknife/reference/getGenomicTiles.html</loc>
   </url>
   <url>
+    <loc>http://fmicompbio.github.io/swissknife/reference/getInsertSizeDistFromBam.html</loc>
+  </url>
+  <url>
     <loc>http://fmicompbio.github.io/swissknife/reference/getMappableRegions.html</loc>
   </url>
   <url>

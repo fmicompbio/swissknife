@@ -25,6 +25,7 @@ Imports:
     Rcpp,
     S4Vectors,
     stats,
+    usethis,
     SummarizedExperiment,
     utils,
     XVector

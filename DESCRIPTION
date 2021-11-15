@@ -4,7 +4,8 @@ Version: 0.32
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
-             person("Dania", "Machlab", email = "dania.machlab@fmi.ch", role = "aut"))
+             person("Dania", "Machlab", email = "dania.machlab@fmi.ch", role = "aut"),
+             person("Friedrich Miescher Institute for Biomedical Research", role = "cph"))
 Description: A collection of useful R functions performing various tasks that
     might be re-usable and worth sharing.
 SystemRequirements: C++11

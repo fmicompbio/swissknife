@@ -37,8 +37,8 @@ test_that("getGenomicTiles() works properly", {
                      c("percGC", "CpGoe", "CGI1.hasOverlap", "CGI2.fracOverlap",
                        "TSS1.numOverlapWithin", "TSS1.numOverlapAny",
                        "TSS2.nearestName", "TSS2.nearestDistance"))
-    expect_true(all(df3$percGC >= 0 && df3$percGC <= 100))
-    expect_true(all(df3$CpGoe > 0 && df3$CpGoe < 2))
+    expect_true(all(df3$percGC >= 0 & df3$percGC <= 100))
+    expect_true(all(df3$CpGoe > 0 & df3$CpGoe < 2))
     expect_identical(sum(df3$CGI1.hasOverlap), 4L)
     expect_true(all(df3$CGI1.hasOverlap == (df3$CGI2.fracOverlap > 0)))
     expect_identical(df3$CGI2.fracOverlap[df3$CGI1.hasOverlap],

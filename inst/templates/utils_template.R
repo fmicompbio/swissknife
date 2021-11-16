@@ -100,8 +100,14 @@
     }
     
     if (!is.null(validValues) && !all(x %in% validValues)) {
-        stop("'All values in", xname, "' must be one of: ", 
-             paste(validValues, collapse = ", "))
+        if (length(validValues) > 15) {
+            vvPrint <- paste(c(validValues[seq_len(15)], 
+                               "...(truncated)"),
+                             collapse = ", ")
+        } else {
+            vvPrint <- paste(validValues, collapse = ", ")
+        }
+        stop("All values in '", xname, "' must be one of: ", vvPrint)
     }
     
     return(invisible(TRUE))

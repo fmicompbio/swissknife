@@ -1,3 +1,7 @@
+# swissknife 0.33
+
+* Add addUtilsFunctions to include utility functions in other packages
+
 # swissknife 0.32
 
 * Add getInsertSizeDistFromBam to tabulate insert sizes from paired-end alignments in bam files

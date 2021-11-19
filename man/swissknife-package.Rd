@@ -26,4 +26,9 @@ Authors:
   \item Dania Machlab \email{dania.machlab@fmi.ch}
 }
 
+Other contributors:
+\itemize{
+  \item Friedrich Miescher Institute for Biomedical Research [copyright holder]
+}
+
 }

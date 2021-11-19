@@ -42,6 +42,7 @@ reference:
     - '`getInsertSizeDistFromBam`'
     - '`getMappableRegions`'
     - '`getGenomicTiles`'
+    - '`addUtilsFunctions`'
 - title: General package information
   contents:
     - '`swissknife-package`'

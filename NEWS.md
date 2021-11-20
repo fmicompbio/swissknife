@@ -1,3 +1,7 @@
+# swissknife 0.34
+
+* Bug fix - expand documentation in utility functions.
+
 # swissknife 0.33
 
 * Add addUtilsFunctions to include utility functions in other packages

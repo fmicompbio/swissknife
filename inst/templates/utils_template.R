@@ -21,6 +21,7 @@
 #' @author Michael Stadler
 #' @noRd
 #' @keywords internal
+#' @importFrom methods is
 .assertScalar <- function(x,
                           type = NULL,
                           rngIncl = NULL,
@@ -42,7 +43,7 @@
         type <- "numeric"
     }
     
-    if (!is.null(type) && !is(x, type)) {
+    if (!is.null(type) && !methods::is(x, type)) {
         stop("'", xname, "' must be of type '", type, "'")
     }
     
@@ -84,6 +85,7 @@
 #' @author Michael Stadler, Charlotte Soneson
 #' @noRd
 #' @keywords internal
+#' @importFrom methods is
 .assertVector <- function(x,
                           type = NULL,
                           rngIncl = NULL,
@@ -105,7 +107,7 @@
         type <- "numeric"
     }
     
-    if (!is.null(type) && !is(x, type)) {
+    if (!is.null(type) && !methods::is(x, type)) {
         stop("'", xname, "' must be of class '", type, "'")
     }
     
@@ -127,7 +129,7 @@
     }
 
     if (!is.null(rngLen) && is.numeric(rngLen) && length(rngLen) == 2L &&
-        any(length(x) < rngLen[1] | length(x) > rngLen[2])) {
+        (length(x) < rngLen[1] || length(x) > rngLen[2])) {
         stop("length of '", xname, "' must be within [", rngLen[1], ",", 
              rngLen[2], "] (inclusive)")
     }

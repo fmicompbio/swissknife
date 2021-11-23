@@ -1,3 +1,7 @@
+# swissknife 0.35
+
+* Expand capabilities of utility functions, add unit tests
+
 # swissknife 0.34
 
 * Bug fix - expand documentation in utility functions.

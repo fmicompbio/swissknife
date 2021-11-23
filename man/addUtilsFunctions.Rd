@@ -4,13 +4,17 @@
 \alias{addUtilsFunctions}
 \title{Copy utility functions to package}
 \usage{
-addUtilsFunctions(outfile = "R/utils.R")
+addUtilsFunctions(outFile = "R/utils.R", copyTests = TRUE)
 }
 \arguments{
-\item{outfile}{Character scalar, giving the path to which the script 
+\item{outFile}{Character scalar, giving the path to which the script 
 should be copied. The path is relative to the root of the active 
 project. If a file with this name already exists, the function will 
 ask for confirmation before overwriting it.}
+
+\item{copyTests}{Logical scalar, defining whether to copy unit tests for 
+the utility functions to \code{tests/testthat/tests-<name>.R}, 
+where \code{<name>} is the base name of \code{outFile}.}
 }
 \description{
 This function copies handy utility functions to a new script in a 

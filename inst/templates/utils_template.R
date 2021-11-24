@@ -114,7 +114,7 @@
         if (allowNULL) {
             return(invisible(TRUE))
         } else {
-            stop("'", xname, "' must not be NULL.")
+            stop("'", xname, "' must not be NULL", call. = FALSE)
         }
     }
     
@@ -123,47 +123,50 @@
     }
     
     if (!is.null(type) && !methods::is(x, type)) {
-        stop("'", xname, "' must be of class '", type, "'")
+        stop("'", xname, "' must be of class '", type, "'", call. = FALSE)
     }
     
     if (!is.null(rngIncl)) {
         if (!is.null(validValues)) {
             if (any((x < rngIncl[1] | x > rngIncl[2]) & !(x %in% validValues))) {
                 stop("'", xname, "' must be within [", rngIncl[1], ",", 
-                     rngIncl[2], "] (inclusive), or one of: ", vvPrint)
+                     rngIncl[2], "] (inclusive), or one of: ", vvPrint,
+                     call. = FALSE)
             }
         } else {
             if (any(x < rngIncl[1] | x > rngIncl[2])) {
                 stop("'", xname, "' must be within [", rngIncl[1], ",", 
-                     rngIncl[2], "] (inclusive)")
+                     rngIncl[2], "] (inclusive)", call. = FALSE)
             }
         }
     } else if (!is.null(rngExcl)) {
         if (!is.null(validValues)) {
             if (any((x <= rngExcl[1] | x >= rngExcl[2]) & !(x %in% validValues))) {
                 stop("'", xname, "' must be within (", rngExcl[1], ",", 
-                     rngExcl[2], ") (exclusive), or one of: ", vvPrint)
+                     rngExcl[2], ") (exclusive), or one of: ", vvPrint,
+                     call. = FALSE)
             }
         } else {
             if (any(x <= rngExcl[1] | x >= rngExcl[2])) {
                 stop("'", xname, "' must be within (", rngExcl[1], ",", 
-                     rngExcl[2], ") (exclusive)")
+                     rngExcl[2], ") (exclusive)", call. = FALSE)
             }
         }
     } else {
         if (!is.null(validValues) && !all(x %in% validValues)) {
-            stop("All values in '", xname, "' must be one of: ", vvPrint)
+            stop("All values in '", xname, "' must be one of: ", vvPrint,
+                 call. = FALSE)
         }
     }
     
 
     if (!is.null(len) && length(x) != len) {
-        stop("'", xname, "' must have length ", len)
+        stop("'", xname, "' must have length ", len, call. = FALSE)
     }
 
     if (!is.null(rngLen) && (length(x) < rngLen[1] || length(x) > rngLen[2])) {
         stop("length of '", xname, "' must be within [", rngLen[1], ",", 
-             rngLen[2], "] (inclusive)")
+             rngLen[2], "] (inclusive)", call. = FALSE)
     }
     
     return(invisible(TRUE))

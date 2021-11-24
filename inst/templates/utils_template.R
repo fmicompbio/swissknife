@@ -19,9 +19,6 @@
 #' @param validValues A vector with the allowed values of \code{x}.
 #' @param allowNULL Logical, whether or not \code{NULL} is an acceptable 
 #'     value for \code{x}.
-#' @param xname The name of the checked variable, to use for output 
-#'     messages. If \code{"auto"} (the default), will be derived from 
-#'     \code{x}.
 #' 
 #' @author Michael Stadler, Charlotte Soneson
 #' @noRd
@@ -32,20 +29,11 @@
                           rngIncl = NULL,
                           rngExcl = NULL,
                           validValues = NULL,
-                          allowNULL = FALSE,
-                          xname = "auto") {
+                          allowNULL = FALSE) {
     
-    args <- lapply(sys.call()[-1], as.character)
-    if (length(xname) != 1 || !is.character(xname)) {
-        stop("'xname' must be a character scalar.")
-    }
-    if (xname == "auto") {
-        xname <- if ("x" %in% names(args)) args$x else "argument"
-    }
     .assertVector(x = x, type = type, rngIncl = rngIncl,
                   rngExcl = rngExcl, validValues = validValues,
-                  len = 1, rngLen = NULL, allowNULL = allowNULL, 
-                  xname = xname)
+                  len = 1, rngLen = NULL, allowNULL = allowNULL)
     
 }
 
@@ -65,9 +53,6 @@
 #' @param rngLen The allowed range for the length of \code{x}.
 #' @param allowNULL Logical, whether or not \code{NULL} is an acceptable 
 #'     value for \code{x}.
-#' @param xname The name of the checked variable, to use for output 
-#'     messages. If \code{"auto"} (the default), will be derived from 
-#'     \code{x}.
 #' 
 #' @author Michael Stadler, Charlotte Soneson
 #' @noRd
@@ -80,16 +65,16 @@
                           validValues = NULL,
                           len = NULL, 
                           rngLen = NULL,
-                          allowNULL = FALSE, 
-                          xname = "auto") {
-    args <- lapply(sys.call()[-1], as.character)
-    if (length(xname) != 1 || !is.character(xname)) {
-        stop("'xname' must be a character scalar.")
+                          allowNULL = FALSE) {
+    sc <- sys.calls()
+    mycall <- sc[[length(sc)]]
+    if (length(sc) >= 2 &&
+        identical(as.character(sc[[length(sc) - 1]])[1], ".assertScalar")) {
+        mycall <- sc[[length(sc) - 1]]
     }
-    if (xname == "auto") {
-        xname <- if ("x" %in% names(args)) args$x else "argument"
-    }
-    
+    args <- lapply(mycall, as.character)[-1]
+    xname <- if ("x" %in% names(args)) args$x else "argument"
+
     ## Check arguments
     stopifnot(is.null(type) || (length(type) == 1L && is.character(type)))
     stopifnot(is.null(rngIncl) || (length(rngIncl) == 2L && is.numeric(rngIncl)))

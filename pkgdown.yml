@@ -1,8 +1,8 @@
 pandoc: 2.7.3
 pkgdown: 1.9000.9000.9000
-pkgdown_sha: e72fc30f333dc4f50f3f9d1f274fc29d67e34974
+pkgdown_sha: 4aa16c72ab4c4325b216c8c5cd33951d12cff78f
 articles: {}
-last_built: 2021-11-22T07:10Z
+last_built: 2021-11-24T18:40Z
 urls:
   reference: http://fmicompbio.github.io/swissknife/reference
   article: http://fmicompbio.github.io/swissknife/articles

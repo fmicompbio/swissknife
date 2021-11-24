@@ -69,7 +69,7 @@ expect_error(.assertScalar(1, type = "character"))
 expect_error(.assertScalar("x", type = "numeric"))
 expect_error(.assertScalar(FALSE, type = "character"))
 expect_error(.assertScalar(c(1, 2), type = "numeric"))
-test <- "test"
+test <- "text"
 expect_error(.assertScalar(x = test, type = "numeric"),
              "'test' must be of class 'numeric")
 
@@ -89,6 +89,6 @@ expect_true(.assertVector(c(1, 2), type = "numeric", rngLen = c(2, 5)))
 expect_true(.assertVector(c(1, 2), type = "numeric", rngLen = c(1, 2)))
 expect_error(.assertVector(c("a", "b"), type = "character", validValues = c("A", "B")))
 expect_true(.assertVector(LETTERS[1:2], type = "character", validValues = LETTERS))
-test <- "test"
+test <- "text"
 expect_error(.assertVector(x = test, type = "numeric"),
              "'test' must be of class 'numeric")

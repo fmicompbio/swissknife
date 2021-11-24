@@ -16,7 +16,11 @@
 #'     ask for confirmation before overwriting it. 
 #' @param copyTests Logical scalar, defining whether to copy unit tests for 
 #'     the utility functions to \code{tests/testthat/tests-<name>.R}, 
-#'     where \code{<name>} is the base name of \code{outFile}.
+#'     where \code{<name>} is the base name of \code{outFile}. If the 
+#'     target package is not yet set up to use \code{testthat}, the function 
+#'     will also run \code{usethis::use_testthat()} to generate the required 
+#'     folder structure and add \code{testthat} to the list of suggested 
+#'     package in the DESCRIPTION file. 
 #'     
 #' @author Charlotte Soneson
 #' 

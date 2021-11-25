@@ -210,7 +210,7 @@ getMappableRegions <- function(genome,
     writeLines(c(">test", "ACGTACGTCATGCTGACTGACTGACGA"), readfile)
 
     args <- sprintf("-f -v 0 --sam --quiet %s %s", index, readfile)
-    res <- system2(command = system.file("bowtie", package = "Rbowtie"), args = args,
+    res <- system2(command = file.path(system.file(package = "Rbowtie"), "bowtie"), args = args,
                    stdout = TRUE, stderr = FALSE)
 
     sqlines <- res[grep("^@SQ", res)]

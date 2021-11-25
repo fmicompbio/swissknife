@@ -1,6 +1,7 @@
 # swissknife 0.35
 
 * Expand capabilities of utility functions, add unit tests
+* fix bowtie executable location logic for windows
 
 # swissknife 0.34
 

@@ -1,3 +1,7 @@
+# swissknife 0.36
+
+* Add .assertPackagesAvailable utility function and unit test
+
 # swissknife 0.35
 
 * Expand capabilities of utility functions, add unit tests

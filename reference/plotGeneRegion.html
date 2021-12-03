@@ -19,7 +19,7 @@ file(s)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.35</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
       </span>
     </div>
 
@@ -56,7 +56,8 @@ provided region, and/or show one or more coverage tracks based on bigwig
 file(s).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">plotGeneRegion</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotGeneRegion</span><span class="op">(</span>
   gtf <span class="op">=</span> <span class="st">""</span>,
   granges <span class="op">=</span> <span class="cn">NULL</span>,
   chr <span class="op">=</span> <span class="st">""</span>,
@@ -77,8 +78,8 @@ file(s).</p>
   condColors <span class="op">=</span> <span class="cn">NULL</span>,
   scaleDataTracks <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gtf</dt>
@@ -147,11 +148,10 @@ specifying a gene (ID or symbol) or by specifying a viewing range
     <h2>Author</h2>
     <p>Charlotte Soneson</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Gviz"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Gviz"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">    <span class="va">gtffile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>, </span>
 <span class="r-in">                           package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span>
 <span class="r-in">    <span class="fu">plotGeneRegion</span><span class="op">(</span>gtf <span class="op">=</span> <span class="va">gtffile</span>, </span>
@@ -192,7 +192,7 @@ specifying a gene (ID or symbol) or by specifying a viewing range
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
       </footer></div>

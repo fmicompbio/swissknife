@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.35</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
       </span>
     </div>
 
@@ -56,7 +56,8 @@
   function from the <code>wordspace</code> package.It is used in the <code>selVarGenes</code> function.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">.getDistMat</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">.getDistMat</span><span class="op">(</span>
   loessModel <span class="op">=</span> <span class="cn">NULL</span>,
   x <span class="op">=</span> <span class="cn">NULL</span>,
   y <span class="op">=</span> <span class="cn">NULL</span>,
@@ -64,8 +65,8 @@
   method <span class="op">=</span> <span class="st">"euclidean"</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>loessModel</dt>
@@ -90,11 +91,10 @@
     <h2>Author</h2>
     <p>Dania Machlab</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
 <span class="r-in">  </span>
 <span class="r-in">  <span class="co"># create data</span></span>
 <span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span></span>
@@ -112,19 +112,19 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: wordspace</span>
 <span class="r-in">  <span class="va">euclMat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pointOnCurve1 pointOnCurve2 pointOnCurve3 pointOnCurve4 pointOnCurve5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy1      6.084125     11.936983      21.25410      31.06033      41.00616</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy2      7.900740     12.195960      20.94796      30.53916      40.37576</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy3      2.385601      8.153411      18.19602      28.27606      38.36395</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy4      8.020961     10.490883      18.96156      28.50918      38.33730</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy5      6.276735      7.963345      17.06495      26.88462      36.85264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy6      5.020690      5.145585      15.21718      25.30725      35.39990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy1     12.721758     16.510052      24.22924      33.24529      42.74513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy2      1.123678      9.131316      19.21918      29.31277      39.40752</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy3      6.985824     10.724282      19.62204      29.30580      39.19710</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy4      6.132140      9.093957      18.21039      28.00614      37.95871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy5      4.445978      6.505901      16.39353      26.43893      36.51195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy6      5.259863      5.251131      15.21136      25.28018      35.36479</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pointOnCurve6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy1      51.00991</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy2      50.31396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy3      48.45470</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy4      48.27480</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy5      46.87438</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> xy6      45.49332</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy1      52.46648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy2      49.50260</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy3      49.17071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy4      47.97044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy5      46.59452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> xy6      45.45456</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -140,7 +140,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
       </footer></div>

@@ -163,9 +163,11 @@
 #' \code{pkgs}, and throws an exception with an informative error message if
 #' that is not the case.
 #' 
-#' @param pkgs Character vector with package names.
 #' @param bioc Logical scalar. If \code{TRUE}, suggest to install the missing
 #'   package(s) using \code{BiocManager} instead of \code{install.packages}.
+#' @param pkgs Character vector with package names. Can be either just a
+#'   package name or a string of the form \code{"githubuser/packagename"} for
+#'   packages hosted on GitHub.
 #' 
 #' @author Michael Stadler, Charlotte Soneson
 #' 
@@ -178,7 +180,7 @@
         length(bioc) == 1L
     })
     
-    avail <- unlist(lapply(pkgs,
+    avail <- unlist(lapply(sub("^[^/]+/", "", pkgs),
                            function(pkg) {
                                requireNamespace(pkg, quietly = TRUE)
                            }))

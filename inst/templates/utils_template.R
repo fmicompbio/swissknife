@@ -191,7 +191,8 @@
         callerfunc <- sub("\\(.+$", "", caller)
         haveBioc <- requireNamespace("BiocManager", quietly = TRUE)
         msg <- paste0("The package", ifelse(sum(!avail) > 1, "s '", " '"),
-                      paste(pkgs[!avail], collapse = "', '"), "' ",
+                      paste(sub("^[^/]+/", "", pkgs[!avail]), collapse = "', '"),
+                      "' ",
                       ifelse(sum(!avail) > 1, "are", "is"), " required for ",
                       callerfunc, "(), but not installed.\n")
         if (suggestInstallation) {

@@ -40,7 +40,7 @@ readSampleTsvs <- function(seqdataDir = "/tungstenfs/groups/gbioinfo/seqdata",
                            sampleIds, keepMulti = TRUE, ...) {
     
     ## Check if dplyr and tidyr are available
-    .assertPackagesAvailable(c("dplyr", "tidyr"), bioc = FALSE)
+    .assertPackagesAvailable(c("dplyr", "tidyr"))
     ## create a copy of dplyr::%>% (specifying the namespace does not work)
     `%>%` <- dplyr::`%>%`
     

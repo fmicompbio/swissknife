@@ -1,3 +1,8 @@
+# swissknife 0.36
+
+* Add .assertPackagesAvailable utility function and unit test to templates
+* Update internally used .assertPackagesAvailable to be identical to the ones in templates
+
 # swissknife 0.35
 
 * Expand capabilities of utility functions, add unit tests

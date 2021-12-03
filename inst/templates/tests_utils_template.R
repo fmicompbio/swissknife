@@ -44,6 +44,12 @@ expect_error(.assertVector(1, type = "numeric", rngLen = "rng"))
 expect_error(.assertVector(1, type = "numeric", rngLen = 1))
 expect_error(.assertVector(1, type = "numeric", rngLen = 1:3))
 
+testfunc <- function(...) .assertPackagesAvailable(...)
+expect_error(testfunc(1L))
+expect_error(testfunc("test", "error"))
+expect_error(testfunc("test", c(TRUE, FALSE)))
+rm(testfunc)
+
 ## ------------------------------------------------------------------------- ##
 ## Checks, .assertScalar
 ## ------------------------------------------------------------------------- ##
@@ -92,3 +98,14 @@ expect_true(.assertVector(LETTERS[1:2], type = "character", validValues = LETTER
 test <- "text"
 expect_error(.assertVector(x = test, type = "numeric"),
              "'test' must be of class 'numeric")
+
+## ------------------------------------------------------------------------- ##
+## Checks, .assertPackagesAvailable
+## ------------------------------------------------------------------------- ##
+testfunc <- function(...) .assertPackagesAvailable(...)
+expect_true(testfunc("base"))
+expect_true(testfunc("githubuser/base"))
+expect_true(testfunc(c("base", "methods")))
+expect_error(testfunc(c("error", "error2")), "BiocManager")
+expect_error(testfunc("error1", suggestInstallation = FALSE), "installed.\n$")
+rm(testfunc)

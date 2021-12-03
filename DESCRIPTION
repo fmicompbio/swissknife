@@ -46,7 +46,8 @@ Suggests:
     SingleR,
     testthat,
     tidyr,
-    wordspace
+    wordspace,
+    BiocManager
 LinkingTo: 
     Rcpp
 License: GPL (>= 3)

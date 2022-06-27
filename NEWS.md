@@ -1,3 +1,7 @@
+# swissknife 0.37
+
+* Add ellipsis to plotGeneRegion to allow additional arguments to plotTracks
+
 # swissknife 0.36
 
 * Add .assertPackagesAvailable utility function and unit test to templates

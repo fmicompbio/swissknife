@@ -21,7 +21,7 @@ plotGeneRegion function.'><!-- mathjax --><script src="https://cdnjs.cloudflare.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -61,12 +61,12 @@ make the file amenable to plotting with Gviz, using the
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">prepareGTF</span><span class="op">(</span>
-  <span class="va">gtf</span>,
-  transcriptIdColumn <span class="op">=</span> <span class="st">"transcript_id"</span>,
-  geneIdColumn <span class="op">=</span> <span class="st">"gene_id"</span>,
-  geneSymbolColumn <span class="op">=</span> <span class="st">"gene_name"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepareGTF</span><span class="op">(</span></span>
+<span>  <span class="va">gtf</span>,</span>
+<span>  transcriptIdColumn <span class="op">=</span> <span class="st">"transcript_id"</span>,</span>
+<span>  geneIdColumn <span class="op">=</span> <span class="st">"gene_id"</span>,</span>
+<span>  geneSymbolColumn <span class="op">=</span> <span class="st">"gene_name"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,16 +74,23 @@ make the file amenable to plotting with Gviz, using the
     <dl><dt>gtf</dt>
 <dd><p>Character scalar, path to gtf file (tested with Ensembl/Gencode
 files).</p></dd>
+
+
 <dt>transcriptIdColumn</dt>
 <dd><p>Character scalar, the column in the gtf file that 
 contains the transcript ID.</p></dd>
+
+
 <dt>geneIdColumn</dt>
 <dd><p>Character scalar, the column in the gtf file that 
 contains the gene ID.</p></dd>
+
+
 <dt>geneSymbolColumn</dt>
 <dd><p>Character scalar, the column in the gtf file that 
 contains the gene symbol (if available). Set to <code>""</code> if not 
 available (in which case the gene IDs will be used in its place).</p></dd>
+
 </dl></div>
     <div id="author">
     <h2>Author</h2>
@@ -92,9 +99,9 @@ available (in which case the gene IDs will be used in its place).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">gtf</span> <span class="op">&lt;-</span> <span class="fu">prepareGTF</span><span class="op">(</span>gtf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>,</span>
-<span class="r-in">                                    package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">                                    </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gtf</span> <span class="op">&lt;-</span> <span class="fu">prepareGTF</span><span class="op">(</span>gtf <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>,</span></span>
+<span class="r-in"><span>                                    package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                                    </span></span>
 </code></pre></div>
     </div>
   </div>
@@ -109,7 +116,7 @@ available (in which case the gene IDs will be used in its place).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

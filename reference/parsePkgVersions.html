@@ -27,7 +27,7 @@ md: Files
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -70,7 +70,7 @@ md: Files
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">parsePkgVersions</span><span class="op">(</span><span class="va">infiles</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parsePkgVersions</span><span class="op">(</span><span class="va">infiles</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,12 +78,16 @@ md: Files
     <dl><dt>infiles</dt>
 <dd><p>Character vector with text files (extension must be either
 <code>.Rout</code> or <code>.md</code>), containing session information to parse out.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>list</code> of <code>list</code>s with one element in the outer list for
-  each R version, contianing an innter list with elements <code>files</code> and
-<code>packages</code>.</p>
+    
+
+<p>A <code>list</code> of <code>list</code>s with one element in the outer list for
+  each R version, contianing an innter list with elements <code>files</code> and</p>
+<p></p>
+<p><code>packages</code>.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -92,10 +96,10 @@ md: Files
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"parsePkgVersions"</span>,</span>
-<span class="r-in">                            package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span>,</span>
-<span class="r-in">                full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parsePkgVersions</span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"parsePkgVersions"</span>,</span></span>
+<span class="r-in"><span>                            package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parsePkgVersions</span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`R version 3.6.0 (2019-04-26)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`R version 3.6.0 (2019-04-26)`$files</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/_temp/Library/swissknife/extdata/parsePkgVersions/example.md"</span>
@@ -131,7 +135,7 @@ md: Files
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] "velocyto.R_0.6"             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -146,7 +150,7 @@ md: Files
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -65,56 +65,77 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">labelCells</span><span class="op">(</span>
-  <span class="va">sce</span>,
-  <span class="va">markergenes</span>,
-  fraction_topscoring <span class="op">=</span> <span class="fl">0.01</span>,
-  expr_values <span class="op">=</span> <span class="st">"logcounts"</span>,
-  normGenesetExpressionParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>R <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>,
-  aggregateReferenceParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
-  SingleRParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labelCells</span><span class="op">(</span></span>
+<span>  <span class="va">sce</span>,</span>
+<span>  <span class="va">markergenes</span>,</span>
+<span>  fraction_topscoring <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  expr_values <span class="op">=</span> <span class="st">"logcounts"</span>,</span>
+<span>  normGenesetExpressionParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>R <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>,</span>
+<span>  aggregateReferenceParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>power <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  SingleRParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>sce</dt>
 <dd><p><code>SingleCellExperiment</code> object.</p></dd>
+
+
 <dt>markergenes</dt>
 <dd><p>Named <code>list</code> of <code>character</code> vectors with the
 marker genes for each cell types. The marker genes must be a subset of
 <code>rownames(sce)</code>.</p></dd>
+
+
 <dt>fraction_topscoring</dt>
 <dd><p><code>numeric</code> vector of length 1 or the same
 length as <code>markergenes</code> giving the fraction(s) of top scoring cells
 for each cell type to pick to create the reference transcriptome profile.</p></dd>
+
+
 <dt>expr_values</dt>
 <dd><p>Integer scalar or string indicating which assay of
 <code>sce</code> contains the expression values.</p></dd>
+
+
 <dt>normGenesetExpressionParams</dt>
 <dd><p><code>list</code> with additional parameters
 for <code><a href="normGenesetExpression.html">normGenesetExpression</a></code>.</p></dd>
+
+
 <dt>aggregateReferenceParams</dt>
 <dd><p><code>list</code> with additional parameters
 for <code><a href="https://rdrr.io/pkg/SingleR/man/aggregateReference.html" class="external-link">aggregateReference</a></code>.</p></dd>
+
+
 <dt>SingleRParams</dt>
 <dd><p><code>list</code> with additional parameters for
 <code><a href="https://rdrr.io/pkg/SingleR/man/SingleR.html" class="external-link">SingleR</a></code>.</p></dd>
+
+
 <dt>BPPARAM</dt>
 <dd><p>An optional <code><a href="https://rdrr.io/pkg/BiocParallel/man/BiocParallelParam-class.html" class="external-link">BiocParallelParam</a></code>
 instance determining the parallel back-end to be used during evaluation.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>list</code> of three elements named <code>cells</code>, <code>refs</code> and <code>labels</code>.
-<code>cells</code> contains a <code>list</code> with the numerical indices of the top
-  scoring cells for each cell type.
-<code>refs</code> contains the pseudo-bulk transcriptome profiles used as a 
-  reference for label assignment, as returned by <code><a href="https://rdrr.io/pkg/SingleR/man/aggregateReference.html" class="external-link">aggregateReference</a></code>.
-<code>labels</code> contains a <code><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></code> with the
-  annotation statistics for each cell (one cell per row), generated by
-<code><a href="https://rdrr.io/pkg/SingleR/man/SingleR.html" class="external-link">SingleR</a></code>.</p>
+    
+
+<p>A <code>list</code> of three elements named <code>cells</code>, <code>refs</code> and <code>labels</code>.</p>
+<p></p>
+<p><code>cells</code> contains a <code>list</code> with the numerical indices of the top
+  scoring cells for each cell type.</p>
+<p></p>
+<p><code>refs</code> contains the pseudo-bulk transcriptome profiles used as a 
+  reference for label assignment, as returned by <code><a href="https://rdrr.io/pkg/SingleR/man/aggregateReference.html" class="external-link">aggregateReference</a></code>.</p>
+<p></p>
+<p><code>labels</code> contains a <code><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></code> with the
+  annotation statistics for each cell (one cell per row), generated by</p>
+<p></p>
+<p><code><a href="https://rdrr.io/pkg/SingleR/man/SingleR.html" class="external-link">SingleR</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -130,54 +151,54 @@ instance determining the parallel back-end to be used during evaluation.</p></dd
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SingleR"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SingleCellExperiment"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    </span>
-<span class="r-in">    <span class="co"># create SingleCellExperiment with cell-type specific genes</span></span>
-<span class="r-in">    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">n_types</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span class="r-in">    <span class="va">n_per_type</span> <span class="op">&lt;-</span> <span class="fl">30</span></span>
-<span class="r-in">    <span class="va">n_cells</span> <span class="op">&lt;-</span> <span class="va">n_types</span> <span class="op">*</span> <span class="va">n_per_type</span></span>
-<span class="r-in">    <span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="fl">500</span></span>
-<span class="r-in">    <span class="va">fraction_specific</span> <span class="op">&lt;-</span> <span class="fl">0.1</span></span>
-<span class="r-in">    <span class="va">n_specific</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">n_genes</span> <span class="op">*</span> <span class="va">fraction_specific</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n_genes</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">mu</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="va">n_cells</span>, lambda <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"g"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">celltype.labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"t"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="va">n_types</span><span class="op">)</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">n_per_type</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">celltype.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/splitAsList.html" class="external-link">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span>, size <span class="op">=</span> <span class="va">n_types</span> <span class="op">*</span> <span class="va">n_specific</span><span class="op">)</span>,</span>
-<span class="r-in">                            <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"t"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="va">n_types</span><span class="op">)</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">n_specific</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">celltype.genes</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">        <span class="va">j</span> <span class="op">&lt;-</span> <span class="va">celltype.genes</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
-<span class="r-in">        <span class="va">k</span> <span class="op">&lt;-</span> <span class="va">celltype.labels</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"t"</span>, <span class="va">i</span><span class="op">)</span></span>
-<span class="r-in">        <span class="va">u</span><span class="op">[</span><span class="va">j</span>, <span class="va">k</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">u</span><span class="op">[</span><span class="va">j</span>, <span class="va">k</span><span class="op">]</span></span>
-<span class="r-in">    <span class="op">}</span></span>
-<span class="r-in">    <span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="va">u</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span>assays<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>counts<span class="op">=</span><span class="va">u</span>, logcounts<span class="op">=</span><span class="va">v</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co"># define marker genes (subset of true cell-type-specific genes)</span></span>
-<span class="r-in">    <span class="va">marker.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">celltype.genes</span>, <span class="st">"["</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">marker.genes</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co"># predict cell types</span></span>
-<span class="r-in">    <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">labelCells</span><span class="op">(</span><span class="va">sce</span>, <span class="va">marker.genes</span>,</span>
-<span class="r-in">                      fraction_topscoring <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">                      normGenesetExpressionParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>R <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co"># high-scoring cells used as references for each celltype</span></span>
-<span class="r-in">    <span class="va">res</span><span class="op">$</span><span class="va">cells</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co"># ... from these, pseudo-bulks were created:</span></span>
-<span class="r-in">    <span class="va">res</span><span class="op">$</span><span class="va">refs</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co"># ... and used to predict labels for all cells</span></span>
-<span class="r-in">    <span class="va">res</span><span class="op">$</span><span class="va">labels</span><span class="op">$</span><span class="va">pruned.labels</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="co"># compare predicted to true cell types</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span>true <span class="op">=</span> <span class="va">celltype.labels</span>, predicted <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">labels</span><span class="op">$</span><span class="va">pruned.labels</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SingleR"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"SingleCellExperiment"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    </span></span>
+<span class="r-in"><span>    <span class="co"># create SingleCellExperiment with cell-type specific genes</span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">n_types</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span>    <span class="va">n_per_type</span> <span class="op">&lt;-</span> <span class="fl">30</span></span></span>
+<span class="r-in"><span>    <span class="va">n_cells</span> <span class="op">&lt;-</span> <span class="va">n_types</span> <span class="op">*</span> <span class="va">n_per_type</span></span></span>
+<span class="r-in"><span>    <span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="fl">500</span></span></span>
+<span class="r-in"><span>    <span class="va">fraction_specific</span> <span class="op">&lt;-</span> <span class="fl">0.1</span></span></span>
+<span class="r-in"><span>    <span class="va">n_specific</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">n_genes</span> <span class="op">*</span> <span class="va">fraction_specific</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n_genes</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">mu</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="va">n_cells</span>, lambda <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"g"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">celltype.labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"t"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="va">n_types</span><span class="op">)</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">n_per_type</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">celltype.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/splitAsList.html" class="external-link">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span>, size <span class="op">=</span> <span class="va">n_types</span> <span class="op">*</span> <span class="va">n_specific</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                            <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"t"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="va">n_types</span><span class="op">)</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">n_specific</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">celltype.genes</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="va">j</span> <span class="op">&lt;-</span> <span class="va">celltype.genes</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span>        <span class="va">k</span> <span class="op">&lt;-</span> <span class="va">celltype.labels</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"t"</span>, <span class="va">i</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="va">u</span><span class="op">[</span><span class="va">j</span>, <span class="va">k</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">u</span><span class="op">[</span><span class="va">j</span>, <span class="va">k</span><span class="op">]</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span></span></span>
+<span class="r-in"><span>    <span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="va">u</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span>assays<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>counts<span class="op">=</span><span class="va">u</span>, logcounts<span class="op">=</span><span class="va">v</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># define marker genes (subset of true cell-type-specific genes)</span></span></span>
+<span class="r-in"><span>    <span class="va">marker.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">celltype.genes</span>, <span class="st">"["</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">marker.genes</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># predict cell types</span></span></span>
+<span class="r-in"><span>    <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">labelCells</span><span class="op">(</span><span class="va">sce</span>, <span class="va">marker.genes</span>,</span></span>
+<span class="r-in"><span>                      fraction_topscoring <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>                      normGenesetExpressionParams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>R <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># high-scoring cells used as references for each celltype</span></span></span>
+<span class="r-in"><span>    <span class="va">res</span><span class="op">$</span><span class="va">cells</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># ... from these, pseudo-bulks were created:</span></span></span>
+<span class="r-in"><span>    <span class="va">res</span><span class="op">$</span><span class="va">refs</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># ... and used to predict labels for all cells</span></span></span>
+<span class="r-in"><span>    <span class="va">res</span><span class="op">$</span><span class="va">labels</span><span class="op">$</span><span class="va">pruned.labels</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co"># compare predicted to true cell types</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span>true <span class="op">=</span> <span class="va">celltype.labels</span>, predicted <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">labels</span><span class="op">$</span><span class="va">pruned.labels</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: SummarizedExperiment</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: MatrixGenerics</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: matrixStats</span>
@@ -218,8 +239,8 @@ instance determining the parallel back-end to be used during evaluation.</p></dd
 <span class="r-out co"><span class="r-pr">#&gt;</span> true t1 t2 t3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   t1 30  0  0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   t2  0 30  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   t3  0  0 29</span>
-<span class="r-in">      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   t3  0  0 30</span>
+<span class="r-in"><span>      </span></span>
 </code></pre></div>
     </div>
   </div>
@@ -234,7 +255,7 @@ instance determining the parallel back-end to be used during evaluation.</p></dd
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

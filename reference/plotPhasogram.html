@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -55,7 +55,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotPhasogram</span><span class="op">(</span><span class="va">x</span>, hide <span class="op">=</span> <span class="cn">TRUE</span>, xlim <span class="op">=</span> <span class="cn">NULL</span>, verbosePlot <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotPhasogram</span><span class="op">(</span><span class="va">x</span>, hide <span class="op">=</span> <span class="cn">TRUE</span>, xlim <span class="op">=</span> <span class="cn">NULL</span>, verbosePlot <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -63,23 +63,37 @@
     <dl><dt>x</dt>
 <dd><p><code>numeric</code> vector giving the counts of alignment distances
 (typically the output of <code><a href="calcPhasogram.html">calcPhasogram</a></code>.</p></dd>
+
+
 <dt>hide</dt>
 <dd><p>If <code>TRUE</code> (the default), hide phasogram counts not used in
 the NRL estimate (<code>mind</code> parameter from <code><a href="estimateNRL.html">estimateNRL</a></code>).</p></dd>
+
+
 <dt>xlim</dt>
 <dd><p><code>numeric(2)</code> with the x-axis (phase) limits in the first two
 plots (see Details). if <code>NULL</code> (the default), the full range defined
 by <code>x</code> and <code>hide</code> will be used.</p></dd>
+
+
 <dt>verbosePlot</dt>
 <dd><p>If <code>TRUE</code>, create three plots instead of just a
 single plot (see Details).</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to <code><a href="estimateNRL.html">estimateNRL</a></code> to
 control NRL estimation.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The return value from the call to <code><a href="estimateNRL.html">estimateNRL</a></code>  (invisibly).</p>
+    
+
+<p>The return value from the call to <code><a href="estimateNRL.html">estimateNRL</a></code></p>
+
+
+<p>(invisibly).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -105,8 +119,8 @@ control NRL estimation.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in">  <span class="co"># see the help for calcPhasogram() for a full example</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="co"># see the help for calcPhasogram() for a full example</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -122,7 +136,7 @@ control NRL estimation.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

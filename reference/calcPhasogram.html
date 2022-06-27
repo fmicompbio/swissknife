@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calcPhasogram</span><span class="op">(</span><span class="va">fname</span>, regions <span class="op">=</span> <span class="cn">NULL</span>, rmdup <span class="op">=</span> <span class="cn">TRUE</span>, dmax <span class="op">=</span> <span class="fl">3000L</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calcPhasogram</span><span class="op">(</span><span class="va">fname</span>, regions <span class="op">=</span> <span class="cn">NULL</span>, rmdup <span class="op">=</span> <span class="cn">TRUE</span>, dmax <span class="op">=</span> <span class="fl">3000L</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -67,21 +67,30 @@
     <dl><dt>fname</dt>
 <dd><p><code>character</code> vector with one or several bam files. If
 multiple files are given, distance counts from all will be summed.</p></dd>
+
+
 <dt>regions</dt>
 <dd><p><code>GRanges</code> object. Only alignments falling into these
 regions will be used. If <code>NULL</code> (the default), all alignments are
 used.</p></dd>
+
+
 <dt>rmdup</dt>
 <dd><p><code>logical(1)</code> indicating if duplicates should be removed. If
 <code>TRUE</code> (the default), only one of several alignments starting at the
 same coordinate is used.</p></dd>
+
+
 <dt>dmax</dt>
 <dd><p><code>numeric(1)</code> specifying the maximal distance between same
 strand alignments to count.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>integer</code> vector with <code>dmax</code> elements, with the element at
+    
+
+<p><code>integer</code> vector with <code>dmax</code> elements, with the element at
   position <code>d</code> giving the observed number of alignment pairs at that
   distance.</p>
     </div>
@@ -107,14 +116,14 @@ strand alignments to count.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"GenomicAlignments"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Rsamtools"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="va">bamf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"phasograms"</span>, <span class="st">"mnase_mm10.bam"</span>,</span>
-<span class="r-in">                        package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">pg</span> <span class="op">&lt;-</span> <span class="fu">calcPhasogram</span><span class="op">(</span><span class="va">bamf</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="estimateNRL.html">estimateNRL</a></span><span class="op">(</span><span class="va">pg</span>, usePeaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="plotPhasogram.html">plotPhasogram</a></span><span class="op">(</span><span class="va">pg</span>, usePeaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"GenomicAlignments"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Rsamtools"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">bamf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"phasograms"</span>, <span class="st">"mnase_mm10.bam"</span>,</span></span>
+<span class="r-in"><span>                        package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">pg</span> <span class="op">&lt;-</span> <span class="fu">calcPhasogram</span><span class="op">(</span><span class="va">bamf</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="estimateNRL.html">estimateNRL</a></span><span class="op">(</span><span class="va">pg</span>, usePeaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="plotPhasogram.html">plotPhasogram</a></span><span class="op">(</span><span class="va">pg</span>, usePeaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nrl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -123,7 +132,7 @@ strand alignments to count.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 176.0015 195.9985 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="calcPhasogram-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -138,7 +147,7 @@ strand alignments to count.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

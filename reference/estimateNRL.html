@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -59,13 +59,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">estimateNRL</span><span class="op">(</span>
-  <span class="va">x</span>,
-  mind <span class="op">=</span> <span class="fl">140L</span>,
-  usePeaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>,
-  span1 <span class="op">=</span> <span class="fl">100</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
-  span2 <span class="op">=</span> <span class="fl">1500</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">estimateNRL</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  mind <span class="op">=</span> <span class="fl">140L</span>,</span>
+<span>  usePeaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>,</span>
+<span>  span1 <span class="op">=</span> <span class="fl">100</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  span2 <span class="op">=</span> <span class="fl">1500</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,23 +73,34 @@
     <dl><dt>x</dt>
 <dd><p><code>numeric</code> vector giving the counts of alignment distances
 (typically the output of <code><a href="calcPhasogram.html">calcPhasogram</a></code>.</p></dd>
+
+
 <dt>mind</dt>
 <dd><p><code>integer(1)</code> specifying the minimal distance to be used for
 NRL estimation. The default value (140) ignores any distance too short to
 span at least a single nucleosome.</p></dd>
+
+
 <dt>usePeaks</dt>
 <dd><p><code>integer</code> vector selecting the modes (peaks) in the
 phasogram used in NRL estimation.</p></dd>
+
+
 <dt>span1</dt>
 <dd><p><code>numeric(1)</code> giving the smoothing parameter for de-trending
 loess fit (high pass filter).</p></dd>
+
+
 <dt>span2</dt>
 <dd><p><code>numeric(1)</code> giving the smoothing parameter for de-noising
 loess fit (low pass filter).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>list</code> with elements:</p><dl><dt>nrl</dt>
+    
+
+<p>A <code>list</code> with elements:</p><dl><dt>nrl</dt>
 <dd><p>the estimated nucleosome repeat length</p></dd>
 
   <dt>nrl.CI95</dt>
@@ -132,8 +143,8 @@ loess fit (low pass filter).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in">  <span class="co"># see the help for calcPhasogram() for a full example</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="co"># see the help for calcPhasogram() for a full example</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -149,7 +160,7 @@ loess fit (low pass filter).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

@@ -25,7 +25,7 @@ functions:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@ functions:</p><ul><li><p><code>.assertScalar()</code> - convenience function to 
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">addUtilsFunctions</span><span class="op">(</span>outFile <span class="op">=</span> <span class="st">"R/utils.R"</span>, copyTests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addUtilsFunctions</span><span class="op">(</span>outFile <span class="op">=</span> <span class="st">"R/utils.R"</span>, copyTests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -76,6 +76,8 @@ functions:</p><ul><li><p><code>.assertScalar()</code> - convenience function to 
 should be copied. The path is relative to the root of the active 
 project. If a file with this name already exists, the function will 
 ask for confirmation before overwriting it.</p></dd>
+
+
 <dt>copyTests</dt>
 <dd><p>Logical scalar, defining whether to copy unit tests for 
 the utility functions to <code>tests/testthat/tests-&lt;name&gt;.R</code>, 
@@ -84,6 +86,7 @@ target package is not yet set up to use <code>testthat</code>, the function
 will also run <code><a href="https://usethis.r-lib.org/reference/use_testthat.html" class="external-link">usethis::use_testthat()</a></code> to generate the required 
 folder structure and add <code>testthat</code> to the list of suggested 
 package in the DESCRIPTION file.</p></dd>
+
 </dl></div>
     <div id="author">
     <h2>Author</h2>
@@ -102,7 +105,7 @@ package in the DESCRIPTION file.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -57,13 +57,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sampleControlElements</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">idxTarget</span>,
-  idxControl <span class="op">=</span> <span class="cn">NULL</span>,
-  nbins <span class="op">=</span> <span class="fl">50</span>,
-  oversample <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sampleControlElements</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">idxTarget</span>,</span>
+<span>  idxControl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nbins <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  oversample <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,25 +72,39 @@
 <dd><p><code>numeric</code> vector (or list of <code>numeric</code> vectors).
 <code>idxTarget</code> and <code>idxControl</code> refer to the elements of <code>x</code>.
 If <code>x</code> is a list, all elements must have the same length.</p></dd>
+
+
 <dt>idxTarget</dt>
 <dd><p><code>numeric</code> or <code>logical</code> vector specifying the elements
 in <code>x</code> that define the target distribution to be matched by the
 control elements.</p></dd>
+
+
 <dt>idxControl</dt>
 <dd><p><code>numeric</code> or <code>logical</code> vector specifying the
 complete set of possible control elements in <code>x</code> (default: all that
 are not in <code>idxTarget</code>), from which a subset is to be sampled.</p></dd>
+
+
 <dt>nbins</dt>
 <dd><p><code>numeric(1)</code> or <code>numeric(length(x))</code> if <code>x</code> is a
 list, specifying the number of bins to group the values of x into. Higher
  numbers of bins will increase the match to the target distribution(s),
  but may fail if there are few elements to sample from (will throw a warning).</p></dd>
+
+
 <dt>oversample</dt>
 <dd><p>The number of control elements to sample for each target element.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>numeric</code> vector with <code>round(length(idxTarget) * oversample)</code>    elements, specifying the index (positions) of the sampled control elements.</p>
+    
+
+<p><code>numeric</code> vector with <code>round(length(idxTarget) * oversample)</code></p>
+
+
+<p>elements, specifying the index (positions) of the sampled control elements.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -99,16 +113,16 @@ list, specifying the number of bins to group the values of x into. Higher
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">       <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, mean <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">sampleControlElements</span><span class="op">(</span><span class="va">x</span>, idxTarget <span class="op">=</span> <span class="fl">1001</span><span class="op">:</span><span class="fl">1200</span>, idxControl <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fl">20</span>, main <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">h</span><span class="op">$</span><span class="va">breaks</span>, main <span class="op">=</span> <span class="st">"all control"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1001</span><span class="op">:</span><span class="fl">1200</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">h</span><span class="op">$</span><span class="va">breaks</span>, main <span class="op">=</span> <span class="st">"target"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">s</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">h</span><span class="op">$</span><span class="va">breaks</span>, main <span class="op">=</span> <span class="st">"sampled control"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>       <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">200</span>, mean <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">sampleControlElements</span><span class="op">(</span><span class="va">x</span>, idxTarget <span class="op">=</span> <span class="fl">1001</span><span class="op">:</span><span class="fl">1200</span>, idxControl <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fl">20</span>, main <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">h</span><span class="op">$</span><span class="va">breaks</span>, main <span class="op">=</span> <span class="st">"all control"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1001</span><span class="op">:</span><span class="fl">1200</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">h</span><span class="op">$</span><span class="va">breaks</span>, main <span class="op">=</span> <span class="st">"target"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">s</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">h</span><span class="op">$</span><span class="va">breaks</span>, main <span class="op">=</span> <span class="st">"sampled control"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="sampleControlElements-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -123,7 +137,7 @@ list, specifying the number of bins to group the values of x into. Higher
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

@@ -19,7 +19,7 @@ file(s)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -57,27 +57,28 @@ file(s).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotGeneRegion</span><span class="op">(</span>
-  gtf <span class="op">=</span> <span class="st">""</span>,
-  granges <span class="op">=</span> <span class="cn">NULL</span>,
-  chr <span class="op">=</span> <span class="st">""</span>,
-  start <span class="op">=</span> <span class="cn">NA_real_</span>,
-  end <span class="op">=</span> <span class="cn">NA_real_</span>,
-  showgene <span class="op">=</span> <span class="st">""</span>,
-  bigwigFiles <span class="op">=</span> <span class="st">""</span>,
-  bigwigCond <span class="op">=</span> <span class="st">""</span>,
-  geneTrackTitle <span class="op">=</span> <span class="st">"Genes"</span>,
-  transcriptIdColumn <span class="op">=</span> <span class="st">"transcript_id"</span>,
-  geneIdColumn <span class="op">=</span> <span class="st">"gene_id"</span>,
-  geneSymbolColumn <span class="op">=</span> <span class="st">"gene_name"</span>,
-  lowerPadding <span class="op">=</span> <span class="fl">0.15</span>,
-  upperPadding <span class="op">=</span> <span class="fl">0.05</span>,
-  colorByStrand <span class="op">=</span> <span class="cn">FALSE</span>,
-  featureColors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span>plusmain <span class="op">=</span> <span class="st">"#0E14D0"</span>, minusmain <span class="op">=</span> <span class="st">"#D0350E"</span>, plusother <span class="op">=</span> <span class="st">"#9E9BEB"</span>,
-    minusother <span class="op">=</span> <span class="st">"#DA907E"</span><span class="op">)</span>,
-  condColors <span class="op">=</span> <span class="cn">NULL</span>,
-  scaleDataTracks <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotGeneRegion</span><span class="op">(</span></span>
+<span>  gtf <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  granges <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  chr <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  start <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
+<span>  end <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
+<span>  showgene <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  bigwigFiles <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  bigwigCond <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  geneTrackTitle <span class="op">=</span> <span class="st">"Genes"</span>,</span>
+<span>  transcriptIdColumn <span class="op">=</span> <span class="st">"transcript_id"</span>,</span>
+<span>  geneIdColumn <span class="op">=</span> <span class="st">"gene_id"</span>,</span>
+<span>  geneSymbolColumn <span class="op">=</span> <span class="st">"gene_name"</span>,</span>
+<span>  lowerPadding <span class="op">=</span> <span class="fl">0.15</span>,</span>
+<span>  upperPadding <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  colorByStrand <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  featureColors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>plusmain <span class="op">=</span> <span class="st">"#0E14D0"</span>, minusmain <span class="op">=</span> <span class="st">"#D0350E"</span>, plusother <span class="op">=</span> <span class="st">"#9E9BEB"</span>,</span>
+<span>    minusother <span class="op">=</span> <span class="st">"#DA907E"</span><span class="op">)</span>,</span>
+<span>  condColors <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  scaleDataTracks <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,56 +86,91 @@ file(s).</p>
     <dl><dt>gtf</dt>
 <dd><p>Character scalar, path to gtf file (tested with Ensembl/Gencode
 files).</p></dd>
+
+
 <dt>granges</dt>
 <dd><p>GRanges object, typically generated from a GTF file using the
 <code>prepareGTF</code> function. This is an alternative to providing the link 
 to the gtf file directly, and will take precedence over the <code>gtf</code> 
 argument if provided.</p></dd>
+
+
 <dt>chr</dt>
 <dd><p>Character scalar, name of the chromosome to show.</p></dd>
+
+
 <dt>start, end</dt>
 <dd><p>Numeric scalars, start and end position of the region to
 show.</p></dd>
+
+
 <dt>showgene</dt>
 <dd><p>Character scalar, the gene ID/name to display. Will take 
 precedence over positional range specification if provided.</p></dd>
+
+
 <dt>bigwigFiles</dt>
 <dd><p>Named character vector, paths to bigwig files.</p></dd>
+
+
 <dt>bigwigCond</dt>
 <dd><p>Named character vector, the grouping of the bigwig files
 (used for coloring of the coverage tracks).</p></dd>
+
+
 <dt>geneTrackTitle</dt>
 <dd><p>Character scalar, name of the gene track.</p></dd>
+
+
 <dt>transcriptIdColumn</dt>
 <dd><p>Character scalar, the column in the gtf file that 
 contains the transcript ID. Passed to <code>prepareGTF</code>.</p></dd>
+
+
 <dt>geneIdColumn</dt>
 <dd><p>Character scalar, the column in the gtf file that 
 contains the gene ID. Passed to <code>prepareGTF</code>.</p></dd>
+
+
 <dt>geneSymbolColumn</dt>
 <dd><p>Character scalar, the column in the gtf file that 
 contains the gene symbol (if available). Set to <code>""</code> if not 
 available (in which case the gene IDs will be used in its place).
 Passed to <code>prepareGTF</code>.</p></dd>
+
+
 <dt>lowerPadding, upperPadding</dt>
 <dd><p>Numeric scalars, setting the amount of 
 padding in the lower and upper range of the plot, respectively. For 
 example, a value of 0.05 will expand the range by 
 0.05 * (max coordinate - min coordinate) in the specified direction.</p></dd>
+
+
 <dt>colorByStrand</dt>
 <dd><p>Logical scalar, determining whether gene features are 
 colored by the annotated strand.</p></dd>
+
+
 <dt>featureColors</dt>
 <dd><p>Named character vector of length 4, with elements 
 <code>plusmain</code>, <code>minusmain</code>, <code>plusother</code>, <code>minusother</code>, 
 giving the colors to use for the features if <code>colorByStrand</code> is TRUE.</p></dd>
+
+
 <dt>condColors</dt>
 <dd><p>Either NULL or a named character vector (with the same 
 names as the unique values of <code>bigwigCond</code>), giving the colors to use
 for the coverage tracks if <code>bigwigCond</code> is provided.</p></dd>
+
+
 <dt>scaleDataTracks</dt>
 <dd><p>Logical scalar, indicating whether the data tracks 
 should be scaled to have the same y-axis limits.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Additional arguments to be passed to <code><a href="https://rdrr.io/pkg/Gviz/man/plotTracks.html" class="external-link">Gviz::plotTracks</a></code>.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -151,33 +187,33 @@ specifying a gene (ID or symbol) or by specifying a viewing range
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Gviz"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="va">gtffile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>, </span>
-<span class="r-in">                           package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu">plotGeneRegion</span><span class="op">(</span>gtf <span class="op">=</span> <span class="va">gtffile</span>, </span>
-<span class="r-in">                   showgene <span class="op">=</span> <span class="st">"Tnfaip3"</span><span class="op">)</span></span>
-<span class="r-in">               </span>
-<span class="r-in">    <span class="va">bwf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/plotGeneRegion/mnase_mm10.bw"</span>, </span>
-<span class="r-in">                       package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwf</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"bwf1"</span></span>
-<span class="r-in">    <span class="fu">plotGeneRegion</span><span class="op">(</span>gtf <span class="op">=</span> <span class="va">gtffile</span>, </span>
-<span class="r-in">                   bigwigFiles <span class="op">=</span> <span class="va">bwf</span>,</span>
-<span class="r-in">                   chr <span class="op">=</span> <span class="st">"chr10"</span>, start <span class="op">=</span> <span class="fl">20000000</span>, end <span class="op">=</span> <span class="fl">20005000</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu">plotGeneRegion</span><span class="op">(</span>bigwigFiles <span class="op">=</span> <span class="va">bwf</span>,</span>
-<span class="r-in">                   chr <span class="op">=</span> <span class="st">"chr10"</span>, start <span class="op">=</span> <span class="fl">20000000</span>, end <span class="op">=</span> <span class="fl">20005000</span><span class="op">)</span></span>
-<span class="r-in">               </span>
-<span class="r-in">    <span class="va">bwf2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bwf</span>, <span class="va">bwf</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwf2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bwf1"</span>, <span class="st">"bwf2"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">bwc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c1"</span>, <span class="st">"c2"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwc2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwf2</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu">plotGeneRegion</span><span class="op">(</span>gtf <span class="op">=</span> <span class="va">gtffile</span>, bigwigFiles <span class="op">=</span> <span class="va">bwf2</span>, bigwigCond <span class="op">=</span> <span class="va">bwc2</span>, </span>
-<span class="r-in">                   showgene <span class="op">=</span> <span class="st">"Map3k5"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Gviz"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">gtffile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/plotGeneRegion/mm10_ensembl98.gtf"</span>, </span></span>
+<span class="r-in"><span>                           package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu">plotGeneRegion</span><span class="op">(</span>gtf <span class="op">=</span> <span class="va">gtffile</span>, </span></span>
+<span class="r-in"><span>                   showgene <span class="op">=</span> <span class="st">"Tnfaip3"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>               </span></span>
+<span class="r-in"><span>    <span class="va">bwf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/plotGeneRegion/mnase_mm10.bw"</span>, </span></span>
+<span class="r-in"><span>                       package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwf</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"bwf1"</span></span></span>
+<span class="r-in"><span>    <span class="fu">plotGeneRegion</span><span class="op">(</span>gtf <span class="op">=</span> <span class="va">gtffile</span>, </span></span>
+<span class="r-in"><span>                   bigwigFiles <span class="op">=</span> <span class="va">bwf</span>,</span></span>
+<span class="r-in"><span>                   chr <span class="op">=</span> <span class="st">"chr10"</span>, start <span class="op">=</span> <span class="fl">20000000</span>, end <span class="op">=</span> <span class="fl">20005000</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu">plotGeneRegion</span><span class="op">(</span>bigwigFiles <span class="op">=</span> <span class="va">bwf</span>,</span></span>
+<span class="r-in"><span>                   chr <span class="op">=</span> <span class="st">"chr10"</span>, start <span class="op">=</span> <span class="fl">20000000</span>, end <span class="op">=</span> <span class="fl">20005000</span><span class="op">)</span></span></span>
+<span class="r-in"><span>               </span></span>
+<span class="r-in"><span>    <span class="va">bwf2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bwf</span>, <span class="va">bwf</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwf2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bwf1"</span>, <span class="st">"bwf2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">bwc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c1"</span>, <span class="st">"c2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwc2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bwf2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu">plotGeneRegion</span><span class="op">(</span>gtf <span class="op">=</span> <span class="va">gtffile</span>, bigwigFiles <span class="op">=</span> <span class="va">bwf2</span>, bigwigCond <span class="op">=</span> <span class="va">bwc2</span>, </span></span>
+<span class="r-in"><span>                   showgene <span class="op">=</span> <span class="st">"Map3k5"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="plotGeneRegion-1.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plotGeneRegion-2.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plotGeneRegion-3.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="plotGeneRegion-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -192,7 +228,7 @@ specifying a gene (ID or symbol) or by specifying a viewing range
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

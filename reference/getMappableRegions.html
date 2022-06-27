@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.36</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.37</span>
       </span>
     </div>
 
@@ -55,14 +55,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">getMappableRegions</span><span class="op">(</span>
-  <span class="va">genome</span>,
-  <span class="va">genomeIndex</span>,
-  kmerLength <span class="op">=</span> <span class="fl">50</span>,
-  maxHits <span class="op">=</span> <span class="fl">1</span>,
-  Ncpu <span class="op">=</span> <span class="fl">2</span>,
-  quiet <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getMappableRegions</span><span class="op">(</span></span>
+<span>  <span class="va">genome</span>,</span>
+<span>  <span class="va">genomeIndex</span>,</span>
+<span>  kmerLength <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  maxHits <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  Ncpu <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -71,29 +71,45 @@
 <dd><p>The genome sequence to work on. Either a <code><a href="https://rdrr.io/pkg/BSgenome/man/BSgenome-class.html" class="external-link">BSgenome</a></code>
 object, a <code>character</code> scalar with the name of an installed <code><a href="https://rdrr.io/pkg/BSgenome/man/BSgenome-class.html" class="external-link">BSgenome</a></code>
 or with a file path and name pointing to a fasta file with the genome sequence.</p></dd>
+
+
 <dt>genomeIndex</dt>
 <dd><p><code>character</code> scalar with the path to the bowtie index
 and prefix to align against, in the form <code>&lt;/path/to/index&gt;/&lt;prefix&gt;</code>,
 or the name of an installed <code>Rbowtie</code> index package created by the
 <span class="pkg">QuasR</span> package for an installed <code>BSgenome</code> package.</p></dd>
+
+
 <dt>kmerLength</dt>
 <dd><p><code>numeric</code> scalar specifying the k-mer length (width of
 overlapping windows in <code>genome</code>), usually set to the typical read
 length for which to get the mappable regions.</p></dd>
+
+
 <dt>maxHits</dt>
 <dd><p><code>numeric</code> scalar specifying the maximum number of hits
 (matches) of a k-mer in the <code>genome</code> to be considered mappable.</p></dd>
+
+
 <dt>Ncpu</dt>
 <dd><p><code>numeric</code> scalar specifying the number of CPU threads to use
 for alignments.</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p><code>logical</code> scalar indicating if progress information should
 be printed on the console.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></code> object with mappable regions.
-    All plus-strand sequences in <code>genome</code> of length <code>kmerLength</code>    with their start (leftmost) position overlapping the <code>GRanges</code> object
+    
+
+<p>A <code><a href="https://rdrr.io/pkg/GenomicRanges/man/GRanges-class.html" class="external-link">GRanges</a></code> object with mappable regions.
+    All plus-strand sequences in <code>genome</code> of length <code>kmerLength</code></p>
+
+
+<p>with their start (leftmost) position overlapping the <code>GRanges</code> object
     do not generate more than <code>maxHits</code> hits when aligned to the genome.</p>
     </div>
     <div id="details">
@@ -117,18 +133,18 @@ be printed on the console.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Rbowtie"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/fmicompbio/Rbowtie" class="external-link">Rbowtie</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="va">genomefile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"getMappableRegions"</span>, <span class="st">"hg19sub.fa"</span>, package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">indexdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">indexpre</span> <span class="op">&lt;-</span> <span class="st">"index"</span></span>
-<span class="r-in">    <span class="va">indexname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">indexdir</span>, <span class="va">indexpre</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rbowtie/man/Rbowtie.html" class="external-link">bowtie_build</a></span><span class="op">(</span><span class="va">genomefile</span>, <span class="va">indexdir</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">    <span class="va">mapgr</span> <span class="op">&lt;-</span> <span class="fu">getMappableRegions</span><span class="op">(</span><span class="va">genomefile</span>, <span class="va">indexname</span>, <span class="fl">50</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mapgr</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"Rbowtie"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/fmicompbio/Rbowtie" class="external-link">Rbowtie</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="va">genomefile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"getMappableRegions"</span>, <span class="st">"hg19sub.fa"</span>, package <span class="op">=</span> <span class="st">"swissknife"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">indexdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">indexpre</span> <span class="op">&lt;-</span> <span class="st">"index"</span></span></span>
+<span class="r-in"><span>    <span class="va">indexname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">indexdir</span>, <span class="va">indexpre</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Rbowtie/man/Rbowtie.html" class="external-link">bowtie_build</a></span><span class="op">(</span><span class="va">genomefile</span>, <span class="va">indexdir</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="va">mapgr</span> <span class="op">&lt;-</span> <span class="fu">getMappableRegions</span><span class="op">(</span><span class="va">genomefile</span>, <span class="va">indexname</span>, <span class="fl">50</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mapgr</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Will calculate mappability for 3 chromosomes (95000 base pairs)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     chr1...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> done (2.1% non-mappable)</span>
@@ -153,7 +169,7 @@ be printed on the console.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [27]     chr3 44387-45000      +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 3 sequences from an unspecified genome</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -168,7 +184,7 @@ be printed on the console.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.9000.</p>
 </div>
 
       </footer></div>

@@ -23,7 +23,8 @@ plotGeneRegion(
   featureColors = c(plusmain = "#0E14D0", minusmain = "#D0350E", plusother = "#9E9BEB",
     minusother = "#DA907E"),
   condColors = NULL,
-  scaleDataTracks = FALSE
+  scaleDataTracks = FALSE,
+  ...
 )
 }
 \arguments{
@@ -79,6 +80,8 @@ for the coverage tracks if \code{bigwigCond} is provided.}
 
 \item{scaleDataTracks}{Logical scalar, indicating whether the data tracks 
 should be scaled to have the same y-axis limits.}
+
+\item{...}{Additional arguments to be passed to \code{Gviz::plotTracks}.}
 }
 \description{
 Visualize the gene model for a gene of interest, or for all genes in a

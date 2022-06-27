@@ -111,6 +111,7 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #'   for the coverage tracks if \code{bigwigCond} is provided. 
 #' @param scaleDataTracks Logical scalar, indicating whether the data tracks 
 #'   should be scaled to have the same y-axis limits. 
+#' @param ... Additional arguments to be passed to \code{Gviz::plotTracks}.
 #' 
 #' @author Charlotte Soneson
 #' 
@@ -162,7 +163,7 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                                              plusother = "#9E9BEB", 
                                              minusother = "#DA907E"),
                            condColors = NULL,
-                           scaleDataTracks = FALSE) {
+                           scaleDataTracks = FALSE, ...) {
     options(ucscChromosomeNames = FALSE)
     
     ## ---------------------------------------------------------------------- ##
@@ -442,5 +443,5 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                      plusmain = featureColors["plusmain"], 
                      minusmain = featureColors["minusmain"],
                      plusother = featureColors["plusother"], 
-                     minusother = featureColors["minusother"])
+                     minusother = featureColors["minusother"], ...)
 }

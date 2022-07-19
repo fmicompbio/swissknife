@@ -93,7 +93,10 @@ test_that("plotGeneRegion fails with incorrect input", {
                                 end = 200, scaleDataTracks = "TRUE"))
     expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
                                 end = 200, scaleDataTracks = c(TRUE, FALSE)))
-    
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, plotTitle = 1))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, plotTitle = c("title1", "title2")))
 })
 
 test_that("plotGeneRegion works", {

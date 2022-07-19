@@ -111,6 +111,9 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #'   for the coverage tracks if \code{bigwigCond} is provided. 
 #' @param scaleDataTracks Logical scalar, indicating whether the data tracks 
 #'   should be scaled to have the same y-axis limits. 
+#' @param plotTitle Character scalar, the title of the final plot. If 
+#'   \code{NULL} (the default), it will be automatically defined based on 
+#'   the displayed gene or region.
 #' @param ... Additional arguments to be passed to \code{Gviz::plotTracks}.
 #' 
 #' @author Charlotte Soneson
@@ -163,7 +166,8 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                                              plusother = "#9E9BEB", 
                                              minusother = "#DA907E"),
                            condColors = NULL,
-                           scaleDataTracks = FALSE, ...) {
+                           scaleDataTracks = FALSE, 
+                           plotTitle = NULL, ...) {
     options(ucscChromosomeNames = FALSE)
     
     ## ---------------------------------------------------------------------- ##
@@ -244,6 +248,11 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     }
     if (length(scaleDataTracks) != 1 || !is.logical(scaleDataTracks)) {
         stop("'scaleDataTracks' must be a logical scalar")
+    }
+    if (!is.null(plotTitle)) {
+        if (length(plotTitle) != 1 || !is.character(plotTitle)) {
+            stop("'plotTitle' must be a character scalar")
+        }
     }
     ## Must have at least one of bigwigFiles, gtf and granges
     if (all(bigwigFiles == "") && is.null(granges) && gtf == "") {
@@ -344,17 +353,19 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     }    
     
     ## ---------------------------------------------------------------------- ##
-    ## Set title and viewing range
+    ## Set title (if not provided) and viewing range
     ## ---------------------------------------------------------------------- ##
-    ## Define the title for the plot
-    if (showgene != "" && !is.null(gr)) {
-        if (all(gr$gene == gr$gene_name)) {
-            plotTitle <- unique(gr$gene)
+    if (is.null(plotTitle)) {
+        ## Define the title for the plot
+        if (showgene != "" && !is.null(gr)) {
+            if (all(gr$gene == gr$gene_name)) {
+                plotTitle <- unique(gr$gene)
+            } else {
+                plotTitle <- unique(paste0(gr$gene, " (", gr$gene_name, ")"))
+            }
         } else {
-            plotTitle <- unique(paste0(gr$gene, " (", gr$gene_name, ")"))
+            plotTitle <- paste0(chr, ":", start, "-", end)
         }
-    } else {
-        plotTitle <- paste0(chr, ":", start, "-", end)
     }
     
     ## Set min and max coord for the plot (add some padding to each side)

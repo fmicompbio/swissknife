@@ -24,6 +24,7 @@ plotGeneRegion(
     minusother = "#DA907E"),
   condColors = NULL,
   scaleDataTracks = FALSE,
+  plotTitle = NULL,
   ...
 )
 }
@@ -80,6 +81,10 @@ for the coverage tracks if \code{bigwigCond} is provided.}
 
 \item{scaleDataTracks}{Logical scalar, indicating whether the data tracks 
 should be scaled to have the same y-axis limits.}
+
+\item{plotTitle}{Character scalar, the title of the final plot. If 
+\code{NULL} (the default), it will be automatically defined based on 
+the displayed gene or region.}
 
 \item{...}{Additional arguments to be passed to \code{Gviz::plotTracks}.}
 }

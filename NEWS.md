@@ -1,3 +1,7 @@
+# swissknife 0.37.9000
+
+* Add plotTitle argument to plotGeneRegion
+
 # swissknife 0.37
 
 * Add ellipsis to plotGeneRegion to allow additional arguments to plotTracks

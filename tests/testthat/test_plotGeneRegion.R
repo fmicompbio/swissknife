@@ -93,7 +93,10 @@ test_that("plotGeneRegion fails with incorrect input", {
                                 end = 200, scaleDataTracks = "TRUE"))
     expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
                                 end = 200, scaleDataTracks = c(TRUE, FALSE)))
-    
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, plotTitle = 1))
+    expect_error(plotGeneRegion(gtf = gtffile, chr = "chr10", start = 100,
+                                end = 200, plotTitle = c("title1", "title2")))
 })
 
 test_that("plotGeneRegion works", {
@@ -108,6 +111,11 @@ test_that("plotGeneRegion works", {
     ## GTF file, no bigwig
     a1 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1")
     expect_type(a1, "list")
+    
+    ## Set title
+    a1b <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1", 
+                          plotTitle = "mytitle")
+    expect_type(a1b, "list")
     
     ## GTF file, no bigwig, region
     a11 <- plotGeneRegion(gtf = gtffile, showgene = "", chr = "chr10",

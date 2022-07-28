@@ -112,6 +112,11 @@ test_that("plotGeneRegion works", {
     a1 <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1")
     expect_type(a1, "list")
     
+    ## Set title
+    a1b <- plotGeneRegion(gtf = gtffile, showgene = "Bclaf1", 
+                          plotTitle = "mytitle")
+    expect_type(a1b, "list")
+    
     ## GTF file, no bigwig, region
     a11 <- plotGeneRegion(gtf = gtffile, showgene = "", chr = "chr10",
                           start = 20310000, end = 20340000)

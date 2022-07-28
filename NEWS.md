@@ -1,4 +1,4 @@
-# swissknife 0.37.9000
+# swissknife 0.38
 
 * Add plotTitle argument to plotGeneRegion
 

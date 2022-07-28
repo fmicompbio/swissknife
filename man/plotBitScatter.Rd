@@ -9,8 +9,8 @@ plotBitScatter(
   y = NULL,
   ...,
   densCols = TRUE,
-  colpal = c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00",
-    "red", "#7F0000"),
+  colpal = c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red",
+    "#7F0000"),
   xpixels = 1000,
   ypixels = NULL,
   pointsize = NULL

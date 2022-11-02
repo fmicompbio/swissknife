@@ -1,3 +1,7 @@
+# swissknife 0.39
+
+* Add function to set LD_LIBRARY_PATH in conda environments
+
 # swissknife 0.38
 
 * Add plotTitle argument to plotGeneRegion

@@ -1,6 +1,6 @@
 Package: swissknife
 Title: Handy code shared in the FMI CompBio group
-Version: 0.38
+Version: 0.39
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
@@ -28,7 +28,8 @@ Imports:
     usethis,
     SummarizedExperiment,
     utils,
-    XVector
+    XVector,
+    basilisk.utils
 Suggests: 
     Biostrings,
     BiocStyle,

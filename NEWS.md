@@ -1,3 +1,7 @@
+# swissknife 0.39
+
+* Change the file name of the utility function test file, wrap tests in test_that
+
 # swissknife 0.38
 
 * Add plotTitle argument to plotGeneRegion

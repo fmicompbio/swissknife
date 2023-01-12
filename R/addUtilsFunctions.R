@@ -15,7 +15,7 @@
 #'     project. If a file with this name already exists, the function will 
 #'     ask for confirmation before overwriting it. 
 #' @param copyTests Logical scalar, defining whether to copy unit tests for 
-#'     the utility functions to \code{tests/testthat/tests-<name>.R}, 
+#'     the utility functions to \code{tests/testthat/test-<name>.R}, 
 #'     where \code{<name>} is the base name of \code{outFile}. If the 
 #'     target package is not yet set up to use \code{testthat}, the function 
 #'     will also run \code{usethis::use_testthat()} to generate the required 
@@ -34,7 +34,7 @@ addUtilsFunctions <- function(outFile = "R/utils.R", copyTests = TRUE) {
         usethis::use_testthat()
         usethis::use_template("tests_utils_template.R", package = "swissknife",
                               save_as = file.path("tests", "testthat", 
-                                                  paste0("tests-", 
+                                                  paste0("test-", 
                                                          basename(outFile))))
     }
 }

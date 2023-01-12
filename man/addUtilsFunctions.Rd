@@ -13,7 +13,7 @@ project. If a file with this name already exists, the function will
 ask for confirmation before overwriting it.}
 
 \item{copyTests}{Logical scalar, defining whether to copy unit tests for 
-the utility functions to \code{tests/testthat/tests-<name>.R}, 
+the utility functions to \code{tests/testthat/test-<name>.R}, 
 where \code{<name>} is the base name of \code{outFile}. If the 
 target package is not yet set up to use \code{testthat}, the function 
 will also run \code{usethis::use_testthat()} to generate the required 

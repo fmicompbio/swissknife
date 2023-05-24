@@ -23,7 +23,8 @@ jobs:
           #- {os: ubuntu-16.04, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
           #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
           #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12'}
-          - {os: ubuntu-latest, r: '4.3', bioc: '3.17', covr: 'yes', pkgdown: 'yes'}
+          - {os: ubuntu-latest, r: '4.2', bioc: '3.16', covr: 'yes', pkgdown: 'yes'}
+          # - {os: ubuntu-latest, r: '4.3', bioc: '3.17', covr: 'yes', pkgdown: 'yes'}
 
     # change this env variable (v...) to manually bust the
     # cache. Cache busting otherwise occurs with changes in

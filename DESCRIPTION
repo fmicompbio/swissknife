@@ -13,6 +13,7 @@ Depends: R (>= 3.5.0)
 Imports: 
     BiocGenerics,
     BiocParallel,
+    datasets,
     GenomeInfoDb,
     GenomicRanges,
     graphics,

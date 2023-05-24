@@ -18,11 +18,12 @@
 #'
 #' @return A \code{data.frame} (invisibly) with one row for each dataset
 #'     that was made available in the global environment.
+#'
 #' @examples
 #' exampleData()
 #' exampleData("mycars")
 #'
-#' @importFrom datasets mtcars
+#' @import datasets
 #'
 #' @export
 exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
@@ -33,8 +34,8 @@ exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
                         created = c("2023-05-23",
                                     "2023-05-23",
                                     "2023-05-24"),
-                        description = c("re-encoded version of `mtcars`",
-                                        "summary of `mtcars` (`hp` by `cyl`)",
+                        description = c("re-encoded version of `datasets::mtcars`",
+                                        "summary of `datasets::mtcars` (`hp` by `cyl`)",
                                         "collection: mycars, mycars_summary"),
                         is_collection = c(FALSE,
                                           FALSE,
@@ -72,7 +73,7 @@ exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
             df
         },
         "mycars" = {
-            mycars <- mtcars
+            mycars <- datasets::mtcars
             mycars$cyl <- factor(mycars$cyl, levels = c("4","6","8"))
             mycars$engine_shape <- factor(c("0" = "V-shaped", "1" = "straight")[as.character(mycars$vs)])
             mycars$transmission <- factor(c("0" = "automatic", "1" = "manual")[as.character(mycars$am)])
@@ -84,7 +85,7 @@ exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
             .info[i, ]
         },
         "mycars_summary" = {
-            mycars_summary <- mtcars |>
+            mycars_summary <- datasets::mtcars |>
                 dplyr::group_by(.data$cyl) |>
                 dplyr::summarise(hp_avg = mean(.data$hp),
                           hp_sem = sd(.data$hp) / sqrt(length(.data$hp)),

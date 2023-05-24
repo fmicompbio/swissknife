@@ -22,6 +22,8 @@
 #' exampleData()
 #' exampleData("mycars")
 #'
+#' @importFrom datasets mtcars
+#'
 #' @export
 exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
     # internal data.frame with available packages

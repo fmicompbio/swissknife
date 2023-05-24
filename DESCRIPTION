@@ -39,6 +39,7 @@ Suggests:
     knitr,
     QuasR,
     Rbowtie,
+    rlang,
     rmarkdown,
     Rsamtools,
     rtracklayer,

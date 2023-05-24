@@ -22,9 +22,6 @@
 #' exampleData()
 #' exampleData("mycars")
 #'
-#' @importFrom dplyr group_by summarise
-#' @importFrom rlang .data
-#'
 #' @export
 exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
     # internal data.frame with available packages
@@ -40,6 +37,9 @@ exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
                         is_collection = c(FALSE,
                                           FALSE,
                                           TRUE))
+
+    # Check if dplyr and rlang are available
+    .assertPackagesAvailable(c("dplyr", "rlang"))
 
     # check arguments
     if (!is.character(name) || length(name) != 1L) {

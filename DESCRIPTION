@@ -48,6 +48,7 @@ Suggests:
     SingleR,
     testthat,
     tidyr,
+    withr,
     wordspace,
     BiocManager
 LinkingTo: 

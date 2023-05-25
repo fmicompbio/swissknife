@@ -34,7 +34,7 @@ test_that("loadExampleData() works properly", {
     expect_true(exists("mycars_summary", envir = globalenv()))
     rm("mycars", "mycars_summary", envir = globalenv())
 
-    expect_message(df4 <- loadExampleData("new", verbose = TRUE))
+    expect_message(df4 <- loadExampleData("latest", verbose = TRUE))
     expect_is(df4, "data.frame")
     expect_identical(df3, df4)
     expect_true(exists("mycars", envir = globalenv()))

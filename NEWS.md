@@ -1,3 +1,7 @@
+# swissknife 0.40
+
+* Add loadExampleData for loading of data sets used in teaching
+
 # swissknife 0.39
 
 * Change the file name of the utility function test file, wrap tests in test_that

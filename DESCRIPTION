@@ -1,6 +1,6 @@
 Package: swissknife
 Title: Handy code shared in the FMI CompBio group
-Version: 0.39
+Version: 0.40
 Authors@R: c(person("Michael", "Stadler", email = "michael.stadler@fmi.ch", role = c("aut", "cre")),
              person("Charlotte", "Soneson", email = "charlotte.soneson@fmi.ch", role = "aut"),
              person("Panagiotis", "Papasaikas", email = "panagiotis.papasaikas@fmi.ch", role = "aut"),
@@ -13,6 +13,7 @@ Depends: R (>= 3.5.0)
 Imports: 
     BiocGenerics,
     BiocParallel,
+    datasets,
     GenomeInfoDb,
     GenomicRanges,
     graphics,
@@ -39,6 +40,7 @@ Suggests:
     knitr,
     QuasR,
     Rbowtie,
+    rlang,
     rmarkdown,
     Rsamtools,
     rtracklayer,
@@ -46,6 +48,7 @@ Suggests:
     SingleR,
     testthat,
     tidyr,
+    withr,
     wordspace,
     BiocManager
 LinkingTo: 

@@ -43,6 +43,7 @@ reference:
     - '`getMappableRegions`'
     - '`getGenomicTiles`'
     - '`addUtilsFunctions`'
+    - '`loadExampleData`'
 - title: General package information
   contents:
     - '`swissknife-package`'

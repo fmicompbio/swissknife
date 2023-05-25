@@ -12,8 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Handy code shared in the FMI CompBio group">
-<meta property="og:description" content="A collection of useful R functions performing various tasks that
-    might be re-usable and worth sharing.">
+<meta property="og:description" content="A collection of useful R functions performing various tasks that might be re-usable and worth sharing.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.39</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.40</span>
       </span>
     </div>
 
@@ -100,7 +99,7 @@
 <li>Use <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html" class="external-link">Roxygen</a> to document your function(s). Some useful tags: <code>@title</code>, <code>@description</code>, <code>@details</code>, <code>@param</code>, <code>@return</code>, <code>@author</code>, <code>@examples</code>, <code>@export</code>, <code>@import</code>/<code>@importFrom</code>.</li>
 <li>If possible, add an example in the Roxygen preamble to show how to run each function.</li>
 <li>If possible, add one or more unit tests to check that the function(s) work as intended (using <a href="https://cran.r-project.org/web/packages/testthat/index.html" class="external-link">testthat</a>).</li>
-<li>When adding code, bump the version number of the package in the DESCRIPTION file, add an entry in the <code>NEWS.md</code> file and to the <code>_pkgdown.yml</code> file (<code>reference</code> section). When you push your edits to github, travis will automatically run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> and deploy it to <a href="https://fmicompbio.github.io/swissknife/" class="external-link">https://fmicompbio.github.io/swissknife/</a>.</li>
+<li>When adding code, bump the version number of the package in the DESCRIPTION file, add an entry in the <code>NEWS.md</code> file and to the <code>_pkgdown.yml</code> file (<code>reference</code> section). When you push your edits to github, github actions will automatically run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> and deploy it to <a href="https://fmicompbio.github.io/swissknife/" class="external-link">https://fmicompbio.github.io/swissknife/</a>.</li>
 <li>If your function uses functions defined in other packages, import the latter by adding <code>@importFrom package function</code> in the Roxygen preamble. Then document the package (e.g. using <code>devtools::document()</code>) to regenerate the NAMESPACE file. It’s also considered good practice to refer to these external functions with <code>package::function</code> in the code, to avoid name clashes.</li>
 <li>As far as possible, avoid hardcoding options (e.g., point sizes in plots, or other things that someone might want to change). Instead provide them as arguments to your function.</li>
 <li>Generally, it’s good to keep functions small (and doing a single thing), for easier testing and increased modularity. As an example, if a function does both some calculations and plotting, it can often be better to split it up into two functions, each with a clearly defined scope.</li>

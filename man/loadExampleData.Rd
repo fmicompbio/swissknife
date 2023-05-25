@@ -10,7 +10,7 @@ loadExampleData(name = "list", envir = globalenv(), verbose = TRUE)
 \item{name}{An optional character scalar specifying the data set(s) to
 be made available. The special name \code{"list"} (default) is used to
 print a data frame of available data sets with descriptions. The special
-name \code{"new"} will select the newest data set(s) available.}
+name \code{"latest"} will select the latest data set(s) available.}
 
 \item{envir}{specifies the environment in which the data should be made
 available. By default, \code{envir = globalenv()}, which creates the

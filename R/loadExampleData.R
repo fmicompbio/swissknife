@@ -12,7 +12,7 @@
 #'     available. By default, \code{envir = globalenv()}, which creates the
 #'     example data objects in the user workspace. Possible alternative
 #'     environment are for example \code{parent.frame()}, which is the
-#'     environment in which \code{exampleData()} was called.
+#'     environment in which \code{loadExampleData()} was called.
 #' @param verbose A logical scalar. If \code{TRUE}, report what is being
 #'     selected and made available.
 #'
@@ -20,13 +20,13 @@
 #'     that was made available in the global environment.
 #'
 #' @examples
-#' exampleData()
-#' exampleData("mycars")
+#' loadExampleData()
+#' loadExampleData("mycars")
 #'
 #' @import datasets
 #'
 #' @export
-exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
+loadExampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
     # internal data.frame with available packages
     .info <- data.frame(name = c("mycars",
                                  "mycars_summary",
@@ -69,7 +69,7 @@ exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
             if (verbose) {
                 message("selecting newest dataset(s) `", .info[i, "name"], "`")
             }
-            df <- exampleData(.info[i, "name"], envir, verbose)
+            df <- loadExampleData(.info[i, "name"], envir, verbose)
             df
         },
         "mycars" = {
@@ -98,8 +98,8 @@ exampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {
             .info[i, ]
         },
         "2023-05" = {
-            df <- rbind(exampleData("mycars", envir, verbose),
-                        exampleData("mycars_summary", envir, verbose))
+            df <- rbind(loadExampleData("mycars", envir, verbose),
+                        loadExampleData("mycars_summary", envir, verbose))
             df
         }
     )

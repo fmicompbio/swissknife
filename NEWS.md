@@ -1,6 +1,6 @@
 # swissknife 0.40
 
-* Add exampleData for loading of data sets used in teaching
+* Add loadExampleData for loading of data sets used in teaching
 
 # swissknife 0.39
 

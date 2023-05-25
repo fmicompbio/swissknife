@@ -7,7 +7,7 @@
 #' @param name An optional character scalar specifying the data set(s) to
 #'     be made available. The special name \code{"list"} (default) is used to
 #'     print a data frame of available data sets with descriptions. The special
-#'     name \code{"latest"} will select the latestest data set(s) available.
+#'     name \code{"latest"} will select the latest data set(s) available.
 #' @param envir specifies the environment in which the data should be made
 #'     available. By default, \code{envir = globalenv()}, which creates the
 #'     example data objects in the user workspace. Possible alternative
@@ -67,7 +67,7 @@ loadExampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) 
         "latest" = {
             i <- which.max(as.Date(.info$created))
             if (verbose) {
-                message("selecting latestest dataset(s) `", .info[i, "name"], "`")
+                message("selecting latest dataset(s) `", .info[i, "name"], "`")
             }
             df <- loadExampleData(.info[i, "name"], envir, verbose)
             df

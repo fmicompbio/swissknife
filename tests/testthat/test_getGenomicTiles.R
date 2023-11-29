@@ -75,7 +75,7 @@ test_that("getGenomicTiles() works properly", {
     # temporary R library
     rlibdir <- tempfile(pattern = "Rlib")
     dir.create(rlibdir)
-    .libPaths(rlibdir)
+    .libPaths(c(rlibdir, .libPaths()))
 
     # install BSgenome.HSapiens.QuasR.hg19sub into temporary library
     bsgPkg <- system.file("extdata", "BSgenome.HSapiens.QuasR.hg19sub_0.1.0.tar.gz", package = "QuasR")

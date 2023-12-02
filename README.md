@@ -2,7 +2,7 @@
 
 | Platforms |  OS  | R CMD check | Coverage |
 |:----------------:|:----------------:|:----------------:|:----------------:|
-| GitHub Actions | Linux/Windows/macOS | [![R build status](https://github.com/fmicompbio/swissknife/workflows/R-CMD-check/badge.svg)](https://github.com/fmicompbio/swissknife/actions) | [![Codecov.io coverage status](https://codecov.io/github/fmicompbio/swissknife/coverage.svg?branch=master)](https://codecov.io/github/fmicompbio/swissknife) |
+| GitHub Actions | Linux/Windows/macOS | [![R build status](https://github.com/fmicompbio/swissknife/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fmicompbio/swissknife/actions) | [![Codecov.io coverage status](https://codecov.io/github/fmicompbio/swissknife/coverage.svg?branch=master)](https://codecov.io/github/fmicompbio/swissknife) |
 
 
 The `swissknife` package is a collection of useful R functions performing various tasks that

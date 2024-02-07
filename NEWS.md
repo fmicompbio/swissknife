@@ -1,3 +1,7 @@
+# swissknife 0.41
+
+* Add weightedMeanByID to aggregate values by an ID
+
 # swissknife 0.40
 
 * Add loadExampleData for loading of data sets used in teaching

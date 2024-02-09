@@ -1,32 +1,37 @@
 #' @title Aggregate different rows assigned to the same ID by calculating a 
 #' weighted mean 
 #'
-#' @description First row means are calculated to summarize across replicates
-#' by a group variable. Then different row means that are assigned to the same 
-#' feature ID are summarized by calculating a weighted mean. This weighted mean
-#' is the sum of the squared row means divided by the sum of the row means.
+#' @description First row means are calculated to summarize across replicates 
+#' identified by the groupCol in the colData. Then different row means that are 
+#' assigned to the same feature ID given by the idCol in the rowData are 
+#' summarized by calculating a weighted mean. This weighted mean is the sum of 
+#' the squared row means divided by the sum of the row means. If all row means 
+#' are 0, they remain 0 in the output.
 #' 
 #' @author Fiona Ross
 #' 
 #' @param SE a \code{SummarizedExperiment} object that contains an assay with
-#' values to be aggregated and a rowData column with IDs to indicate which 
-#' rows to combine. 
+#' values to be aggregated, a colData column that assigns samples to their group
+#' and a rowData column with IDs to indicate which rows to combine. 
 #' @param assay the name of the assay in the SummarizedExperiment object that 
 #' should be aggregated.
 #' @param idCol the column name in the rowData of the SummarizedExperiment 
-#' indicating the ID assigned to each row.
+#' indicating the feature ID.
 #' @param groupCol the column name in the colData of the SummarizedExperiment 
-#' indicating which columns should be averaged as replicates, before the
-#' weighted mean is calculated across rows.
+#' indicating which columns belong to the same group and should be averaged as
+#' replicates, before the weighted mean is calculated across rows.
 #' @param log2Transformed a \code{logical} indicating whether values in the 
 #' assay are log2 transformed. If log2Transformed is TRUE, an exponential
 #' transformation will be applied before aggregating the values and another log 
 #' transformation afterwards. 
 #' 
-#' @return \code{data.frame} with one column that is a numeric vector of the
-#' weighted means per unique ID. If log2Transformed is true the output will be 
-#' log2 transformed again. The rownames of the dataframe correspond to the 
-#' unique IDs.
+#' @return The output is a \code{data.frame} with one column for each of the 
+#' unique names in the groupCol and one row for each of the unique IDs in the
+#' idCol. The row and column names are the respective unique values. The entries
+#' represent the weighted means for each unique feature ID. If all the input 
+#' values were NA, the aggregated value is also NA, while for all zero, the 
+#' output remains zero. If log2Transformed is true the output will be log2
+#' transformed again.
 #' 
 #' @examples
 #' set.seed(123)

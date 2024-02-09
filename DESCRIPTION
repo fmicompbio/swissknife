@@ -30,12 +30,12 @@ Imports:
     usethis,
     SummarizedExperiment,
     utils,
-    XVector
+    XVector,
+    dplyr
 Suggests: 
     Biostrings,
     BiocStyle,
     BSgenome,
-    dplyr,
     GenomicAlignments,
     Gviz,
     knitr,

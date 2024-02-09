@@ -69,6 +69,6 @@ test_that("weightedMeanByID works properly", {
     
     # test that this still works if we have only one group
     oneSE <- mockSE[, colData(mockSE)$group == "Y"]
-    res_one <- weightedMeanByID(onereSE, "promoterenr", idCol = "ID", log2Transformed = FALSE)
+    res_one <- weightedMeanByID(oneSE, "promoterenr", idCol = "ID", log2Transformed = FALSE)
     expect_identical(res$Y, res_one$Y)
 })

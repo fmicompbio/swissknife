@@ -59,7 +59,8 @@ dat <- unlist(lapply(meansRows, function(m) {
 ma <- matrix(dat, nrow = 10, ncol = 5, byrow = TRUE)
 IDs <- data.frame(ID = sample(c("A", "B", "C", "D"), size = 10, replace = TRUE))
 Groups <- data.frame(group = c("Y","Y", "Z", "Z", "Z"))
-mockSE <- SummarizedExperiment(assays = list(counts = ma),
+mockSE <- SummarizedExperiment::SummarizedExperiment(
+                               assays = list(counts = ma),
                                rowData = IDs,
                                colData = Groups)
 weightedMeanByID(mockSE, "counts", idCol = "ID", log2Transformed = FALSE)                                

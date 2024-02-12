@@ -11,19 +11,19 @@
 #' @author Fiona Ross
 #' 
 #' @param SE a \code{SummarizedExperiment} object that contains an assay with
-#' values to be aggregated, a colData column that assigns samples to their group
-#' and a rowData column with IDs to indicate which rows to combine. 
+#'   values to be aggregated, a colData column that assigns samples to their
+#'   group and a rowData column with IDs to indicate which rows to combine. 
 #' @param assay the name of the assay in the SummarizedExperiment object that 
-#' should be aggregated.
+#'   should be aggregated.
 #' @param idCol the column name in the rowData of the SummarizedExperiment 
-#' indicating the feature ID.
+#'   indicating the feature ID.
 #' @param groupCol the column name in the colData of the SummarizedExperiment 
-#' indicating which columns belong to the same group and should be averaged as
-#' replicates, before the weighted mean is calculated across rows.
+#'   indicating which columns belong to the same group and should be averaged as
+#'   replicates, before the weighted mean is calculated across rows.
 #' @param log2Transformed a \code{logical} indicating whether values in the 
-#' assay are log2 transformed. If log2Transformed is TRUE, an exponential
-#' transformation will be applied before aggregating the values and another log 
-#' transformation afterwards. 
+#'   assay are log2 transformed. If log2Transformed is TRUE, an exponential
+#'   transformation will be applied before aggregating the values and another
+#'   log transformation afterwards. 
 #' 
 #' @return The output is a \code{data.frame} with one column for each of the 
 #' unique names in the groupCol and one row for each of the unique IDs in the
@@ -42,16 +42,17 @@
 #' ma <- matrix(dat, nrow = 10, ncol = 5, byrow = TRUE)
 #' IDs <- data.frame(ID = sample(c("A", "B", "C", "D"), size = 10, replace = TRUE))
 #' Groups <- data.frame(group = c("Y","Y", "Z", "Z", "Z"))
-#' mockSE <- SummarizedExperiment(assays = list(promoterenr = ma),
-#'                               rowData = IDs,
-#'                               colData = Groups)
+#' mockSE <- SummarizedExperiment(assays = list(counts = ma),
+#'                                rowData = IDs,
+#'                                colData = Groups)
 #' weightedMeanByID(mockSE, "counts", idCol = "ID", log2Transformed = FALSE)                                
 #' 
 #' @importFrom stats aggregate weighted.mean
-#' @importFrom SummarizedExperiment assay rowData
+#' @importFrom SummarizedExperiment assay assays rowData colData
 #' @importFrom dplyr mutate across where
 #' @export
-weightedMeanByID <- function(SE, assay, idCol = "GENEID", groupCol = "group", log2Transformed = TRUE) {
+weightedMeanByID <- function(SE, assay, idCol = "GENEID", groupCol = "group", 
+                             log2Transformed = TRUE) {
     .assertPackagesAvailable("stats")
     if (!is(SE, "SummarizedExperiment")) {
         stop("Provide data to aggregate in a SummarizedExperiment")
@@ -66,16 +67,20 @@ weightedMeanByID <- function(SE, assay, idCol = "GENEID", groupCol = "group", lo
         stop("Provide the name of the colData column as a character")
     }
     if (!is.logical(log2Transformed)) {
-        stop("log2Transformed must be a logical indicating if data is log2 transformed")
+        stop("log2Transformed must be a logical indicating if", 
+             " data is log2 transformed")
     }
     if (!idCol %in% colnames(SummarizedExperiment::rowData(SE))) {
-        stop("idCol must be an existing column name in the rowData of the SummarizedExperiment object")
+        stop("idCol must be an existing column name in the rowData of the", 
+             " SummarizedExperiment object")
     }
     if (!groupCol %in% colnames(SummarizedExperiment::colData(SE))) {
-        stop("groupCol must be an existing column name in the colData of the SummarizedExperiment object")
+        stop("groupCol must be an existing column name in the colData of the", 
+             " SummarizedExperiment object")
     }
     if (!assay %in% names(SummarizedExperiment::assays(SE))) {
-        stop("The assay name must be an existing assay of the SummarizedExperiment object")
+        stop("The assay name must be an existing assay of the", 
+             " SummarizedExperiment object")
     }
     if (any(is.na(SummarizedExperiment::assay(SE)))) {
         warning("The assay contains NAs, remaining values will be aggregated.")
@@ -87,8 +92,10 @@ weightedMeanByID <- function(SE, assay, idCol = "GENEID", groupCol = "group", lo
         ma <- SummarizedExperiment::assay(SE, assay)
     }
     
-    weightedMeanByID <- do.call(cbind, lapply(unique(SummarizedExperiment::colData(SE)[, groupCol]), function(g) {
-        sel <- colData(SE)[, groupCol] == g
+    uniqueIDs <- unique(SummarizedExperiment::rowData(SE)[, idCol])
+    
+    weightedMeanByID <- do.call(cbind, lapply(unique(SE[[groupCol]]), function(g) {
+        sel <- SE[[groupCol]] == g
         ma <- ma[, sel, drop = FALSE]
         promoterenr <- as.data.frame(rowMeans(ma, na.rm = TRUE))
         promoterenr$gene_id <- SummarizedExperiment::rowData(SE)[, idCol]
@@ -105,13 +112,13 @@ weightedMeanByID <- function(SE, assay, idCol = "GENEID", groupCol = "group", lo
             })
         
         if (log2Transformed) {
-            weightedMeanByID <- weightedMeanByID %>%
+            weightedMeanByID <- weightedMeanByID |>
                 dplyr::mutate(across(where(is.numeric), log2))
         }
         
         rownames(weightedMeanByID) <- weightedMeanByID$gene_id
         weightedMeanByID$gene_id <- NULL
-        colnames(weightedMeanByID) <- c("weightedMean")
+        colnames(weightedMeanByID) <- "weightedMean"
         
         if (any(!unique(promoterenr$gene_id) %in% rownames(weightedMeanByID))) {
             append <- unique(promoterenr$gene_id)[!unique(promoterenr$gene_id) %in% rownames(weightedMeanByID)]
@@ -119,8 +126,9 @@ weightedMeanByID <- function(SE, assay, idCol = "GENEID", groupCol = "group", lo
             weightedMeanByID <- rbind(weightedMeanByID, append)
         }
         
+        colnames(weightedMeanByID) <- g
+        weightedMeanByID <- weightedMeanByID[uniqueIDs, , drop = FALSE]
         return(weightedMeanByID)
     }))
-    colnames(weightedMeanByID) <- unique(SummarizedExperiment::colData(SE)[, groupCol])
     return(weightedMeanByID)
 }

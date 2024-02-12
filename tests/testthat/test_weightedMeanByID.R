@@ -71,4 +71,11 @@ test_that("weightedMeanByID works properly", {
     oneSE <- mockSE[, colData(mockSE)$group == "Y"]
     res_one <- weightedMeanByID(oneSE, "promoterenr", idCol = "ID", log2Transformed = FALSE)
     expect_identical(res$Y, res_one$Y)
+    
+    # test that appending for NAs works while maintaining the row order
+    assay(na_SE)[c(1, 7), c(1, 2)] <- NA
+    assay(na_SE)
+    res_append <- weightedMeanByID(na_SE, "promoterenr", idCol = "ID", log2Transformed = FALSE)
+    expect_true(is.na(res_append["A", "Y"]))
+    expect_true(res_append["A", "Z"] == 0)
 })

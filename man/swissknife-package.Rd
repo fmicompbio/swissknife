@@ -24,6 +24,7 @@ Authors:
   \item Charlotte Soneson \email{charlotte.soneson@fmi.ch}
   \item Panagiotis Papasaikas \email{panagiotis.papasaikas@fmi.ch}
   \item Dania Machlab \email{dania.machlab@fmi.ch}
+  \item Fiona Ross \email{fiona.ross@fmi.ch}
 }
 
 Other contributors:

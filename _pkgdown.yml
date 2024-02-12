@@ -44,6 +44,7 @@ reference:
     - '`getGenomicTiles`'
     - '`addUtilsFunctions`'
     - '`loadExampleData`'
+    - '`weightedMeanByID`'
 - title: General package information
   contents:
     - '`swissknife-package`'

@@ -9,36 +9,61 @@ weightedMeanByID(
   SE,
   assay,
   idCol = "GENEID",
-  log2Transformed = TRUE,
-  pseudocount = 0.01
+  groupCol = "group",
+  log2Transformed = TRUE
 )
 }
 \arguments{
-\item{SE}{\code{SummarizedExperiment} object that contains an assay with 
-the values to be aggregated and a rowData column with IDs to indicate
-which values of different rows to combine.}
+\item{SE}{a \code{SummarizedExperiment} object that contains an assay with
+values to be aggregated, a colData column that assigns samples to their
+group and a rowData column with IDs to indicate which rows to combine.}
 
-\item{assay}{\code{character} name of the assay in the SummarizedExperiment
-object to use.}
+\item{assay}{the name of the assay in the SummarizedExperiment object that 
+should be aggregated.}
 
-\item{idCol}{\code{character} column name in the rowData of the
-SummarizedExperiment indicating the ID assigned to each row.}
+\item{idCol}{the column name in the rowData of the SummarizedExperiment 
+indicating the feature ID.}
 
-\item{log2Transformed}{\code{logical} indicating whether the data is log2
-transformed.}
+\item{groupCol}{the column name in the colData of the SummarizedExperiment 
+indicating which columns belong to the same group and should be averaged as
+replicates, before the weighted mean is calculated across rows.}
 
-\item{pseudocount}{\code{numeric} pseudocount to add to avoid dividing by 0.}
+\item{log2Transformed}{a \code{logical} indicating whether values in the 
+assay are log2 transformed. If log2Transformed is TRUE, an exponential
+transformation will be applied before aggregating the values and another
+log transformation afterwards.}
 }
 \value{
-\code{data.frame} with one column that is a numeric vector of the
-weighted means per unique ID. If log2Transformed is true the output will be 
-log2 transformed again. The rownames of the dataframe correspond to the 
-unique IDs.
+The output is a \code{data.frame} with one column for each of the 
+unique names in the groupCol and one row for each of the unique IDs in the
+idCol. The row and column names are the respective unique values. The entries
+represent the weighted means for each unique feature ID. If all the input 
+values were NA, the aggregated value is also NA, while for all zero, the 
+output remains zero. If log2Transformed is true the output will be log2
+transformed again.
 }
 \description{
-After calculating row means to summarize across replicates, 
-values of different rows that are assigned to the same ID are summarized by 
-calculating a weighted mean. The weights are the values themselves.
+First row means are calculated to summarize across replicates 
+identified by the groupCol in the colData. Then different row means that are 
+assigned to the same feature ID given by the idCol in the rowData are 
+summarized by calculating a weighted mean. This weighted mean is the sum of 
+the squared row means divided by the sum of the row means. If all row means 
+are 0, they remain 0 in the output.
+}
+\examples{
+set.seed(123)
+meansRows <- sample(1:100, 10, replace = TRUE)
+dat <- unlist(lapply(meansRows, function(m) {
+    rnorm(n = 5, mean = m, sd = 0.1*m)
+}))
+ma <- matrix(dat, nrow = 10, ncol = 5, byrow = TRUE)
+IDs <- data.frame(ID = sample(c("A", "B", "C", "D"), size = 10, replace = TRUE))
+Groups <- data.frame(group = c("Y","Y", "Z", "Z", "Z"))
+mockSE <- SummarizedExperiment(assays = list(counts = ma),
+                               rowData = IDs,
+                               colData = Groups)
+weightedMeanByID(mockSE, "counts", idCol = "ID", log2Transformed = FALSE)                                
+
 }
 \author{
 Fiona Ross

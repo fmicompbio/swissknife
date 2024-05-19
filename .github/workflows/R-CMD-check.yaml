@@ -76,6 +76,11 @@ jobs:
           extra-packages: any::rcmdcheck
           pak-version: devel
 
+      - name: Install system dependencies required for deployment
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update && sudo apt-get -y install libharfbuzz-dev libfribidi-dev 
+        
       - name: Install R package dependencies
         run: |
           if (Sys.getenv("CRAN") != "") options(repos = c(REPO_NAME = Sys.getenv("CRAN")))

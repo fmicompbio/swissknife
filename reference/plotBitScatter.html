@@ -6,6 +6,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
+
+
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -18,9 +20,10 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">swissknife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.41</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.42</span>
       </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
   <a href="../reference/index.html">Reference</a>
@@ -31,24 +34,30 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/fmicompbio/swissknife/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
+
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a bitmap-rendered plot.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/fmicompbio/swissknife/blob/HEAD/R/plotBitScatter.R" class="external-link"><code>R/plotBitScatter.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/fmicompbio/swissknife/blob/master/R/plotBitScatter.R" class="external-link"><code>R/plotBitScatter.R</code></a></small>
     <div class="hidden name"><code>plotBitScatter.Rd</code></div>
     </div>
+
     <div class="ref-description">
     <p><code>plotBitScatter</code> is a wrapper around <code>plot</code> which renders the
     plot area as a bitmap (png), but keeps all other elements (axes, labels, etc.)
     as vector elements. This is especially useful for keeping the size of PDF files
     with scatter plots with many elements small, while retaining editability of axes.</p>
     </div>
+
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotBitScatter</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
@@ -62,25 +71,40 @@
 <span>  pointsize <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
+
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p><code>numeric</code> vector with x-coordinates of points, or a two-column
 matrix with x- and y- coordinates.</p></dd>
+
+
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
 <dd><p><code>numeric</code> vector with y-coordinates of points (same length as <code>x</code>).
 Can be <code>NULL</code>, in which case <code>x</code> must be a two-column matrix.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>any further arguments to be passed to <code>plot</code></p></dd>
+
+
 <dt id="arg-denscols">densCols<a class="anchor" aria-label="anchor" href="#arg-denscols"></a></dt>
 <dd><p><code>logical(1)</code>. If <code>TRUE</code> and <code>col</code> is not given
 as an additional argument, then the local density of points will be used
 as colors, using the palette spanned by the colors in <code>colpal</code>.</p></dd>
+
+
 <dt id="arg-colpal">colpal<a class="anchor" aria-label="anchor" href="#arg-colpal"></a></dt>
 <dd><p>vector of colors defining the palette for automatic density-based coloring.</p></dd>
+
+
 <dt id="arg-xpixels">xpixels<a class="anchor" aria-label="anchor" href="#arg-xpixels"></a></dt>
 <dd><p>the number of pixels in the x dimension used for rendering
 the plotting area.</p></dd>
+
+
 <dt id="arg-ypixels">ypixels<a class="anchor" aria-label="anchor" href="#arg-ypixels"></a></dt>
 <dd><p>the number of pixels in the y dimension used for rendering the
 plotting area. If <code>NULL</code> (the default), will be calculated automatically
@@ -88,6 +112,8 @@ as <code>xpixels * par('pin')[2] / par('pin')[1]</code>, such that the aspect ra
 the current plotting region is observed. This may not work (e.g. when using
 <code><a href="https://rdrr.io/r/graphics/layout.html" class="external-link">layout()</a></code>), as this may result in negative values returned by <code>par('pin')</code>.
 In that case, <code>ypixels</code> should be set manually using this argument.</p></dd>
+
+
 <dt id="arg-pointsize">pointsize<a class="anchor" aria-label="anchor" href="#arg-pointsize"></a></dt>
 <dd><p>the size of points used for the png device when rendering the plot.
 If <code>NULL</code> (the default), will be calculated automatically as
@@ -95,10 +121,11 @@ If <code>NULL</code> (the default), will be calculated automatically as
 This may not work (e.g. when using <code><a href="https://rdrr.io/r/graphics/layout.html" class="external-link">layout()</a></code>), as this may result in
 negative values returned by <code>par('pin')</code>. In that case, <code>pointsize</code>
 should be set manually using this argument.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-<p><code>NULL</code> (invisibly)</p>
+    <p><code>NULL</code> (invisibly)</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -113,6 +140,7 @@ should be set manually using this argument.</p></dd>
     <h2>Author</h2>
     <p>Michael Stadler</p>
     </div>
+
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span></span>
@@ -129,12 +157,22 @@ should be set manually using this argument.</p></dd>
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
     </nav></div>
 </div>
+
+
       <footer><div class="copyright">
   <p></p><p>Developed by Michael Stadler, <a href="https://csoneson.github.io" class="external-link">Charlotte Soneson</a>, Panagiotis Papasaikas, Dania Machlab, Fiona Ross.</p>
 </div>
+
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
+
       </footer></div>
+
+
+
+
+
+
   </body></html>
 

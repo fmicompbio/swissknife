@@ -11,21 +11,13 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.bioc }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          #- {os: windows-latest, r: '3.6'}
-          #- {os: macOS-latest, r: '3.6'}
-          #- {os: macOS-latest, r: '4.0', bioc: '3.12'}
-          #- {os: macOS-latest, r: 'devel'}
-          #- {os: ubuntu-16.04, r: '3.6', rspm: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
-          #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
-          #- {os: ubuntu-18.04, r: '4.0', bioc: '3.12'}
-          # - {os: ubuntu-latest, r: '4.2', bioc: '3.16', covr: 'yes', pkgdown: 'yes'}
-          - {os: ubuntu-latest, r: '4.3', bioc: '3.18', covr: 'yes', pkgdown: 'yes'}
+          - {os: ubuntu-latest, bioc: 'release', covr: 'yes', pkgdown: 'yes'}
 
     # change this env variable (v...) to manually bust the
     # cache. Cache busting otherwise occurs with changes in
@@ -37,25 +29,23 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: checkout branch
-        uses: actions/checkout@v2
+      - name: Check out branch
+        uses: actions/checkout@v3
 
-      - name: setup R
-        uses: r-lib/actions/setup-r@v2
+      - name: Set up R and install BiocManager
+        uses: grimbough/bioc-actions/setup-bioc@v1
         with:
-          r-version: ${{ matrix.config.r }}
-          rtools-version: ${{ matrix.config.rtools }}
+          bioc-version: ${{ matrix.config.bioc }}
 
       - name: R version
         run: Rscript -e 'R.version'
 
-      - name: setup Pandoc
+      - name: Set up Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
       - name: Query dependencies
         run: |
-          install.packages(c('remotes', 'BiocManager'), Ncpus = 2L)
-          BiocManager::install(version = "${{ matrix.config.bioc }}", Ncpus = 2L, ask = FALSE)
+          install.packages('remotes')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE, repos = c(getOption('repos'), BiocManager::repositories())), 'depends.Rds', version = 2)
         shell: Rscript {0}
 
@@ -64,8 +54,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ env.cache-version }}-${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('depends.Rds') }}
-          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-r-${{ matrix.config.r }}-
+          key: ${{ env.cache-version }}-${{ runner.os }}-bioc-${{ matrix.config.bioc }}-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-bioc-${{ matrix.config.bioc }}-
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
@@ -113,7 +103,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          name: ${{ runner.os }}-bioc${{ matrix.config.bioc }}-results
           path: check
 
       - name: Test coverage

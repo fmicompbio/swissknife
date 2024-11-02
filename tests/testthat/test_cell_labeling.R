@@ -30,12 +30,14 @@ test_that("normGenesetExpression() works properly", {
     ## these should fail
     expect_error(normGenesetExpression("not_a_sce", NULL))
     expect_error(normGenesetExpression(sce, c("1","2","3")))
-    expect_error(normGenesetExpression(sce, c("g1")))
     expect_error(normGenesetExpression(sce, c("not","known","genes")))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), expr_values = FALSE))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = "error"))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 1:3))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = -1))
+    expect_error(normGenesetExpression(sce, c("g1","g2","g3"), nbins = "error"))
+    expect_error(normGenesetExpression(sce, c("g1","g2","g3"), nbins = 1:3))
+    expect_error(normGenesetExpression(sce, c("g1","g2","g3"), nbins = -1))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 20, subset.row = c(TRUE, FALSE)))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 20, subset.row = c(-1, 10)))
     expect_error(normGenesetExpression(sce, c("g1","g2","g3"), R = 20, subset.row = c("g99999")))
@@ -46,14 +48,14 @@ test_that("normGenesetExpression() works properly", {
     selgns <- sample(rownames(sce), size = 20)
     res1 <- normGenesetExpression(sce = sce, genes = selgns,
                                   expr_values = "logcounts", R = 40,
-                                  subset.row = rownames(sce),
+                                  nbins = 100, subset.row = rownames(sce),
                                   BPPARAM = BiocParallel::SerialParam())
     res2 <- normGenesetExpression(sce = sce, genes = selgns,
                                   expr_values = 2, R = 40,
-                                  subset.row = seq.int(nrow(sce)),
+                                  nbins = 100, subset.row = seq.int(nrow(sce)),
                                   BPPARAM = BiocParallel::MulticoreParam(workers = 4L))
     res3 <- normGenesetExpression(sce = sce[unique(c(paste0("g",1:100),selgns))], genes = selgns,
-                                  expr_values = 2, R = 2,
+                                  expr_values = 2, R = 2, nbins = 100, 
                                   subset.row = rep(TRUE, 120L))
     
     ## tests

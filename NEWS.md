@@ -1,3 +1,8 @@
+# swissknife 0.42
+
+* Expose nbins argument (to sampleControlElements) in normGenesetExpression
+* Allow single-gene sets in normGenesetExpression
+
 # swissknife 0.41
 
 * Add weightedMeanByID to aggregate values by an ID

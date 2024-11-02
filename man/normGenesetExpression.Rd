@@ -10,6 +10,7 @@ normGenesetExpression(
   expr_values = "logcounts",
   subset.row = NULL,
   R = 200,
+  nbins = 100,
   BPPARAM = SerialParam()
 )
 }
@@ -31,6 +32,12 @@ which are likely expressed only in certain cell types.}
 
 \item{R}{Integer scalar giving the number of random gene sets to sample
 for normalization.}
+
+\item{nbins}{Integer scalar, specifying the number of bins to group the 
+average expression levels into before sampling (passed to 
+\code{sampleControlElements}). Higher numbers of bins 
+will increase the match to the target distribution(s), but may fail if 
+there are few elements to sample from.}
 
 \item{BPPARAM}{An optional \code{\link[BiocParallel]{BiocParallelParam}}
 instance determining the parallel back-end to be used during evaluation.}

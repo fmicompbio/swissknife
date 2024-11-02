@@ -14,6 +14,11 @@
 #'   \code{sce} contains the expression values.
 #' @param R Integer scalar giving the number of random gene sets to sample
 #'   for normalization.
+#' @param nbins Integer scalar, specifying the number of bins to group the 
+#'   average expression levels into before sampling (passed to 
+#'   \code{sampleControlElements}). Higher numbers of bins 
+#'   will increase the match to the target distribution(s), but may fail if 
+#'   there are few elements to sample from.
 #' @param subset.row Sample random genes only from these. If \code{NULL}
 #'   (the default), the function will sample from all genes in \code{sce}.
 #'   Alternatively, \code{subset.row} can be a logical, integer or character
@@ -51,18 +56,22 @@ normGenesetExpression <- function(sce,
                                   expr_values = "logcounts",
                                   subset.row = NULL,
                                   R = 200,
+                                  nbins = 100, 
                                   BPPARAM = SerialParam()) {
     # pre-flight checks
     .assertPackagesAvailable("SummarizedExperiment")
     stopifnot(exprs = {
         is(sce, "SingleCellExperiment")
         is.character(genes)
-        length(genes) > 1L
+        length(genes) > 0L
         all(genes %in% rownames(sce))
         is.null(subset.row) || !any(is.na(subset.row))
         is.numeric(R)
         length(R) == 1L
         R > 0
+        is.numeric(nbins)
+        length(nbins) == 1L
+        nbins > 0
         inherits(BPPARAM, "BiocParallelParam")
     })
     if (is.numeric(expr_values)) {
@@ -103,7 +112,7 @@ normGenesetExpression <- function(sce,
     
     # calculate expression in random gene sets
     val.rand <- do.call(cbind, bplapply(seq_len(R), function(r) {
-        irand <- sampleControlElements(x = avgExpr, idxTarget = i, nbins = 100)
+        irand <- sampleControlElements(x = avgExpr, idxTarget = i, nbins = nbins)
         colSums(expr[irand, , drop = FALSE])
     }, BPPARAM = BPPARAM))
     
@@ -232,7 +241,7 @@ labelCells <- function(sce,
         is(markergenes, "list")
         !is.null(names(markergenes))
         length(markergenes) > 1L
-        all(lengths(markergenes) > 1L)
+        all(lengths(markergenes) > 0L)
         all(vapply(markergenes, is.character, logical(1)))
         all(unlist(markergenes) %in% rownames(sce))
         # fraction_topscoring

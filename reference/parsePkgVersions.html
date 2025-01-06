@@ -3,11 +3,14 @@
   session information (created by sessionInfo(), tested with R 3.6) in
   files provided in infiles. Two types of files are currently
   supported:
-Rout: Files containing R console output
+Rout:
+Files containing R console output
   (created by R CMD BATCH script.R output.Rout
-md: Files
+ md:
+Files
   containing markdown output created by rmarkdown::render('input.Rmd',
   clean = FALSE), which will keep the intermediate .md file.
+
 
 "><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -62,12 +65,15 @@ md: Files
     <p>The function parses the R version and R package versions from
   session information (created by <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code>, tested with R 3.6) in
   files provided in <code>infiles</code>. Two types of files are currently
-  supported:</p><ul><li><p>Rout: Files containing R console output
-  (created by <code>R CMD BATCH script.R output.Rout</code></p></li>
-<li><p>md: Files
+  supported:</p><dl><dt>Rout: </dt>
+<dd><p>Files containing R console output
+  (created by <code>R CMD BATCH script.R output.Rout</code></p></dd>
+ <dt>md: </dt>
+<dd><p>Files
   containing markdown output created by <code>rmarkdown::render('input.Rmd',
-  clean = FALSE)</code>, which will keep the intermediate <code>.md</code> file.</p></li>
-</ul></div>
+  clean = FALSE)</code>, which will keep the intermediate <code>.md</code> file.</p></dd>
+
+</dl></div>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parsePkgVersions</span><span class="op">(</span><span class="va">infiles</span><span class="op">)</span></span></code></pre></div>

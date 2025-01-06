@@ -80,7 +80,7 @@ test_that("getGenomicTiles() works properly", {
     # install BSgenome.HSapiens.QuasR.hg19sub into temporary library
     bsgPkg <- system.file("extdata", "BSgenome.HSapiens.QuasR.hg19sub_0.1.0.tar.gz", package = "QuasR")
     suppressMessages({
-        utils::install.packages(pkgs = bsgPkg, lib = rlibdir, repos = NULL,
+        utils::install.packages(pkgs = bsgPkg, lib = rlibdir, repos = NULL, quiet = TRUE,
                                 type = "source", INSTALL_opts = "--no-test-load")
     })
     

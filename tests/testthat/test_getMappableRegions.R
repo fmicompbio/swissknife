@@ -4,7 +4,9 @@ chrs <- Biostrings::readDNAStringSet(genomefile)
 indexdir <- tempfile()
 indexpre <- "index"
 indexname <- file.path(indexdir, indexpre)
-idx <- Rbowtie::bowtie_build(genomefile, indexdir)
+suppressMessages({
+    idx <- Rbowtie::bowtie_build(genomefile, indexdir)
+})
 
 test_that(".getChrlenFromBowtieIndex works properly", {
     expect_type(len <- .getChrlenFromBowtieIndex(indexname), "integer")
@@ -96,7 +98,7 @@ test_that("getMappableRegions() works properly", {
     clObj <- parallel::makeCluster(2L)
     bsgPkg <- file.path(tempdir(), "extdata", "BSgenome.HSapiens.QuasR.hg19sub_0.1.0.tar.gz")
     suppressMessages({
-        utils::install.packages(pkgs = bsgPkg, repos = NULL,
+        utils::install.packages(pkgs = bsgPkg, repos = NULL, quiet = TRUE,
                                 type = "source", INSTALL_opts = "--no-test-load")
     })
     samplefile <- file.path(tempdir(), "extdata", "samples_chip_single.txt")

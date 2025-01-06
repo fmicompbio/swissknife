@@ -19,7 +19,7 @@ A \code{list} of \code{list}s with one element in the outer list for
 The function parses the R version and R package versions from
   session information (created by \code{sessionInfo()}, tested with R 3.6) in
   files provided in \code{infiles}. Two types of files are currently
-  supported: \itemize{ \item{Rout: }{Files containing R console output
+  supported: \describe{ \item{Rout: }{Files containing R console output
   (created by \code{R CMD BATCH script.R output.Rout}} \item{md: }{Files
   containing markdown output created by \code{rmarkdown::render('input.Rmd',
   clean = FALSE)}, which will keep the intermediate \code{.md} file.}}

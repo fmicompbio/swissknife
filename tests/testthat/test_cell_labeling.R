@@ -53,7 +53,7 @@ test_that("normGenesetExpression() works properly", {
     res2 <- normGenesetExpression(sce = sce, genes = selgns,
                                   expr_values = 2, R = 40,
                                   nbins = 100, subset.row = seq.int(nrow(sce)),
-                                  BPPARAM = BiocParallel::MulticoreParam(workers = 4L))
+                                  BPPARAM = BiocParallel::MulticoreParam(workers = 2L))
     res3 <- normGenesetExpression(sce = sce[unique(c(paste0("g",1:100),selgns))], genes = selgns,
                                   expr_values = 2, R = 2, nbins = 100, 
                                   subset.row = rep(TRUE, 120L))
@@ -95,7 +95,7 @@ test_that("labelCells() works properly", {
                        normGenesetExpressionParams = list(sce = sce, R = 40),
                        aggregateReferenceParams = list(power = 0.5, BPPARAM = NULL),
                        SingleRParams = list(BPPARAM = NULL),
-                       BPPARAM = BiocParallel::MulticoreParam(workers = 4L))
+                       BPPARAM = BiocParallel::MulticoreParam(workers = 2L))
     })
     
     ## tests

@@ -21,7 +21,6 @@
 #' @export
 #' 
 #' @importFrom S4Vectors mcols
-#' @importFrom BiocGenerics subset
 #' 
 #' @examples
 #' gtf <- prepareGTF(gtf = system.file("extdata/plotGeneRegion/mm10_ensembl98.gtf",
@@ -57,8 +56,8 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
     }
     
     ## Keep only exons
-    gtf <- BiocGenerics::subset(gtf, type %in% c("exon", "gene"))
-    
+    gtf <- gtf[gtf$type %in% c("exon", "gene")]
+
     gtf
 }
 
@@ -120,7 +119,7 @@ prepareGTF <- function(gtf, transcriptIdColumn = "transcript_id",
 #' 
 #' @export
 #' 
-#' @importFrom BiocGenerics subset start end strand
+#' @importFrom BiocGenerics start end strand
 #' @importFrom GenomeInfoDb seqnames
 #' @importFrom IRanges overlapsAny IRanges subsetByOverlaps
 #' @importFrom GenomicRanges GRanges
@@ -274,8 +273,8 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
     ## Extract full gene loci into its own GRanges object, in order to 
     ## show also features where only the introns overlap the selected region
     if (!is.null(granges)) {
-        grangesgene <- BiocGenerics::subset(granges, type == "gene")
-        granges <- BiocGenerics::subset(granges, type == "exon")
+        grangesgene <- granges[granges$type == "gene"]
+        granges <- granges[granges$type == "exon"]
     }
     
     if (!is.na(start)) {
@@ -298,13 +297,13 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
         
         ## If a gene has been defined, set the viewing range accordingly
         if (showgene != "") {
-            gr <- BiocGenerics::subset(granges, tolower(gene) == tolower(showgene) | 
-                                           tolower(gene_name) == tolower(showgene))
+            gr <- granges[tolower(granges$gene) == tolower(showgene) | 
+                              tolower(granges$gene_name) == tolower(showgene)]
             ## Select only one gene if there are many with the same name
             if (length(unique(gr$gene)) > 1) {
                 warning("Multiple gene IDs with the same name, choosing the first")
             }
-            gr <- BiocGenerics::subset(gr, gene == gene[1])
+            gr <- gr[gr$gene == gr$gene[1]]
             chr <- unique(GenomeInfoDb::seqnames(gr))
             start <- min(BiocGenerics::start(gr))
             end <- max(BiocGenerics::end(gr))
@@ -315,19 +314,19 @@ plotGeneRegion <- function(gtf = "", granges = NULL, chr = "",
                                        ranges = IRanges::IRanges(start = start,
                                                                  end = end),
                                        strand = "*")), ]
-            gr <- BiocGenerics::subset(granges, gene %in% gr$gene)
+            gr <- granges[granges$gene %in% gr$gene]
         }
         
         ## Other features in the region
-        grogene <- BiocGenerics::subset(grangesgene, !(gene %in% gr$gene))
+        grogene <- grangesgene[!grangesgene$gene %in% gr$gene]
         gro <- grogene[IRanges::overlapsAny(
             grogene,
             GenomicRanges::GRanges(seqnames = chr,
                                    ranges = IRanges::IRanges(start = start,
                                                              end = end),
                                    strand = "*"))]
-        gro <- BiocGenerics::subset(granges, gene %in% gro$gene)
-        
+        gro <- granges[granges$gene %in% gro$gene]
+
         grtr <- Gviz::GeneRegionTrack(gr, showId = TRUE, col = NULL, fill = "gray80",
                                       name = geneTrackTitle, col.title = "black")
         

@@ -31,7 +31,8 @@ Imports:
     SummarizedExperiment,
     utils,
     XVector,
-    dplyr
+    dplyr,
+    rlang
 Suggests: 
     Biostrings,
     BiocStyle,
@@ -41,7 +42,6 @@ Suggests:
     knitr,
     QuasR,
     Rbowtie,
-    rlang,
     rmarkdown,
     Rsamtools,
     rtracklayer,

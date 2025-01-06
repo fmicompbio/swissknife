@@ -24,6 +24,7 @@
 #' loadExampleData("mycars")
 #'
 #' @import datasets
+#' @importFrom rlang .data
 #'
 #' @export
 loadExampleData <- function(name = "list", envir = globalenv(), verbose = TRUE) {

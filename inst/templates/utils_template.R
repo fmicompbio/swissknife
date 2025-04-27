@@ -3,7 +3,8 @@
 # the MIT license, and package authors are permitted to 
 # include the code as-is in other packages, as long as this note and the 
 # information provided below crediting the authors of the respective 
-# functions is retained. 
+# functions is retained. Note that in addition to copying this script to your 
+# package, you also need to add 'cli' to the Imports of your package. 
 
 #' Utility function to check validity of scalar variable values.
 #' 
@@ -58,6 +59,7 @@
 #' @noRd
 #' @keywords internal
 #' @importFrom methods is
+#' @importFrom cli cli_abort
 .assertVector <- function(x,
                           type = NULL,
                           rngIncl = NULL,
@@ -72,7 +74,7 @@
         identical(as.character(sc[[length(sc) - 1]])[1], ".assertScalar")) {
         mycall <- sc[[length(sc) - 1]]
     }
-    args <- lapply(mycall, as.character)[-1]
+    args <- lapply(mycall, \(x) if (is(x, "language")) deparse(x) else as.character(x))[-1]
     xname <- if ("x" %in% names(args)) args$x else "argument"
 
     ## Check arguments
@@ -83,7 +85,8 @@
     stopifnot(is.null(rngLen) || (length(rngLen) == 2L && is.numeric(rngLen)))
     stopifnot(is.logical(allowNULL) && length(allowNULL) == 1L)
     if (!is.null(rngIncl) && !is.null(rngExcl)) {
-        stop("'rngIncl' and 'rngExcl' can not both be specified")
+        cli_abort("{.arg rngIncl} and {.arg rngExcl} can not both be specified",
+                  call = NULL)
     }
     
     ## If there are too many valid values, print only the first 15
@@ -99,7 +102,7 @@
         if (allowNULL) {
             return(invisible(TRUE))
         } else {
-            stop("'", xname, "' must not be NULL", call. = FALSE)
+            cli_abort("{.arg {xname}} must not be {.code NULL}", call = NULL)
         }
     }
     
@@ -108,50 +111,53 @@
     }
     
     if (!is.null(type) && !methods::is(x, type)) {
-        stop("'", xname, "' must be of class '", type, "'", call. = FALSE)
+        cli_abort("{.arg {xname}} must be of class {.cls {type}}", call = NULL)
     }
     
     if (!is.null(rngIncl)) {
         if (!is.null(validValues)) {
             if (any((x < rngIncl[1] | x > rngIncl[2]) & !(x %in% validValues))) {
-                stop("'", xname, "' must be within [", rngIncl[1], ",", 
-                     rngIncl[2], "] (inclusive), or one of: ", vvPrint,
-                     call. = FALSE)
+                cli_abort(paste0(
+                    "{.arg {xname}} must be between {rngIncl} (inclusive), ",
+                    "or one of: {vvPrint}"), call = NULL)
             }
         } else {
             if (any(x < rngIncl[1] | x > rngIncl[2])) {
-                stop("'", xname, "' must be within [", rngIncl[1], ",", 
-                     rngIncl[2], "] (inclusive)", call. = FALSE)
+                cli_abort(paste0(
+                    "{.arg {xname}} must be between {rngIncl} (inclusive)"),
+                    call = NULL)
             }
         }
     } else if (!is.null(rngExcl)) {
         if (!is.null(validValues)) {
             if (any((x <= rngExcl[1] | x >= rngExcl[2]) & !(x %in% validValues))) {
-                stop("'", xname, "' must be within (", rngExcl[1], ",", 
-                     rngExcl[2], ") (exclusive), or one of: ", vvPrint,
-                     call. = FALSE)
+                cli_abort(paste0(
+                    "{.arg {xname}} must be between {rngExcl} (exclusive), ",
+                    "or one of: {vvPrint}"), call = NULL)
             }
         } else {
             if (any(x <= rngExcl[1] | x >= rngExcl[2])) {
-                stop("'", xname, "' must be within (", rngExcl[1], ",", 
-                     rngExcl[2], ") (exclusive)", call. = FALSE)
+                cli_abort(paste0(
+                    "{.arg {xname}} must be between {rngExcl} (exclusive)"),
+                    call = NULL)
             }
         }
     } else {
         if (!is.null(validValues) && !all(x %in% validValues)) {
-            stop("All values in '", xname, "' must be one of: ", vvPrint,
-                 call. = FALSE)
+            cli_abort("All values in {.arg {xname}} must be one of: {vvPrint}",
+                      call = NULL)
         }
     }
     
 
     if (!is.null(len) && length(x) != len) {
-        stop("'", xname, "' must have length ", len, call. = FALSE)
+        cli_abort("{.arg {xname}} must have length {len}", call = NULL)
     }
 
     if (!is.null(rngLen) && (length(x) < rngLen[1] || length(x) > rngLen[2])) {
-        stop("length of '", xname, "' must be within [", rngLen[1], ",", 
-             rngLen[2], "] (inclusive)", call. = FALSE)
+        cli_abort(paste0(
+            "length of {.arg {xname}} must be between {rngLen} (inclusive)"),
+            call = NULL)
     }
     
     return(invisible(TRUE))
@@ -174,6 +180,7 @@
 #' 
 #' @noRd
 #' @keywords internal
+#' @importFrom cli cli_abort
 .assertPackagesAvailable <- function(pkgs, suggestInstallation = TRUE) {
     stopifnot(exprs = {
         is.character(pkgs)
@@ -202,7 +209,7 @@
                           "BiocManager::install(c(\"",
                           paste(pkgs[!avail], collapse = "\", \""), "\"))")
         }
-        stop(msg, call. = FALSE)
+        cli_abort(msg, call = NULL)
     }
     
     invisible(TRUE)

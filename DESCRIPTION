@@ -52,7 +52,8 @@ Suggests:
     tidyr,
     withr,
     wordspace,
-    BiocManager
+    BiocManager,
+    scrapper
 LinkingTo: 
     Rcpp
 License: GPL (>= 3)

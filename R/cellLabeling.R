@@ -173,7 +173,8 @@ normGenesetExpression <- function(sce,
 #' 
 #' @examples 
 #' if (requireNamespace("SingleR", quietly = TRUE) &&
-#'     requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+#'     requireNamespace("SingleCellExperiment", quietly = TRUE) &&
+#'     requireNamespace("scrapper", quietly = TRUE)) {
 #'     
 #'     # create SingleCellExperiment with cell-type specific genes
 #'     library(SingleCellExperiment)

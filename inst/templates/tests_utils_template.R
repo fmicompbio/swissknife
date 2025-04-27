@@ -116,3 +116,14 @@ test_that(".assertPackagesAvailable works", {
                  "installed[.]")
     rm(testfunc)
 })
+
+## -------------------------------------------------------------------------- ##
+## Checks, .message
+## -------------------------------------------------------------------------- ##
+test_that(".message works", {
+    verbose <- TRUE
+    expect_type(suppressMessages(.message("message")), "character")
+    expect_type(suppressMessages(.message("message", noTimer = TRUE)), "character")
+    verbose <- FALSE
+    expect_null(suppressMessages(.message("message")))
+})

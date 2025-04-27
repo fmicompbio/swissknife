@@ -32,7 +32,8 @@ Imports:
     utils,
     XVector,
     dplyr,
-    rlang
+    rlang,
+    cli
 Suggests: 
     Biostrings,
     BiocStyle,

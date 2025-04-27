@@ -245,7 +245,7 @@
     env <- parent.frame()
     verbose <- tryCatch(get("verbose", envir = env),
                         error = function(e) FALSE)
-    if (verbose) {
+    if (isTRUE(verbose)) {
         if (noTimer) {
             cli_alert_info(text = message, .envir = env)
         } else {

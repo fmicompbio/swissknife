@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-latest, bioc: 'release', covr: 'yes', pkgdown: 'yes'}
+          - {os: ubuntu-latest, bioc: '3.21', covr: 'yes', pkgdown: 'yes'}
 
     # change this env variable (v...) to manually bust the
     # cache. Cache busting otherwise occurs with changes in

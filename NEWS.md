@@ -1,3 +1,8 @@
+# swissknife 0.43
+
+* Update utils templates to use cli
+* Add .message utility function to utils template
+
 # swissknife 0.42
 
 * Expose nbins argument (to sampleControlElements) in normGenesetExpression

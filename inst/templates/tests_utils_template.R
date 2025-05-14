@@ -45,7 +45,12 @@ test_that(".assertScalar works", {
     expect_error(.assertScalar(c(1, 2), type = "numeric"))
     test <- "text"
     expect_error(.assertScalar(x = test, type = "numeric"),
-                 "'test' must be of class 'numeric")
+                 ".test. must be of class .numeric.")
+    expect_error(.assertScalar(x = list(a = 1)$a, type = "logical"),
+                 "list(a = 1)$a", fixed = TRUE)
+    tmp <- matrix(1:4, ncol = 2)
+    expect_error(.assertScalar(x = tmp[, 1], type = "logical"),
+                 "tmp[, 1]", fixed = TRUE)
 })
 
 ## -------------------------------------------------------------------------- ##
@@ -91,7 +96,7 @@ test_that(".assertVector works", {
     expect_true(.assertVector(LETTERS[1:2], type = "character", validValues = LETTERS))
     test <- "text"
     expect_error(.assertVector(x = test, type = "numeric"),
-                 "'test' must be of class 'numeric")
+                 ".test. must be of class .numeric.")
 })
 
 ## -------------------------------------------------------------------------- ##
@@ -107,6 +112,18 @@ test_that(".assertPackagesAvailable works", {
     expect_true(testfunc("githubuser/base"))
     expect_true(testfunc(c("base", "methods")))
     expect_error(testfunc(c("error", "error2")), "BiocManager")
-    expect_error(testfunc("error1", suggestInstallation = FALSE), "installed.\n$")
+    expect_error(testfunc("error1", suggestInstallation = FALSE),
+                 "installed[.]")
     rm(testfunc)
+})
+
+## -------------------------------------------------------------------------- ##
+## Checks, .message
+## -------------------------------------------------------------------------- ##
+test_that(".message works", {
+    verbose <- TRUE
+    expect_type(suppressMessages(.message("message")), "character")
+    expect_type(suppressMessages(.message("message", noTimer = TRUE)), "character")
+    verbose <- FALSE
+    expect_null(suppressMessages(.message("message")))
 })

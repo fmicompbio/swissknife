@@ -8,7 +8,15 @@
 #'     of scalar variables.
 #' \item \code{.assertVector()} - convenience function to check the validity 
 #'     of vector variables. 
+#' \item \code{.assertPackagesAvailable()} - convenience function to check if 
+#'     packages are available, and suggest how to install them otherwise.
+#' \item \code{.message()} - a drop-in replacement for message() that only 
+#'     prints a message if a variable named verbose is available in the 
+#'     calling environment and is set to TRUE.
 #' }
+#' In addition to copying the files, the function also runs 
+#' \code{usethis::use_package("cli")} to add the \code{cli} package to the 
+#' \code{Imports} of your package.
 #' 
 #' @param outFile Character scalar, giving the path to which the script 
 #'     should be copied. The path is relative to the root of the active 
@@ -28,6 +36,7 @@
 #' 
 #' @importFrom usethis use_template use_testthat
 addUtilsFunctions <- function(outFile = "R/utils.R", copyTests = TRUE) {
+    usethis::use_package("cli")
     usethis::use_template("utils_template.R", package = "swissknife",
                           save_as = outFile)
     if (copyTests) {

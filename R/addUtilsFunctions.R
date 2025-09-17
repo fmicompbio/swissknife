@@ -36,6 +36,7 @@
 #' 
 #' @importFrom usethis use_template use_testthat
 addUtilsFunctions <- function(outFile = "R/utils.R", copyTests = TRUE) {
+    # nocov start
     usethis::use_package("cli")
     usethis::use_template("utils_template.R", package = "swissknife",
                           save_as = outFile)
@@ -46,4 +47,29 @@ addUtilsFunctions <- function(outFile = "R/utils.R", copyTests = TRUE) {
                                                   paste0("test-", 
                                                          basename(outFile))))
     }
+    # nocov end
+}
+
+#' Copy lintr configuration to package
+#' 
+#' This function copies a .lintr configuration file to a new script in a 
+#' specified location. 
+#' 
+#' @param outFile Character scalar, giving the path to which the script 
+#'     should be copied. The path is relative to the root of the active 
+#'     project. If a file with this name already exists, the function will 
+#'     ask for confirmation before overwriting it. \code{outFile} will also 
+#'     be added to the \code{.Rbuildignore} and \code{.gitignore} files.
+#'     
+#' @author Charlotte Soneson
+#' 
+#' @export
+#' 
+#' @importFrom usethis use_template use_git_ignore
+addLintrConfig <- function(outFile = ".lintr") {
+    # nocov start
+    usethis::use_template("lintr_template", package = "swissknife",
+                          save_as = outFile, ignore = TRUE)
+    usethis::use_git_ignore(ignores = outFile)
+    # nocov end
 }

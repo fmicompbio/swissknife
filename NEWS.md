@@ -1,3 +1,7 @@
+# swissknife 0.44
+
+* Add addLintrConfig to add a lintr config file to a package
+
 # swissknife 0.43
 
 * Update utils templates to use cli

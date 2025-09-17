@@ -43,6 +43,7 @@ reference:
     - '`getMappableRegions`'
     - '`getGenomicTiles`'
     - '`addUtilsFunctions`'
+    - '`addLintrConfig`'
     - '`loadExampleData`'
     - '`weightedMeanByID`'
 - title: General package information

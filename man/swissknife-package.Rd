@@ -21,6 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Michael Stadler \email{michael.stadler@fmi.ch}
   \item Charlotte Soneson \email{charlotte.soneson@fmi.ch}
   \item Panagiotis Papasaikas \email{panagiotis.papasaikas@fmi.ch}
   \item Dania Machlab \email{dania.machlab@fmi.ch}
